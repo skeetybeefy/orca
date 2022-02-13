@@ -1,17 +1,23 @@
-import { useRouter } from 'next/router';
-import React, { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from 'store';
-import { loginAsync } from 'store/actions/auth';
-import Routes from 'types/enums/Routes';
+import { useRouter } from "next/router";
+import React, { useCallback } from "react";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "store";
+import { loginAsync } from "store/actions/auth";
+import Routes from "types/enums/Routes";
 
-import { Button, FormControl, FormLabel, Input, VStack } from '@chakra-ui/react';
+import {
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
+  VStack,
+} from "@chakra-ui/react";
 
 const LoginForm = () => {
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   const onLogin = useCallback(async () => {
-    await dispatch(loginAsync({ password: "admin", login: "admin" })).unwrap();
+    await dispatch(loginAsync({ password: "admin", email: "admin" })).unwrap();
     router.push(Routes.Dashboard);
   }, [dispatch, router]);
   return (

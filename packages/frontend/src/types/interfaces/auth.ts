@@ -4,6 +4,6 @@ export interface IAuthState {
 }
 
 export interface IAuthCredentials {
-  login: string;
+  email: string;
   password: string;
 }
