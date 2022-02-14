@@ -1,7 +1,8 @@
 import { Exclude } from 'class-transformer';
-import { File } from 'src/files/entities/file.entity';
-import { Group } from 'src/groups/entities/group.entity';
-import { Role } from 'src/users/entities/role.enum';
+import { File } from 'files/entities/file.entity';
+import { Group } from 'groups/entities/group.entity';
+import { IUser } from 'monotypes/IUser.interface';
+import { Role } from 'users/entities/role.enum';
 import {
   Column,
   Entity,
@@ -11,9 +12,8 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class User {
+export class User implements Omit<IUser, 'groupsIds' | 'files'> {
   @PrimaryGeneratedColumn()
-  @Exclude()
   id: number;
 
   @Column({ type: 'enum', enum: Role })
@@ -43,16 +43,16 @@ export class User {
   @Column()
   addressLocation: string;
 
-  @Column()
+  @Column({ nullable: true })
   diplomaNumber: string;
 
-  @Column()
+  @Column({ nullable: true })
   qualification: string;
 
-  @Column()
+  @Column({ nullable: true })
   specification: string;
 
-  @Column()
+  @Column({ nullable: true })
   medicalFacility: string;
 
   @Column()

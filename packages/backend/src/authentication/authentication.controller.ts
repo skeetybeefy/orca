@@ -1,10 +1,13 @@
-import { AuthenticationService } from 'src/authentication/authentication.service';
-import { JwtAccessGuard } from 'src/authentication/guards/jwtAccess.guard';
-import { JwtRefreshGuard } from 'src/authentication/guards/jwtRefresh.guard';
-import { LocalAuthenticationGuard } from 'src/authentication/guards/localAuthentication.guard';
-import { RequestWithUser } from 'src/authentication/entities/requestWithUser.interface';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
-import { UsersService } from 'src/users/users.service';
+import { AuthenticationService } from 'authentication/authentication.service';
+import { LoginUserDto } from 'authentication/dto/loginUser.dto';
+import { RequestWithUser } from 'authentication/entities/requestWithUser.interface';
+import { JwtAccessGuard } from 'authentication/guards/jwtAccess.guard';
+import { JwtRefreshGuard } from 'authentication/guards/jwtRefresh.guard';
+import { LocalAuthenticationGuard } from 'authentication/guards/localAuthentication.guard';
+import { ApiRoute } from 'monotypes/ApiRoute.enum';
+import { AuthenticationRoute } from 'monotypes/AuthenticationRoutes.enum';
+import { CreateUserDto } from 'users/dto/createUser.dto';
+import { UsersService } from 'users/users.service';
 
 import {
   Body,
@@ -17,15 +20,15 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
-@Controller('authentication')
-@ApiTags('authentication')
+@Controller(ApiRoute.Authentication)
+@ApiTags(ApiRoute.Authentication)
 export class AuthenticationController {
   constructor(
     private readonly authenticationService: AuthenticationService,
     private readonly usersService: UsersService,
   ) {}
 
-  @Post('register')
+  @Post(AuthenticationRoute.Register)
   async register(
     @Body() registrationData: CreateUserDto,
     @Req() request: RequestWithUser,
@@ -40,10 +43,10 @@ export class AuthenticationController {
     return user;
   }
 
+  @Post(AuthenticationRoute.LogIn)
   @HttpCode(200)
   @UseGuards(LocalAuthenticationGuard)
-  @Post('log-in')
-  async logIn(@Req() request: RequestWithUser) {
+  async logIn(@Body() _: LoginUserDto, @Req() request: RequestWithUser) {
     const { user } = request;
 
     const refreshToken = this.authenticationService.getJwtRefreshToken(user.id);
@@ -54,9 +57,9 @@ export class AuthenticationController {
     return user;
   }
 
-  @UseGuards(JwtAccessGuard)
-  @Post('log-out')
+  @Post(AuthenticationRoute.LogOut)
   @HttpCode(200)
+  @UseGuards(JwtAccessGuard)
   async logOut(@Req() request: RequestWithUser) {
     await this.usersService.removeRefreshToken(request.user.id);
     request.res.setHeader(
@@ -65,15 +68,15 @@ export class AuthenticationController {
     );
   }
 
+  @Get('auth')
   @UseGuards(JwtAccessGuard)
-  @Get()
   authenticate(@Req() request: RequestWithUser) {
     const user = request.user;
     return user;
   }
 
+  @Get(AuthenticationRoute.Refresh)
   @UseGuards(JwtRefreshGuard)
-  @Get('refresh')
   refresh(@Req() request: RequestWithUser) {
     const accessTokenCookie =
       this.authenticationService.getJwtAccessTokenCookie(request.user.id);

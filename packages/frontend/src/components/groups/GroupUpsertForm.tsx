@@ -1,109 +1,108 @@
-import { Field, FieldProps, Form, Formik } from 'formik';
-import { Select } from 'chakra-react-select';
-import { IGroup } from 'types/interfaces/group';
+import { MultiValue, Select } from "chakra-react-select";
+import { Field, FieldProps, Form, Formik, useFormik } from "formik";
+import { useCallback, useEffect, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllUsersAsync } from "store/actions/users";
+import { selectAllUsers } from "store/selectors/users";
 
-import { Button, FormControl, FormLabel, Input } from '@chakra-ui/react';
-import { useEffect } from 'react';
-import { getAllUsersAsync } from 'store/actions/users';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectAllUsers } from 'store/selectors/users';
+import {
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
+  VStack,
+} from "@chakra-ui/react";
+import { ICreateGroupDto } from "monotypes/IGroup.interface";
 
 interface IProps {
-    onSubmit: (values: Omit<IGroup, "id">) => void;
-    initialValues: Omit<IGroup, "id">;
-    buttonText: string
+  onSubmit: (values: ICreateGroupDto) => void;
+  initialValues: ICreateGroupDto;
+  buttonText: string;
 }
-
 
 const GroupUpsertForm = ({ onSubmit, initialValues, buttonText }: IProps) => {
+  const dispatch = useDispatch();
+  const users = useSelector(selectAllUsers);
 
-    const dispatch = useDispatch()
-
-    useEffect(() => {
-        dispatch(getAllUsersAsync())
-    }, [dispatch])
-
-    const users = useSelector(selectAllUsers)
-
-    const mappedUsers = users.map((user) => {
+  const mappedUsersOptions = useMemo(
+    () =>
+      users.map((user) => {
         return {
-            value: `${user.firstName} ${user.lastName}`, 
-            label: `${user.firstName} ${user.lastName}`
-        }
-    })
+          value: user.id,
+          label: user.nickname,
+        };
+      }),
+    [users]
+  );
 
-    console.log(`Init values: ${JSON.stringify(initialValues)}`)
+  const { handleSubmit, handleBlur, handleChange, values, setFieldValue } =
+    useFormik({
+      initialValues,
+      onSubmit,
+    });
 
-    const mappedInitialValues = {
-        ...initialValues,
-        membersIds: initialValues.membersIds.map((member) => {
-            return {
-                value: member,
-                label: member,
-            }
-        })
-    }
+  const onSelectorValueChange = useCallback(
+    (members: MultiValue<{ value: number; label: string | undefined }>) => {
+      const mappedMembers = members.map(({ value }) => value);
+      setFieldValue("membersIds", mappedMembers);
+    },
+    [setFieldValue]
+  );
 
-    return (
-        <Formik
-            initialValues={mappedInitialValues}
-            onSubmit={onSubmit}
-            enableReInitialize={true}>
-            {(props) =>
-                <Form onSubmit={props.handleSubmit}>
-                    <Field name="name">
-                        {({ field }: FieldProps) => (
-                            <FormControl>
-                                <FormLabel>Name</FormLabel>
-                                <Input {...field} id="name" type="text" mb={4} />
-                            </FormControl>
-                        )}
-                    </Field>
-                    <Field name="description">
-                        {({ field }: FieldProps) => (
-                            <FormControl>
-                                <FormLabel>Description</FormLabel>
-                                <Input {...field} id="description" type="text" mb={4} />
-                            </FormControl>
-                        )}
-                    </Field>
-                    <Field name="membersIds">
-                        {({ field, form }: FieldProps) => (
-                            <FormControl>
-                                {console.log(`Field: ${JSON.stringify(field)}`)}
-                                <FormLabel>Members</FormLabel>
-                                <Select
-                                    isMulti 
-                                    {...field} 
-                                    options={mappedUsers}
-                                    id="membersIds"
-                                    placeholder="Select members"
-                                    onChange={(value) => {
-                                        console.log(`Value: ${JSON.stringify(value)}`)
-                                        form.setFieldValue(field.name, value)
-                                    }}
-                                    chakraStyles={{
-                                        control: (provided) => ({
-                                            ...provided,
-                                            mb: 4
-                                        })
-                                    }}/>
-                            </FormControl>
-                        )}
-                    </Field>
-                    <Field name="owner">
-                        {({ field }: FieldProps) => (
-                            <FormControl>
-                                <FormLabel>Owner</FormLabel>
-                                <Input {...field} id="owner" type="text" mb={4} />
-                            </FormControl>
-                        )}
-                    </Field>
-                    <Button type="submit" isLoading={props.isSubmitting}>{buttonText}</Button>
-                </Form>
-            }
-        </Formik>
-    )
-}
+  const mappedSelectorValues = useMemo(() => {
+    return values.membersIds.map((value) => {
+      const member = users.find((user) => user.id === value);
+      return {
+        label: member?.nickname,
+        value,
+      };
+    });
+  }, [users, values]);
 
-export default GroupUpsertForm
+  return (
+    <form onSubmit={handleSubmit}>
+      <VStack p={2} gap={4}>
+        <FormControl isRequired>
+          <FormLabel htmlFor="name">Name</FormLabel>
+          <Input
+            value={values["name"]}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            name={"name"}
+            id="name"
+            type="text"
+            placeholder="Group name"
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel htmlFor="description">Description</FormLabel>
+          <Input
+            value={values["description"]}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            name={"description"}
+            id="description"
+            type="text"
+            placeholder="Group description"
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel htmlFor="membersIds">Members</FormLabel>
+          <Select
+            isMulti
+            id="membersIds"
+            name="membersIds"
+            value={mappedSelectorValues}
+            options={mappedUsersOptions}
+            onChange={onSelectorValueChange}
+          />
+        </FormControl>
+        <Button w="full" type="submit">
+          {buttonText}
+        </Button>
+      </VStack>
+    </form>
+  );
+};
+
+export default GroupUpsertForm;

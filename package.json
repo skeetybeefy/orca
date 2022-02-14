@@ -1,5 +1,5 @@
 {
-  "name": "orca",
+  "name": "@orca/monorepo",
   "private": true,
   "devDependencies": {
     "lerna": "^4.0.0"

@@ -1,7 +1,7 @@
 {
   "name": "@orca/common",
   "version": "0.0.1",
-  "main": "index.js",
+  "main": "index.ts",
   "license": "MIT",
   "baseUrl": "src",
   "private": true

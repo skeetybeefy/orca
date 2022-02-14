@@ -1,10 +1,18 @@
+import { IUser } from "monotypes/IUser.interface";
 import {
-    createUserAsync, deleteUserByIdAsync, getAllUsersAsync, updateUserAsync
-} from 'store/actions/users';
-import Slices from 'types/enums/Slices';
-import { IUser } from 'types/interfaces/user';
+  createUserAsync,
+  deleteUserByIdAsync,
+  getAllUsersAsync,
+  updateUserAsync,
+} from "store/actions/users";
+import Slices from "types/enums/Slices";
 
-import { createEntityAdapter, createSlice, EntityState, PayloadAction } from '@reduxjs/toolkit';
+import {
+  createEntityAdapter,
+  createSlice,
+  EntityState,
+  PayloadAction,
+} from "@reduxjs/toolkit";
 
 export const usersAdapter = createEntityAdapter<IUser>();
 

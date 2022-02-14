@@ -1,12 +1,12 @@
-import { JwtAccessGuard } from 'src/authentication/guards/jwtAccess.guard';
-import { AppAbility } from 'src/authorization/authorizationAbilities.factory';
-import { CheckPolicies } from 'src/authorization/checkPolicies.decorator';
-import { AuthorizationAction } from 'src/authorization/entities/authorizedAction.enum';
-import { AuthorizationPoliciesGuard } from 'src/authorization/guards/authorizationPolicies.guard';
-import { CreateTestDto } from 'src/test/dto/create-test.dto';
-import { UpdateTestDto } from 'src/test/dto/update-test.dto';
-import { Test } from 'src/test/entities/test.entity';
-import { TestService } from 'src/test/test.service';
+import { JwtAccessGuard } from 'authentication/guards/jwtAccess.guard';
+import { AppAbility } from 'authorization/authorizationAbilities.factory';
+import { CheckPolicies } from 'authorization/checkPolicies.decorator';
+import { AuthorizationAction } from 'authorization/entities/authorizedAction.enum';
+import { AuthorizationPoliciesGuard } from 'authorization/guards/authorizationPolicies.guard';
+import { CreateTestDto } from 'test/dto/create-test.dto';
+import { UpdateTestDto } from 'test/dto/update-test.dto';
+import { Test } from 'test/entities/test.entity';
+import { TestService } from 'test/test.service';
 
 import {
   Body,

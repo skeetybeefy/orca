@@ -1,8 +1,20 @@
+import { IUser } from "monotypes/IUser.interface";
 import { RootState } from "store";
 import { usersAdapter } from "store/slices/users";
 
-const users = usersAdapter.getSelectors((state: RootState) => state.users.users)
+import { createSelector } from "@reduxjs/toolkit";
 
-export const selectAllUsers = users.selectAll
+const usersSelector = (state: RootState) => state.users.users;
 
-export const selectGroupById = users.selectById 
+const users = usersAdapter.getSelectors(usersSelector);
+
+export const selectAllUsers = users.selectAll;
+
+export const selectUserById = users.selectById;
+
+export const selectUsersByIds = (ids: IUser["id"][]) =>
+  createSelector(users.selectAll, (users) =>
+    users.filter((user) => {
+      return ids.includes(user.id);
+    })
+  );

@@ -1,6 +1,6 @@
 import UsersService from 'api/services/users';
+import { IUser } from 'monotypes/IUser.interface';
 import Slices from 'types/enums/Slices';
-import { IUser } from 'types/interfaces/user';
 
 import { createAsyncThunk } from '@reduxjs/toolkit';
 

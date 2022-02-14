@@ -1,16 +1,19 @@
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { getAllUsersAsync } from 'store/actions/users';
-import { getAllDocuments } from 'store/actions/documents';
-import { getAllGroups } from 'store/actions/groups';
+import { useCallback } from "react";
+import { useDispatch } from "react-redux";
+import { getAllFilesAsync } from "store/actions/files";
+import { getAllGroups } from "store/actions/groups";
+import { getAllUsersAsync } from "store/actions/users";
 
 const useLoadInitialData = () => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getAllUsersAsync());
-    dispatch(getAllDocuments());
-    dispatch(getAllGroups());
+  const loadInitialData = useCallback(() => {
+    return () => {
+      dispatch(getAllUsersAsync());
+      dispatch(getAllFilesAsync());
+      dispatch(getAllGroups());
+    };
   }, [dispatch]);
+  return loadInitialData;
 };
 
 export default useLoadInitialData;

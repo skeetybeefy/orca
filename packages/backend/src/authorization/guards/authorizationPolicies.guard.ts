@@ -1,9 +1,9 @@
 import {
   AppAbility,
   AuthorizationAbilitiesFactory,
-} from 'src/authorization/authorizationAbilities.factory';
-import { AuthorizationPolicyHandler } from 'src/authorization/entities/authorizationPolicyHandler';
-import { MetadataKey } from 'src/common/enums/metadataKey.enum';
+} from 'authorization/authorizationAbilities.factory';
+import { AuthorizationPolicyHandler } from 'authorization/entities/authorizationPolicyHandler';
+import { MetadataKey } from 'common/enums/metadataKey.enum';
 
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';

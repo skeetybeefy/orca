@@ -1,48 +1,72 @@
-import { JwtAccessGuard } from 'src/authentication/guards/jwtAccess.guard';
-import { CreateFileDto } from 'src/files/dto/create-file.dto';
-import { UpdateFileDto } from 'src/files/dto/update-file.dto';
-import { FilesService } from 'src/files/files.service';
+import { RequestWithUser } from 'authentication/entities/requestWithUser.interface';
+import { JwtAccessGuard } from 'authentication/guards/jwtAccess.guard';
+import { File } from 'files/entities/file.entity';
+import { FilesService } from 'files/files.service';
+import { LocalFilesInterceptor } from 'files/localFiles.interceptor';
+import { createReadStream } from 'fs';
+import { ApiRoute } from 'monotypes/ApiRoute.enum';
+import { join } from 'path';
 
 import {
-  Body,
   Controller,
   Delete,
   Get,
   Param,
-  Patch,
   Post,
+  Req,
+  StreamableFile,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('files')
-@Controller('files')
+@ApiTags(ApiRoute.Files)
+@Controller(ApiRoute.Files)
 @UseGuards(JwtAccessGuard)
 export class FilesController {
   constructor(private readonly filesService: FilesService) {}
 
   @Post()
-  create(@Body() createFileDto: CreateFileDto) {
-    return this.filesService.create(createFileDto);
+  @UseInterceptors(
+    LocalFilesInterceptor({
+      fieldName: 'file',
+      path: '/files',
+    }),
+  )
+  create(
+    @UploadedFile() file: Express.Multer.File,
+    @Req() request: RequestWithUser,
+  ) {
+    const {
+      user: { id: ownerId },
+    } = request;
+    return this.filesService.create({ file, ownerId });
   }
 
   @Get()
-  findAll() {
-    return this.filesService.findAll();
+  findAll(@Req() request: RequestWithUser) {
+    const {
+      user: { id: ownerId },
+    } = request;
+    return this.filesService.findAll(ownerId);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.filesService.findOne(+id);
-  }
+  async getById(@Param('id') id: File['id'], @Req() request: RequestWithUser) {
+    const file = await this.filesService.getById(id);
+    const stream = createReadStream(join(process.cwd(), file.path));
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateFileDto: UpdateFileDto) {
-    return this.filesService.update(+id, updateFileDto);
+    request.res.set({
+      'Content-Disposition': `inline; filename="${file.filename}"`,
+      'Content-Type': file.mimetype,
+    });
+
+    return new StreamableFile(stream);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.filesService.remove(+id);
+  remove(@Param('id') id: File['id']) {
+    return this.filesService.remove(id);
   }
 }

@@ -1,19 +1,32 @@
-import { CreateGroupDto } from 'src/groups/dto/create-group.dto';
-import { UpdateGroupDto } from 'src/groups/dto/update-group.dto';
-import { Group } from 'src/groups/entities/group.entity';
+import { CreateGroupDto } from 'groups/dto/createGroup.dto';
+import { UpdateGroupDto } from 'groups/dto/updateGroup.dto';
+import { Group } from 'groups/entities/group.entity';
 import { Repository } from 'typeorm';
+import { User } from 'users/entities/user.entity';
 
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { UsersService } from 'users/users.service';
 
 @Injectable()
 export class GroupsService {
   constructor(
     @InjectRepository(Group) private groupsRepository: Repository<Group>,
+    private readonly usersService: UsersService,
   ) {}
 
-  async create(createGroupDto: CreateGroupDto) {
-    const newGroup = await this.groupsRepository.create(createGroupDto);
+  async create({
+    ownerId,
+    membersIds,
+    ...createGroupDto
+  }: CreateGroupDto & { ownerId: User['id'] }) {
+    const owner = await this.usersService.getById(ownerId);
+    const members = await this.usersService.getByIds(membersIds);
+    const newGroup = await this.groupsRepository.create({
+      ...createGroupDto,
+      owner,
+      members,
+    });
     await this.groupsRepository.save(newGroup);
     return newGroup;
   }
@@ -30,7 +43,21 @@ export class GroupsService {
     throw new NotFoundException('Group not found');
   }
 
-  async update(id: Group['id'], updateGroupDto: UpdateGroupDto) {
+  async update(
+    id: Group['id'],
+    { membersIds, ...updateGroupDto }: UpdateGroupDto,
+  ) {
+    // TypeOrm doesn't allow updating ManyToMany relationships
+    // First we must save the members and then update other props
+    const group = await this.groupsRepository.findOne({ id });
+    if (!group) {
+      throw new NotFoundException('Group not found');
+    }
+
+    const members = await this.usersService.getByIds(membersIds);
+    group.members = members;
+    await this.groupsRepository.save(group);
+
     await this.groupsRepository.update(id, updateGroupDto);
     const updatedGroup = await this.groupsRepository.findOne({ id });
     if (updatedGroup) {

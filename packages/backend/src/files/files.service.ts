@@ -1,27 +1,56 @@
-import { CreateFileDto } from 'src/files/dto/create-file.dto';
-import { UpdateFileDto } from 'src/files/dto/update-file.dto';
+import { File } from 'files/entities/file.entity';
+import { Repository } from 'typeorm';
+import { UsersService } from 'users/users.service';
 
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { User } from 'users/entities/user.entity';
 
+type CreateFileProps = {
+  ownerId: User['id'];
+  file: Express.Multer.File;
+};
 @Injectable()
 export class FilesService {
-  create(createFileDto: CreateFileDto) {
-    return 'This action adds a new file';
+  constructor(
+    @InjectRepository(File) private filesRepository: Repository<File>,
+    private readonly usersService: UsersService,
+  ) {}
+  async create({ file, ownerId }: CreateFileProps) {
+    const owner = await this.usersService.getById(ownerId);
+    if (!owner) {
+      throw new NotFoundException('User not found');
+    }
+
+    const newFile = await this.filesRepository.create({
+      filename: file.filename,
+      path: file.path,
+      mimetype: file.mimetype,
+      owner,
+    });
+    await this.filesRepository.save(newFile);
+
+    return newFile;
   }
 
-  findAll() {
-    return `This action returns all files`;
+  async getById(fileId: File['id']) {
+    const file = await this.filesRepository.findOne(fileId);
+    if (file) {
+      return file;
+    }
+    throw new NotFoundException('File not found');
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} file`;
+  async findAll(ownerId: User['id']) {
+    const owner = await this.usersService.getById(ownerId);
+    const files = await this.filesRepository.find({ owner });
+    return files;
   }
 
-  update(id: number, updateFileDto: UpdateFileDto) {
-    return `This action updates a #${id} file`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} file`;
+  async remove(id: File['id']) {
+    const deleteResponse = await this.filesRepository.delete(id);
+    if (!deleteResponse.affected) {
+      throw new NotFoundException('File not found');
+    }
   }
 }

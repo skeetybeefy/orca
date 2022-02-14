@@ -1,12 +1,12 @@
 import * as bcrypt from 'bcrypt';
-import { Tokens } from 'src/authentication/entities/token.enum';
-import { TokenPair } from 'src/authentication/entities/tokenPair.interface';
-import { TokenPayload } from 'src/authentication/entities/tokenPayload.interface';
-import { EnvironmentVariable } from 'src/common/enums/EnvironmentVariable.enum';
-import { PostgresErrorCode } from 'src/common/enums/PostgresErrorCode.enum';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
-import { User } from 'src/users/entities/user.entity';
-import { UsersService } from 'src/users/users.service';
+import { Tokens } from 'authentication/entities/token.enum';
+import { TokenPair } from 'authentication/entities/tokenPair.interface';
+import { TokenPayload } from 'authentication/entities/tokenPayload.interface';
+import { EnvironmentVariable } from 'common/enums/EnvironmentVariable.enum';
+import { PostgresErrorCode } from 'common/enums/PostgresErrorCode.enum';
+import { CreateUserDto } from 'users/dto/createUser.dto';
+import { User } from 'users/entities/user.entity';
+import { UsersService } from 'users/users.service';
 
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -110,7 +110,7 @@ export class AuthenticationService {
     const expirationTime = this.configService.get(
       EnvironmentVariable.JWT_ACCESS_TOKEN_EXPIRATION_TIME,
     );
-    return `${Tokens.Access}=${accessToken}; HttpOnly; Path=/; Max-Age:${expirationTime}`;
+    return `${Tokens.Access}=${accessToken}; HttpOnly; Path=/; Max-Age:${expirationTime}; SameSite=None; Secure`;
   }
 
   public getJwtRefreshTokenCookie(userId: User['id']) {
@@ -118,7 +118,7 @@ export class AuthenticationService {
     const expirationTime = this.configService.get(
       EnvironmentVariable.JWT_REFRESH_TOKEN_EXPIRATION_TIME,
     );
-    return `${Tokens.Refresh}=${refreshToken}; HttpOnly; Path=/; Max-Age:${expirationTime}`;
+    return `${Tokens.Refresh}=${refreshToken}; HttpOnly; Path=/; Max-Age:${expirationTime}; SameSite=None; Secure`;
   }
 
   public getLoginCookies(userId: User['id']) {

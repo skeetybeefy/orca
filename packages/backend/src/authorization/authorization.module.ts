@@ -1,4 +1,4 @@
-import { AuthorizationAbilitiesFactory } from 'src/authorization/authorizationAbilities.factory';
+import { AuthorizationAbilitiesFactory } from 'authorization/authorizationAbilities.factory';
 
 import { Global, Module } from '@nestjs/common';
 

@@ -1,14 +1,21 @@
+import { AppModule } from 'app.module';
+import { EnvironmentVariable } from 'common/enums/environmentVariable.enum';
 import * as cookieParser from 'cookie-parser';
-import { AppModule } from 'src/app.module';
-import { EnvironmentVariable } from 'src/common/enums/environmentVariable.enum';
+import * as fs from 'fs';
 
 import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory, Reflector } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as express from 'express';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const httpsOptions = {
+    key: fs.readFileSync('/Users/buktp/Documents/certs/localhost-key.pem'),
+    cert: fs.readFileSync('/Users/buktp/Documents/certs/localhost.pem'),
+  };
+  const app = await NestFactory.create(AppModule, { httpsOptions });
+  // const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
   app.use(cookieParser());
@@ -25,7 +32,13 @@ async function bootstrap() {
   const config = app.get(ConfigService);
   const port = config.get(EnvironmentVariable.PORT);
 
-  app.enableCors();
+  app.enableCors({
+    origin: 'https://localhost:3000',
+    credentials: true,
+  });
+
+  app.use(express.json({ limit: '50mb' }));
+  app.use(express.urlencoded({ limit: '50mb' }));
 
   await app.listen(port);
 }

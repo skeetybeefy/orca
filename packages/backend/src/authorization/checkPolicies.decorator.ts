@@ -1,5 +1,5 @@
-import { AuthorizationPolicyHandler } from 'src/authorization/entities/authorizationPolicyHandler';
-import { MetadataKey } from 'src/common/enums/metadataKey.enum';
+import { AuthorizationPolicyHandler } from 'authorization/entities/authorizationPolicyHandler';
+import { MetadataKey } from 'common/enums/metadataKey.enum';
 
 import { SetMetadata } from '@nestjs/common';
 

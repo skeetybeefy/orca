@@ -1,7 +1,7 @@
 import * as bcrypt from 'bcrypt';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
-import { UpdateUserDto } from 'src/users/dto/update-user.dto';
-import { User } from 'src/users/entities/user.entity';
+import { CreateUserDto } from 'users/dto/createUser.dto';
+import { UpdateUserDto } from 'users/dto/updateUser.dto';
+import { User } from 'users/entities/user.entity';
 import { Repository } from 'typeorm';
 
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
@@ -21,6 +21,10 @@ export class UsersService {
 
   getAll() {
     return this.usersRepository.find();
+  }
+
+  async getByIds(ids: User['id'][]) {
+    return await this.usersRepository.findByIds(ids);
   }
 
   async getByEmail(email: string) {

@@ -1,6 +1,6 @@
+import { IGroup } from 'monotypes/IGroup.interface';
 import { createGroup, deleteGroupById, getAllGroups, updateGroupById } from 'store/actions/groups';
 import Slices from 'types/enums/Slices';
-import { IGroup } from 'types/interfaces/group';
 
 import { createEntityAdapter, createSlice, EntityState, PayloadAction } from '@reduxjs/toolkit';
 
@@ -8,47 +8,44 @@ export const groupsAdapter = createEntityAdapter<IGroup>();
 
 interface GroupsSliceState {
   loading: boolean;
-  groups: EntityState<IGroup>
+  groups: EntityState<IGroup>;
 }
 
-const groupsRequestStarted = (
-  state: GroupsSliceState
-) => {
-  state.loading = true
-}
+const groupsRequestStarted = (state: GroupsSliceState) => {
+  state.loading = true;
+};
 
 const groupUpsertRequestFulfilled = (
   state: GroupsSliceState,
-  {payload}: PayloadAction<IGroup | null>
+  { payload }: PayloadAction<IGroup | null>
 ) => {
-  state.loading = false
+  state.loading = false;
   if (payload !== null) {
-    groupsAdapter.upsertOne(state.groups, payload)
+    groupsAdapter.upsertOne(state.groups, payload);
   }
-}
+};
 
 const groupGetAllRequestFulfilled = (
   state: GroupsSliceState,
-  {payload}: PayloadAction<IGroup[]>
+  { payload }: PayloadAction<IGroup[]>
 ) => {
-  state.loading = false
-  groupsAdapter.upsertMany(state.groups, payload)
-}
+  state.loading = false;
+  groupsAdapter.upsertMany(state.groups, payload);
+};
 
 const groupDeleteRequestFulfilled = (
   state: GroupsSliceState,
-  {payload}: PayloadAction<string | null>
+  { payload }: PayloadAction<string | null>
 ) => {
-  state.loading = false
+  state.loading = false;
   if (payload !== null) {
-    groupsAdapter.removeOne(state.groups, payload)
+    groupsAdapter.removeOne(state.groups, payload);
   }
-}
-
+};
 
 const groupsSlice = createSlice({
   name: Slices.Groups,
-  initialState: {loading: false, groups: groupsAdapter.getInitialState()},
+  initialState: { loading: false, groups: groupsAdapter.getInitialState() },
   reducers: {},
   extraReducers: {
     [createGroup.pending.type]: groupsRequestStarted,

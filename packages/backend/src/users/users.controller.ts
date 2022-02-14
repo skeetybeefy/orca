@@ -1,7 +1,8 @@
-import { JwtAccessGuard } from 'src/authentication/guards/jwtAccess.guard';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
-import { UpdateUserDto } from 'src/users/dto/update-user.dto';
-import { UsersService } from 'src/users/users.service';
+import { JwtAccessGuard } from 'authentication/guards/jwtAccess.guard';
+import { ApiRoute } from 'monotypes/ApiRoute.enum';
+import { CreateUserDto } from 'users/dto/createUser.dto';
+import { UpdateUserDto } from 'users/dto/updateUser.dto';
+import { UsersService } from 'users/users.service';
 
 import {
   Body,
@@ -15,8 +16,8 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('users')
-@Controller('users')
+@ApiTags(ApiRoute.Users)
+@Controller(ApiRoute.Users)
 @UseGuards(JwtAccessGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}

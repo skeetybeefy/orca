@@ -1,5 +1,5 @@
-import { Group } from "src/types/Group.type";
-import { Role } from "src/types/Role.enum";
+import { Group } from "types/Group.type";
+import { Role } from "types/Role.enum";
 
 export type User = {
   id: number;

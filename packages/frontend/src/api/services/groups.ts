@@ -1,42 +1,34 @@
-import { IGroup } from "types/interfaces/group"
+import API from "api";
+import { ApiRoute } from "monotypes/ApiRoute.enum";
+import {
+  ICreateGroupDto,
+  IGroup,
+  IUpdateGroupDto,
+} from "monotypes/IGroup.interface";
 
 class GroupsService {
-    static _groups: IGroup[] = [
-        {
-            id: "group0",
-            name: "Doctors",
-            description: "Hospital #2048 employees",
-            membersIds: ["Artem Pavlov", "Nikita Pavlov", "Elena Testova"],
-            owner: "Artem Pavlov"
-        }
-    ]
+  static async create(group: ICreateGroupDto): Promise<IGroup> {
+    const response = await API.post<IGroup>(`${ApiRoute.Groups}`, group);
+    return response.data;
+  }
 
-    static _lastId: number = 1
+  static async getAll(): Promise<IGroup[]> {
+    const response = await API.get<IGroup[]>(`${ApiRoute.Groups}`);
+    return response.data;
+  }
 
-    static async create(group: Omit<IGroup, "id">): Promise<IGroup> {
-        const newGroup: IGroup = {
-            ...group,
-            id: `group${GroupsService._lastId++}`,
-        }
-        GroupsService._groups.push(newGroup)
-        return newGroup
-    }
+  static async updateById(
+    id: IGroup["id"],
+    group: IUpdateGroupDto
+  ): Promise<IGroup> {
+    const response = await API.patch<IGroup>(`${ApiRoute.Groups}/${id}`, group);
+    return response.data;
+  }
 
-    static async getAll():Promise<IGroup[]> {
-        return GroupsService._groups
-    }
-
-    static async updateById(id: string, group: IGroup): Promise<IGroup> {
-        const updatedGroup = {...group, id: id}
-        GroupsService._groups = GroupsService._groups.filter(group => group.id !== id)
-        GroupsService._groups.push(updatedGroup)
-        return updatedGroup
-    }
-
-    static async deleteById(id: string): Promise<string> {
-        GroupsService._groups = GroupsService._groups.filter(group => group.id !== id)
-        return id
-    }
+  static async deleteById(id: IGroup["id"]): Promise<IGroup["id"]> {
+    const response = await API.delete<IGroup["id"]>(`${ApiRoute.Groups}/${id}`);
+    return response.data;
+  }
 }
 
-export default GroupsService
+export default GroupsService;

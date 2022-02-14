@@ -1,8 +1,8 @@
-import { AuthorizationAction } from 'src/authorization/entities/authorizedAction.enum';
-import { Group } from 'src/groups/entities/group.entity';
-import { Test } from 'src/test/entities/test.entity';
-import { Role } from 'src/users/entities/role.enum';
-import { User } from 'src/users/entities/user.entity';
+import { AuthorizationAction } from 'authorization/entities/authorizedAction.enum';
+import { Group } from 'groups/entities/group.entity';
+import { Test } from 'test/entities/test.entity';
+import { Role } from 'users/entities/role.enum';
+import { User } from 'users/entities/user.entity';
 
 import {
   Ability,

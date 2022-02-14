@@ -1,51 +1,51 @@
-import Page from 'components/common/Page';
-import GroupUpsertForm from 'components/groups/GroupUpsertForm';
-import { useRouter } from 'next/router';
-import { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
-import { createGroup } from 'store/actions/groups';
-import { IGroup } from 'types/interfaces/group';
+import Page from "components/common/Page";
+import GroupUpsertForm from "components/groups/GroupUpsertForm";
+import ProtectedLayout from "layouts/ProtectedLayout";
+import { ICreateGroupDto } from "monotypes/IGroup.interface";
+import { useRouter } from "next/router";
+import { useCallback, useMemo } from "react";
+import { useDispatch } from "react-redux";
+import { createGroup } from "store/actions/groups";
+import Routes from "types/enums/Routes";
 
-import { Heading, VStack } from '@chakra-ui/react';
-import Routes from 'types/enums/Routes';
-import ProtectedLayout from 'layouts/ProtectedLayout';
-
-interface IMemberFormData {
-    value: string,
-    label: string,
-}
+import { Heading, VStack } from "@chakra-ui/react";
 
 const Create = () => {
+  const router = useRouter();
+  const dispatch = useDispatch();
 
-    const router = useRouter()
-    const dispatch = useDispatch()
+  const onCreate = useCallback(
+    (group: ICreateGroupDto) => {
+      dispatch(createGroup(group));
+      router.push(Routes.Groups);
+    },
+    [dispatch, router]
+  );
 
-    const onCreate = useCallback((group) => {
-        group.membersIds = group.membersIds.map((memberFormData: IMemberFormData) => memberFormData.label)
-        dispatch(createGroup(group))
-        router.push(Routes.Groups)
-    }, [dispatch, router])
+  const initialValues: ICreateGroupDto = useMemo(() => {
+    return {
+      name: "",
+      description: "",
+      membersIds: [],
+    };
+  }, []);
 
-
-    return (
-        <Page title="Creating a group">
-            <VStack gap={4}>
-                <Heading size="md" w="full" textAlign="start">
-                    Create a group
-                </Heading>
-                <GroupUpsertForm buttonText="Create" onSubmit={onCreate} initialValues={
-                    {
-                        name: "",
-                        description: "",
-                        membersIds: [],
-                        owner: ""
-                    } as Omit<IGroup, "id">
-                } />
-            </VStack>
-        </Page>
-    );
+  return (
+    <Page title="Creating a group">
+      <VStack align="stretch" gap={4}>
+        <Heading size="md" w="full" textAlign="start">
+          Create a group
+        </Heading>
+        <GroupUpsertForm
+          buttonText="Create"
+          onSubmit={onCreate}
+          initialValues={initialValues}
+        />
+      </VStack>
+    </Page>
+  );
 };
 
-Create.getLayout = ProtectedLayout
+Create.getLayout = ProtectedLayout;
 
 export default Create;

@@ -1,5 +1,5 @@
-import { Group } from 'src/groups/entities/group.entity';
-import { UsersModule } from 'src/users/users.module';
+import { Group } from 'groups/entities/group.entity';
+import { UsersModule } from 'users/users.module';
 
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';

@@ -1,30 +1,41 @@
-import { User } from 'src/users/entities/user.entity';
+import { Exclude } from 'class-transformer';
+import { IGroup } from 'monotypes/IGroup.interface';
 import {
   Column,
   Entity,
   JoinColumn,
   JoinTable,
   ManyToMany,
-  OneToOne,
+  ManyToOne,
   PrimaryGeneratedColumn,
+  RelationId,
 } from 'typeorm';
+import { User } from 'users/entities/user.entity';
 
 @Entity()
-export class Group {
+export class Group implements IGroup {
   @PrimaryGeneratedColumn()
-  public id?: number;
+  id: number;
 
-  @OneToOne(() => User)
+  @ManyToOne(() => User)
   @JoinColumn()
-  public owner: User;
+  @Exclude()
+  owner: User;
+
+  @RelationId((self: Group) => self.owner)
+  ownerId: User['id'];
 
   @ManyToMany(() => User)
   @JoinTable()
-  public members: User[];
+  @Exclude()
+  members: User[];
+
+  @RelationId((self: Group) => self.members)
+  membersIds: User['id'][];
 
   @Column()
-  public name: string;
+  name: string;
 
   @Column()
-  public description: string;
+  description: string;
 }

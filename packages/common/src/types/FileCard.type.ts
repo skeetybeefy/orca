@@ -1,4 +1,4 @@
-import { Category } from "src/types/Category.enum";
+import { Category } from "types/Category.enum";
 
 export type FileCard = {
   id: number;

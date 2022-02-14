@@ -1,7 +1,8 @@
-import { JwtAccessGuard } from 'src/authentication/guards/jwtAccess.guard';
-import { CreateGroupDto } from 'src/groups/dto/create-group.dto';
-import { UpdateGroupDto } from 'src/groups/dto/update-group.dto';
-import { GroupsService } from 'src/groups/groups.service';
+import { JwtAccessGuard } from 'authentication/guards/jwtAccess.guard';
+import { CreateGroupDto } from 'groups/dto/createGroup.dto';
+import { UpdateGroupDto } from 'groups/dto/updateGroup.dto';
+import { GroupsService } from 'groups/groups.service';
+import { ApiRoute } from 'monotypes/ApiRoute.enum';
 
 import {
   Body,
@@ -11,19 +12,27 @@ import {
   Param,
   Patch,
   Post,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { RequestWithUser } from 'authentication/entities/requestWithUser.interface';
 
-@ApiTags('groups')
-@Controller('groups')
+@ApiTags(ApiRoute.Groups)
+@Controller(ApiRoute.Groups)
 @UseGuards(JwtAccessGuard)
 export class GroupsController {
   constructor(private readonly groupsService: GroupsService) {}
 
   @Post()
-  create(@Body() createGroupDto: CreateGroupDto) {
-    return this.groupsService.create(createGroupDto);
+  create(
+    @Body() createGroupDto: CreateGroupDto,
+    @Req() request: RequestWithUser,
+  ) {
+    const {
+      user: { id: ownerId },
+    } = request;
+    return this.groupsService.create({ ...createGroupDto, ownerId });
   }
 
   @Get()

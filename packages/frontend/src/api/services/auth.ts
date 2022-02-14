@@ -1,21 +1,34 @@
 import API from "api";
-import Errors from "types/enums/Errors";
-import { IAuthCredentials, IAuthState } from "types/interfaces/auth";
+import { ApiRoute } from "monotypes/ApiRoute.enum";
+import { AuthenticationRoute } from "monotypes/AuthenticationRoutes.enum";
+import { ICredentials } from "monotypes/ICredentials.interface";
+import { ICreateUserDto, IUser } from "monotypes/IUser.interface";
 
 class AuthService {
-  static async login(credentials: IAuthCredentials): Promise<IAuthState> {
-    return API.post("/log-in", credentials);
+  static async authenticate(): Promise<IUser> {
+    const response = await API.get<IUser>(`${ApiRoute.Authentication}/auth`);
+    return response.data;
   }
 
-  static async register(credentials: IAuthCredentials): Promise<IAuthState> {
-    if (credentials.email === "admin" && credentials.password === "admin") {
-      return {
-        authToken: "testAuth",
-        refreshToken: "testRefresh",
-      };
-    } else {
-      throw new Error(Errors.UserCannotBeCreated);
-    }
+  static async logIn(credentials: ICredentials): Promise<IUser> {
+    const response = await API.post<IUser>(
+      `${ApiRoute.Authentication}/${AuthenticationRoute.LogIn}`,
+      credentials
+    );
+    return response.data;
+  }
+
+  static async register(user: ICreateUserDto): Promise<IUser> {
+    const response = await API.post<IUser>(
+      `${ApiRoute.Authentication}/${AuthenticationRoute.Register}`,
+      user
+    );
+    return response.data;
+  }
+
+  static async logOut(): Promise<void> {
+    await API.post(`${ApiRoute.Authentication}/${AuthenticationRoute.LogOut}`);
+    return;
   }
 }
 

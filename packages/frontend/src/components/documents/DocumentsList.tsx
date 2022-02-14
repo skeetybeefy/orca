@@ -1,41 +1,48 @@
-import React, { useEffect } from 'react';
+import Link from "next/link";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllFilesAsync } from "store/actions/files";
+import { allFilesSelector } from "store/selectors/files";
 
-import { AddIcon } from '@chakra-ui/icons';
+import { AddIcon } from "@chakra-ui/icons";
 import {
-    Button, Flex, Table, Tbody, Td, Th, Thead, Tr} from '@chakra-ui/react';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectAllDocuments } from 'store/selectors/documents';
-import { getAllDocuments } from 'store/actions/documents';
-import DocumentsTableRow from './DocumentsTableRow';
-import Link from 'next/link';
+  Button,
+  Flex,
+  Table,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+} from "@chakra-ui/react";
+
+import DocumentsTableRow from "./DocumentsTableRow";
 
 const DocumentsList = () => {
-
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAllDocuments())
-  }, [dispatch])
+    dispatch(getAllFilesAsync());
+  }, [dispatch]);
 
-  const documents = useSelector(selectAllDocuments)
+  const documents = useSelector(allFilesSelector);
 
   return (
     <Table size="sm">
       <Thead>
         <Tr>
-          <Th>Name</Th>
-          <Th>Category</Th>
-          <Th>Description</Th>
-          <Th>Owner</Th>
-          <Th textAlign="end">Manage</Th>
+          <Th>Filename</Th>
+          <Th>Url</Th>
+          <Th>Mimetype</Th>
+          <Th>Actions</Th>
         </Tr>
       </Thead>
       <Tbody>
         <Tr>
-          <Td colSpan={4}>You can create a new document</Td>
+          <Td colSpan={3}>Upload your files</Td>
           <Td>
             <Flex justify="end">
-              <Link href="/documents/create">
+              <Link passHref href="/files/create">
                 <Button size="sm">
                   <AddIcon />
                 </Button>
@@ -43,8 +50,9 @@ const DocumentsList = () => {
             </Flex>
           </Td>
         </Tr>
-        {documents.map((doc) => 
-        <DocumentsTableRow {...doc} key={doc.id}/>)}
+        {documents.map((doc) => (
+          <DocumentsTableRow {...doc} key={doc.id} />
+        ))}
       </Tbody>
     </Table>
   );

@@ -1,22 +1,30 @@
-import LoginButton from 'components/auth/login/LoginButton';
-import RegisterButton from 'components/auth/register/RegisterButton';
-import Logo from 'components/common/Logo';
-import MobileMenu from 'components/common/MobileMenu';
-import ProfileMenu from 'components/common/ProfileMenu';
-import ThemeSwitcher from 'components/common/ThemeSwitcher';
-import menuRoutes from 'constants/menuRoutes';
-import { map } from 'lodash';
-import NextLink from 'next/link';
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { userIsAuthorizedSelector } from 'store/selectors/auth';
+import LoginButton from "components/auth/login/LoginButton";
+import RegisterButton from "components/auth/register/RegisterButton";
+import Logo from "components/common/Logo";
+import MobileMenu from "components/common/MobileMenu";
+import ProfileMenu from "components/common/ProfileMenu";
+import ThemeSwitcher from "components/common/ThemeSwitcher";
+import menuRoutes from "constants/menuRoutes";
+import { map } from "lodash";
+import NextLink from "next/link";
+import React from "react";
+import { useSelector } from "react-redux";
 
 import {
-    Box, ButtonGroup, Divider, Flex, Grid, Heading, HStack, Link, useBreakpointValue
-} from '@chakra-ui/react';
+  Box,
+  ButtonGroup,
+  Divider,
+  Flex,
+  Grid,
+  Heading,
+  HStack,
+  Link,
+  useBreakpointValue,
+} from "@chakra-ui/react";
+import { userIsAuthenticatedSelector } from "store/selectors/profile";
 
 const Header = () => {
-  const isAuthorized = useSelector(userIsAuthorizedSelector);
+  const isAuthorized = useSelector(userIsAuthenticatedSelector);
 
   const bp = useBreakpointValue({
     base: true,

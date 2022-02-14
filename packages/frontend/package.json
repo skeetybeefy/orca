@@ -6,7 +6,7 @@
   "author": "",
   "license": "UNLICENSED",
   "scripts": {
-    "dev": "next dev",
+    "dev": "node server.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -16,10 +16,12 @@
     "@chakra-ui/react": "^1.7.4",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
+    "@orca/common": "0.0.1",
     "@reduxjs/toolkit": "^1.7.1",
     "axios": "^0.25.0",
     "chakra-react-select": "^3.0.4",
     "classnames": "^2.3.1",
+    "express": "^4.17.2",
     "formik": "^2.2.9",
     "framer-motion": "^5",
     "lodash": "^4.17.21",

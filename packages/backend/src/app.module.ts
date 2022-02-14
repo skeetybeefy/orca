@@ -1,16 +1,16 @@
-import { AuthenticationModule } from 'src/authentication/authentication.module';
-import { AuthorizationModule } from 'src/authorization/authorization.module';
-import { EnvironmentVariable } from 'src/common/enums/environmentVariable.enum';
-import { DatabaseModule } from 'src/database/database.module';
-import { FilesModule } from 'src/files/files.module';
-import { GroupsModule } from 'src/groups/groups.module';
-import { UsersModule } from 'src/users/users.module';
+import { AuthenticationModule } from 'authentication/authentication.module';
+import { AuthorizationModule } from 'authorization/authorization.module';
+import { EnvironmentVariable } from 'common/enums/environmentVariable.enum';
+import { DatabaseModule } from 'database/database.module';
+import { FileCardsModule } from 'fileCards/fileCards.module';
+import { FilesModule } from 'files/files.module';
+import { GroupsModule } from 'groups/groups.module';
+import { TestModule } from 'test/test.module';
+import { UsersModule } from 'users/users.module';
 
 import * as Joi from '@hapi/joi';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-
-import { TestModule } from './test/test.module';
 
 @Module({
   imports: [
@@ -29,6 +29,8 @@ import { TestModule } from './test/test.module';
         [EnvironmentVariable.JWT_REFRESH_TOKEN_SECRET]: Joi.string().required(),
         [EnvironmentVariable.JWT_REFRESH_TOKEN_EXPIRATION_TIME]:
           Joi.string().required(),
+        [EnvironmentVariable.UPLOADED_FILES_DESTINATION]:
+          Joi.string().required(),
       }),
     }),
     DatabaseModule,
@@ -37,6 +39,7 @@ import { TestModule } from './test/test.module';
     UsersModule,
     AuthorizationModule,
     TestModule,
+    FileCardsModule,
   ],
 })
 export class AppModule {}

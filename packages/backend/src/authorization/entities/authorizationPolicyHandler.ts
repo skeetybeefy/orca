@@ -1,4 +1,4 @@
-import { AppAbility } from 'src/authorization/authorizationAbilities.factory';
+import { AppAbility } from 'authorization/authorizationAbilities.factory';
 
 interface IPolicyHandler {
   handle(ability: AppAbility): boolean;

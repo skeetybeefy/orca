@@ -1,7 +1,7 @@
-import { JwtAccessStrategy } from 'src/authentication/strategies/jwtAccess.strategy';
-import { JwtRefreshStrategy } from 'src/authentication/strategies/jwtRefresh.strategy';
-import { LocalStrategy } from 'src/authentication/strategies/local.strategy';
-import { UsersModule } from 'src/users/users.module';
+import { JwtAccessStrategy } from 'authentication/strategies/jwtAccess.strategy';
+import { JwtRefreshStrategy } from 'authentication/strategies/jwtRefresh.strategy';
+import { LocalStrategy } from 'authentication/strategies/local.strategy';
+import { UsersModule } from 'users/users.module';
 
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';

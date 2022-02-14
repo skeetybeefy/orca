@@ -1,9 +1,9 @@
 import { Request } from 'express';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { TokenPayload } from 'src/authentication/entities/tokenPayload.interface';
-import { EnvironmentVariable } from 'src/common/enums/environmentVariable.enum';
-import { Tokens } from 'src/authentication/entities/token.enum';
-import { UsersService } from 'src/users/users.service';
+import { TokenPayload } from 'authentication/entities/tokenPayload.interface';
+import { EnvironmentVariable } from 'common/enums/environmentVariable.enum';
+import { Tokens } from 'authentication/entities/token.enum';
+import { UsersService } from 'users/users.service';
 
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
