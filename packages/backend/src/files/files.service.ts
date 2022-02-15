@@ -26,6 +26,7 @@ export class FilesService {
       filename: file.filename,
       path: file.path,
       mimetype: file.mimetype,
+      originalname: file.originalname,
       owner,
     });
     await this.filesRepository.save(newFile);
@@ -52,5 +53,6 @@ export class FilesService {
     if (!deleteResponse.affected) {
       throw new NotFoundException('File not found');
     }
+    return id;
   }
 }

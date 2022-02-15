@@ -23,7 +23,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-const DocumentsTableRow: FC<IFile> = ({ id, filename, path, mimetype }) => {
+const DocumentsTableRow: FC<IFile> = ({ id, originalname, mimetype }) => {
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const onDelete = useCallback(() => {
@@ -51,7 +51,7 @@ const DocumentsTableRow: FC<IFile> = ({ id, filename, path, mimetype }) => {
         </ModalContent>
       </Modal>
       <Tr>
-        <Td>{filename}</Td>
+        <Td>{originalname}</Td>
         <Td>
           <Link
             href={`${process.env.NEXT_PUBLIC_API_URL}/${ApiRoute.Files}/${id}`}

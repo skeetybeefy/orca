@@ -18,6 +18,9 @@ export class File implements IFile {
   filename: string;
 
   @Column()
+  originalname: string;
+
+  @Column()
   path: string;
 
   @Column()

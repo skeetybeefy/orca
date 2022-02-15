@@ -7,11 +7,9 @@ import { getAllUsersAsync } from "store/actions/users";
 const useLoadInitialData = () => {
   const dispatch = useDispatch();
   const loadInitialData = useCallback(() => {
-    return () => {
-      dispatch(getAllUsersAsync());
-      dispatch(getAllFilesAsync());
-      dispatch(getAllGroups());
-    };
+    dispatch(getAllUsersAsync());
+    dispatch(getAllFilesAsync());
+    dispatch(getAllGroups());
   }, [dispatch]);
   return loadInitialData;
 };
