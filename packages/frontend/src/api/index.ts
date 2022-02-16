@@ -1,12 +1,15 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
   withCredentials: true,
 });
 
-API.defaults.baseURL = process.env.NEXT_PUBLIC_API_URL;
-// API.defaults.withCredentials = true;
+API.defaults.baseURL = "http://localhost:4000";
+API.defaults.withCredentials = true;
+API.defaults.proxy = {
+  host: "backend",
+  port: 4000,
+};
 
 // API.interceptors.request.use((config) => {
 //   config.headers!.Authorization = "Bearer test";
