@@ -1,0 +1,65 @@
+version: '3.7'
+services:
+  backend:
+    container_name: backend
+    build:
+      context: ./packages/backend
+      target: production
+    env_file:
+      - .env
+    volumes:
+      - ${UPLOADED_FILES_DESTINATION}
+    ports:
+      - ${PORT}:${PORT}
+    networks:
+      - orca
+    depends_on:
+      - postgres
+
+  frontend:
+    container_name: frontend
+    build:
+      context: ./packages/frontend
+      target: runner
+    ports:
+      - "80:3000"
+    env_file:
+      - .env
+    networks:
+      - orca
+    depends_on:
+      - backend
+
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-volume:/data/postgres
+    env_file:
+      - docker.env
+    networks:
+      - orca
+
+  pgadmin:
+    links:
+      - postgres:postgres
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    ports:
+      - "8080:80"
+    volumes:
+      - pgadmin-volume:/root/.pgadmin
+    env_file:
+      - docker.env
+    networks:
+      - orca
+
+networks:
+  orca:
+    driver: bridge
+
+volumes:
+  postgres-volume:
+  pgadmin-volume:
