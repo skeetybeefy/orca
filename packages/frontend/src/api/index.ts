@@ -6,7 +6,7 @@ const API = axios.create({
 });
 
 API.defaults.baseURL = process.env.NEXT_PUBLIC_API_URL;
-API.defaults.withCredentials = true;
+// API.defaults.withCredentials = true;
 
 // API.interceptors.request.use((config) => {
 //   config.headers!.Authorization = "Bearer test";
