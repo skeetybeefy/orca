@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { TokenPayload } from 'authentication/entities/tokenPayload.interface';
-import { EnvironmentVariable } from 'common/enums/environmentVariable.enum';
+import { EnvironmentVariable } from 'common/enums/environmentVariable';
 import { Tokens } from 'authentication/entities/token.enum';
 import { UsersService } from 'users/users.service';
 

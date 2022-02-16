@@ -3,7 +3,7 @@ import {
   AuthorizationAbilitiesFactory,
 } from 'authorization/authorizationAbilities.factory';
 import { AuthorizationPolicyHandler } from 'authorization/entities/authorizationPolicyHandler';
-import { MetadataKey } from 'common/enums/metadataKey.enum';
+import { MetadataKey } from 'common/enums/metadataKey';
 
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';

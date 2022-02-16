@@ -1,6 +1,6 @@
 import { AuthenticationModule } from 'authentication/authentication.module';
 import { AuthorizationModule } from 'authorization/authorization.module';
-import { EnvironmentVariable } from 'common/enums/environmentVariable.enum';
+import { EnvironmentVariable } from 'common/enums/environmentVariable';
 import { DatabaseModule } from 'database/database.module';
 import { FileCardsModule } from 'fileCards/fileCards.module';
 import { FilesModule } from 'files/files.module';
