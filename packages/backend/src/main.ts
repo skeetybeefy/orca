@@ -32,10 +32,10 @@ async function bootstrap() {
   const config = app.get(ConfigService);
   const port = config.get(EnvironmentVariable.PORT);
 
-  // app.enableCors({
-  //   origin: 'https://localhost:3000',
-  //   credentials: true,
-  // });
+  app.enableCors({
+    origin: 'http://localhost',
+    credentials: true,
+  });
 
   app.use(express.json({ limit: '50mb' }));
   app.use(express.urlencoded({ limit: '50mb' }));

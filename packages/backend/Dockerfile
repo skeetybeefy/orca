@@ -17,6 +17,8 @@ ENV NODE_ENV=${NODE_ENV}
 
 WORKDIR /usr/src/app
 
+RUN mkdir /usr/src/app/uploaded
+
 COPY package*.json ./
 
 RUN npm install --only=production

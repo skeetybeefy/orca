@@ -5,6 +5,7 @@ import { ConfigService } from '@nestjs/config';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
 import { EnvironmentVariable } from 'common/enums/environmentVariable';
+import { join } from 'path';
 
 interface LocalFilesInterceptorOptions {
   fieldName: string;
@@ -23,6 +24,8 @@ export function LocalFilesInterceptor(
       );
 
       const destination = `${filesDestination}${options.path}`;
+
+      console.log({ destination });
 
       const multerOptions: MulterOptions = {
         storage: diskStorage({

@@ -55,7 +55,9 @@ export class FilesController {
   @Get(':id')
   async getById(@Param('id') id: File['id'], @Req() request: RequestWithUser) {
     const file = await this.filesService.getById(id);
-    const stream = createReadStream(join(process.cwd(), file.path));
+    const path = join(process.cwd(), file.path);
+    console.log({ path });
+    const stream = createReadStream(path);
 
     request.res.set({
       'Content-Disposition': `inline; filename="${file.filename}"`,
