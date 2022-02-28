@@ -1,30 +1,35 @@
 import { IFileCard } from "monotypes/IFileCard.interface";
 import React, { FC } from "react";
-import { useSelector } from "react-redux";
-import { selectAllUsers } from "store/selectors/users";
 
 import {
   Avatar,
   AvatarGroup,
   Box,
+  color,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
 } from "@chakra-ui/react";
 
-const FileCard: FC<Partial<IFileCard>> = ({
+const FileCard: FC<Partial<IFileCard> & {onClick: () => void, isSelecting: boolean, selected: boolean}> = ({
   name,
   description,
   category,
   ownerId,
   allowedGroupsIds,
   fileId,
+  onClick,
+  isSelecting,
+  selected
 }) => {
-  const members = useSelector(selectAllUsers);
 
   return (
-    <Box w={60} borderWidth="1px" borderRadius="lg" overflow="hidden">
+    <Box w={60} borderColor={selected ? "red.600" : ""} borderWidth="1px" borderRadius="lg" overflow="hidden" _hover={{
+      boxShadow: "xl",
+      borderColor: selected ? "red.600" : isSelecting ? "red.400" : "gray.400",
+      cursor: "pointer" }}
+      onClick={onClick}>
       <Box p="6">
         <Box
           mt="1"
@@ -37,7 +42,7 @@ const FileCard: FC<Partial<IFileCard>> = ({
         </Box>
 
         <Box as="span" color="gray.600" fontSize="sm">
-          {description}
+          {description || "No description"} 
         </Box>
 
         <Box
@@ -48,22 +53,6 @@ const FileCard: FC<Partial<IFileCard>> = ({
           isTruncated
         >
           Access groups
-        </Box>
-        <Box>
-          <Menu>
-            <MenuButton>
-              <AvatarGroup size="sm" max={2}>
-                {members.map(({ nickname, id }) => {
-                  return <Avatar key={id} name={nickname} />;
-                })}
-              </AvatarGroup>
-            </MenuButton>
-            <MenuList>
-              {members.map(({ nickname, id }) => {
-                return <MenuItem key={id}>{nickname}</MenuItem>;
-              })}
-            </MenuList>
-          </Menu>
         </Box>
       </Box>
     </Box>

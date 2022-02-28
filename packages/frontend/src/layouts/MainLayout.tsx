@@ -7,9 +7,7 @@ const Layout: FC = ({ children }) => {
   return (
     <>
       <Header />
-      <Container>
-        <GridItem>{children}</GridItem>
-      </Container>
+      {children}
     </>
   );
 };

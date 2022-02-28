@@ -1,4 +1,5 @@
 enum Slices {
+  FileCards = "filecards",
   Files = "files",
   Documents = "documents",
   Groups = "groups",
