@@ -30,14 +30,13 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, swaggerDocument);
 
   const config = app.get(ConfigService);
-  const port = config.get(EnvironmentVariable.PORT);
+  const port = config.get(EnvironmentVariable.BACKEND_PORT);
+  const originPort = config.get(EnvironmentVariable.FRONTEND_PORT);
 
   app.enableCors({
-    origin: 'http://localhost',
+    origin: `http://localhost:${originPort}`,
     credentials: true,
   });
-
-  app.enableCors();
 
   app.use(express.json({ limit: '50mb' }));
   app.use(express.urlencoded({ limit: '50mb' }));

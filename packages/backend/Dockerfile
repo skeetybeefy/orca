@@ -1,30 +1,28 @@
-FROM node:16.14-alpine As development
-
+# development
+FROM node:16.14-alpine as development
 WORKDIR /usr/src/app
+COPY package.json ./
+COPY yarn.lock ./
+RUN yarn install --frozen-lockfile --development
+COPY tsconfig.json ./
+COPY tsconfig.build.json ./
 
-COPY package*.json ./
-
-RUN npm install
-
+# preproduction
+FROM node:16.14-alpine as preproduction
+WORKDIR /usr/src/app
+COPY package.json ./
+COPY yarn.lock ./
+RUN yarn install --frozen-lockfile --development
 COPY . .
+RUN yarn build
 
-RUN npm run build
-
+# production
 FROM node:16.14-alpine as production
-
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
-
 WORKDIR /usr/src/app
-
 RUN mkdir /usr/src/app/uploaded
-
-COPY package*.json ./
-
-RUN npm install --only=production
-
-COPY . .
-
-COPY --from=development /usr/src/app/dist ./dist
-
-CMD ["node", "dist/main"]
+COPY package.json ./
+COPY yarn.lock ./
+RUN yarn install --frozen-lockfile --production
+COPY --from=preproduction /usr/src/app/dist ./dist

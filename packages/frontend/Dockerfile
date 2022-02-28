@@ -1,23 +1,27 @@
-FROM node:lts as dependencies
-WORKDIR /my-project
-COPY package.json yarn.lock ./
-RUN yarn install
+# development
+FROM node:16.14-alpine as development
+WORKDIR /usr/src/app
+COPY package.json ./
+COPY yarn.lock ./
+COPY tsconfig.json ./
+RUN yarn install --frozen-lockfile --development
 
-FROM node:lts as builder
-WORKDIR /my-project
+# preproduction
+FROM node:16.14-alpine as preproduction
+WORKDIR /usr/src/app
+COPY package.json ./
+COPY yarn.lock ./
+COPY tsconfig.json ./
+RUN yarn install --frozen-lockfile --development
 COPY . .
-COPY --from=dependencies /my-project/node_modules ./node_modules
 RUN yarn build
 
-FROM node:lts as runner
-WORKDIR /my-project
+# production
+FROM node:16.14-alpine as production
+WORKDIR /usr/src/app
 ENV NODE_ENV production
-# If you are using a custom next.config.js file, uncomment this line.
-# COPY --from=builder /my-project/next.config.js ./
-COPY --from=builder /my-project/public ./public
-COPY --from=builder /my-project/.next ./.next
-COPY --from=builder /my-project/node_modules ./node_modules
-COPY --from=builder /my-project/package.json ./package.json
-
-EXPOSE 3000
-CMD ["yarn", "start"]
+COPY package.json ./
+COPY yarn.lock ./
+RUN yarn install --frozen-lockfile --production
+COPY --from=preproduction /usr/src/app/public ./public
+COPY --from=preproduction /usr/src/app/.next ./.next
