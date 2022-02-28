@@ -11,7 +11,10 @@ const API = axios.create({
 //   port: 4000,
 // };
 
-API.defaults.baseURL = process.env.NEXT_PUBLIC_API_URL;
+const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+console.log({ baseUrl });
+
+API.defaults.baseURL = baseUrl;
 API.defaults.withCredentials = true;
 
 // API.interceptors.request.use((config) => {
