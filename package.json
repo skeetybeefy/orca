@@ -4,6 +4,15 @@
   "devDependencies": {
     "lerna": "^4.0.0"
   },
+  "scripts": {
+    "dev:build": "docker-compose -f docker-compose.dev.yml build",
+    "dev:start": "docker-compose -f docker-compose.dev.yml up",
+    "dev": "yarn dev:build && yarn dev:start",
+    "prod:build": "docker-compose -f docker-compose.yml build",
+    "prod:start": "docker-compose -f docker-compose.yml up",
+    "prod": "yarn prod:build && yarn prod:start",
+    "setup": "lerna run setup"
+  },
   "workspaces": [
     "packages/*"
   ]

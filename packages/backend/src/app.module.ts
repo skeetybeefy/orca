@@ -22,7 +22,7 @@ import { ConfigModule } from '@nestjs/config';
         [EnvironmentVariable.POSTGRES_USER]: Joi.string().required(),
         [EnvironmentVariable.POSTGRES_PASSWORD]: Joi.string().required(),
         [EnvironmentVariable.POSTGRES_DB]: Joi.string().required(),
-        [EnvironmentVariable.PORT]: Joi.number(),
+        [EnvironmentVariable.BACKEND_PORT]: Joi.number(),
         [EnvironmentVariable.JWT_ACCESS_TOKEN_SECRET]: Joi.string().required(),
         [EnvironmentVariable.JWT_ACCESS_TOKEN_EXPIRATION_TIME]:
           Joi.string().required(),
