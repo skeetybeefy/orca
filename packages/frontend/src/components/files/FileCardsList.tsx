@@ -25,7 +25,7 @@ const FileCardsList: FC<IFileCardsList> = ({isSelecting, selectedCards, setSelec
     const fileCards = useSelector(selectAllFileCards)
     
     return (
-        <Flex w="full" justify={"start"} gap={4} wrap={"wrap"}>
+        <Flex w="full" justify={"start"} gap={4} wrap={"wrap"} alignItems="center">
             <FileCardAdd isSelecting={isSelecting} />
             {fileCards.map((fileCard) => {
               return <FileCard 

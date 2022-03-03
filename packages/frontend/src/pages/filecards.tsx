@@ -79,6 +79,6 @@ const FileCards = () => {
   );
 };
 
-FileCards.getLayout = MainLayout;
+FileCards.getLayout = ProtectedLayout;
 
 export default FileCards;
