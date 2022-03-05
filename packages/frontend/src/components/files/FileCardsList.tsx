@@ -1,12 +1,16 @@
-import { Flex } from "@chakra-ui/react"
-import { useRouter } from "next/router"
-import React, { Dispatch, FC, useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { getAllFileCards } from "store/actions/filecards"
-import { selectAllFileCards } from "store/selectors/filecards"
-import Routes from "types/enums/Routes"
-import FileCard from "./FileCard"
-import FileCardAdd from "./FileCardAdd"
+import { useRouter } from 'next/router';
+import React, { Dispatch, FC, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'store';
+import { getAllFileCards } from 'store/actions/filecards';
+import { selectAllFileCards } from 'store/selectors/filecards';
+import { profileSelector } from 'store/selectors/profile';
+import Routes from 'types/enums/Routes';
+
+import { Flex } from '@chakra-ui/react';
+
+import FileCard from './FileCard';
+import FileCardAdd from './FileCardAdd';
 
 interface IFileCardsList {
     isSelecting: boolean;
@@ -23,28 +27,33 @@ const FileCardsList: FC<IFileCardsList> = ({isSelecting, selectedCards, setSelec
     }, [dispatch, router])
 
     const fileCards = useSelector(selectAllFileCards)
+
+    const user = useSelector((state: RootState) => profileSelector(state))
     
     return (
-        <Flex w="full" justify={"start"} gap={4} wrap={"wrap"} alignItems="center">
-            <FileCardAdd isSelecting={isSelecting} />
+        <Flex w="full" justify={"start"} gap={4} wrap={"wrap"} alignItems="stretch">
+            <FileCardAdd isSelecting={isSelecting}/>
             {fileCards.map((fileCard) => {
               return <FileCard 
               key={fileCard.id} 
               name={fileCard.name}
-              description={fileCard.description} 
+              description={fileCard.description}
               onClick={() => {
                     if (isSelecting) {
-                        if (!selectedCards.includes(fileCard.id)) {
-                            setSelectedCards([...selectedCards, fileCard.id])
-                        } else {
-                            setSelectedCards(selectedCards.filter(cardId => fileCard.id !== cardId))
+                        if (fileCard.ownerId === user?.id) {
+                            if (!selectedCards.includes(fileCard.id)) {
+                                setSelectedCards([...selectedCards, fileCard.id])
+                            } else {
+                                setSelectedCards(selectedCards.filter(cardId => fileCard.id !== cardId))
+                            }
                         }
                     } else {
                         router.push(`${Routes.FileCards}/view?id=${fileCard.id}`)
                     }
               }}
               isSelecting={isSelecting}
-              selected={selectedCards.includes(fileCard.id)}/>
+              selected={selectedCards.includes(fileCard.id)}
+              selectable={fileCard?.ownerId === user?.id}/>
           })}
         </Flex>
     )

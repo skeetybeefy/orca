@@ -3,6 +3,9 @@ import { useFormik } from 'formik';
 import { FileCategory } from 'monotypes/FileCategory.enum';
 import { ICreateFileCardDto } from 'monotypes/IFileCard.interface';
 import { useCallback, useMemo } from 'react';
+import { useSelector } from 'react-redux';
+import { allFilesSelector } from 'store/selectors/files';
+import { selectAllGroups } from 'store/selectors/groups';
 
 import { Button, FormControl, FormLabel, Input, VStack } from '@chakra-ui/react';
 
@@ -18,6 +21,9 @@ const FileCardUpsertForm = ({ onSubmit, initialValues, buttonText }: IProps) => 
             initialValues,
             onSubmit,
         })
+
+    const groups = useSelector(selectAllGroups) 
+    const files = useSelector(allFilesSelector)
 
     const onCategoryChange = useCallback(
         (category: SingleValue<{ value: number, label: string }>) => {
@@ -38,7 +44,7 @@ const FileCardUpsertForm = ({ onSubmit, initialValues, buttonText }: IProps) => 
     // Think how to rewrite it later
 
     const onAllowedGroupsIdsChange = useCallback(
-        (allowedGroups: MultiValue<{ value: number, label: string }>) => {
+        (allowedGroups: MultiValue<{ value: number, label: string | undefined }>) => {
             const mappedGroups = allowedGroups.map(({ value }) => value)
             setFieldValue("allowedGroupsIds", mappedGroups)
         },
@@ -47,8 +53,9 @@ const FileCardUpsertForm = ({ onSubmit, initialValues, buttonText }: IProps) => 
 
     const mappedAllowedGroups = useMemo(() => {
         return values.allowedGroupsIds.map((value) => {
+            const group = groups.find(group => group.id === value)
             return {
-                label: `Group ${value}`,
+                label: group?.name,
                 value
             }
         })
@@ -57,7 +64,7 @@ const FileCardUpsertForm = ({ onSubmit, initialValues, buttonText }: IProps) => 
     )
 
     const onFileIdChange = useCallback(
-        (fileId: SingleValue<{ value: number, label: string }>) => {
+        (fileId: SingleValue<{ value: number, label: string | undefined }>) => {
             const transformedFileId = fileId?.value
             setFieldValue("fileId", transformedFileId)
         },
@@ -65,8 +72,9 @@ const FileCardUpsertForm = ({ onSubmit, initialValues, buttonText }: IProps) => 
     )
 
     const transformedFileId = useMemo(() => {
+        const file = files.find(file => file.id === values.fileId)
         return {
-            label: `Filename ${values.fileId}`,
+            label: file?.originalname,
             value: values.fileId
         }
     },
@@ -126,10 +134,10 @@ const FileCardUpsertForm = ({ onSubmit, initialValues, buttonText }: IProps) => 
                         isMulti
                         id="allowedGroupsIds"
                         name="allowedGroupsIds"
-                        options={[1, 2, 3].map(id => {
+                        options={groups.map(group => {
                             return {
-                                label: `Group ${id}`,
-                                value: id
+                                label: group.name,
+                                value: group.id
                             }
                         })}
                         value={mappedAllowedGroups}
@@ -141,10 +149,10 @@ const FileCardUpsertForm = ({ onSubmit, initialValues, buttonText }: IProps) => 
                     <FormLabel
                         htmlFor="fileId">File</FormLabel>
                     <Select
-                        options={[1, 2, 3].map(id => {
+                        options={files.map(file => {
                             return {
-                                label: `Filename ${id}`,
-                                value: id
+                                label: file.originalname,
+                                value: file.id
                             }
                         })}
                         id="fileId"

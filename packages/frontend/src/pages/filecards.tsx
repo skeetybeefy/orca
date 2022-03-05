@@ -1,17 +1,14 @@
 import Page from 'components/common/Page';
-import FileCard from 'components/files/FileCard';
 import FileCardsList from 'components/files/FileCardsList';
-import MainLayout from 'layouts/MainLayout';
 import ProtectedLayout from 'layouts/ProtectedLayout';
-import Link from 'next/link';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteFileCardById } from 'store/actions/filecards';
 
-import { AddIcon, CheckIcon, CloseIcon, DeleteIcon } from '@chakra-ui/icons';
+import { CheckIcon, CloseIcon, DeleteIcon } from '@chakra-ui/icons';
 import {
-    Box, Button, Flex, Heading, HStack, Modal, ModalBody, ModalCloseButton, ModalContent,
-    ModalFooter, ModalHeader, ModalOverlay, Spacer, Text, useDisclosure, VStack
+    Box, Button, Flex, Heading, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter,
+    ModalHeader, ModalOverlay, Spacer, Text, useDisclosure
 } from '@chakra-ui/react';
 
 const FileCards = () => {
@@ -51,7 +48,7 @@ const FileCards = () => {
       <Page title="File cards">
         <Flex ml="auto" mr="auto">
           <Box>
-            <Heading size="md" w="full" textAlign="center" mb={4}>
+            <Heading size="md" w="full" textAlign="start" mb={4}>
               Your file cards
             </Heading>
             <FileCardsList isSelecting={isSelecting} selectedCards={selectedCards} setSelectedCards={setSelectedCards} />

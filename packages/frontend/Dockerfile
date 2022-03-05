@@ -5,6 +5,7 @@ COPY package.json ./
 COPY yarn.lock ./
 COPY tsconfig.json ./
 RUN yarn install --frozen-lockfile --development
+EXPOSE 49153
 
 # preproduction
 FROM node:16.14-alpine as preproduction

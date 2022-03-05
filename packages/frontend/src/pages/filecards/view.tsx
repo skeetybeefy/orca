@@ -2,16 +2,20 @@ import MainLayout from 'layouts/MainLayout';
 import { FileCategory } from 'monotypes/FileCategory.enum';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { deleteFileCardById, getAllFileCards } from 'store/actions/filecards';
 import { selectFileCardById } from 'store/selectors/filecards';
+import { allFilesSelector } from 'store/selectors/files';
+import { selectAllGroups } from 'store/selectors/groups';
+import { profileSelector } from 'store/selectors/profile';
+import Routes from 'types/enums/Routes';
 
 import {
-    Box, Button, Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useDisclosure, VStack
+    Box, Button, Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader,
+    ModalOverlay, Text, useDisclosure, VStack
 } from '@chakra-ui/react';
-import Routes from 'types/enums/Routes';
 
 const View = () => {
     const router = useRouter()
@@ -24,7 +28,12 @@ const View = () => {
         return Number.parseInt(idString);
     }, [id]);
 
-    //dispatch(getAllFileCards())
+    useEffect(() => {
+        dispatch(getAllFileCards())
+    }, [dispatch, router])
+
+    const groups = useSelector(selectAllGroups) 
+    const files = useSelector(allFilesSelector)
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -37,6 +46,8 @@ const View = () => {
 
     const fileCard = useSelector((state: RootState) => selectFileCardById(state, parsedId)
     )
+
+    const user = useSelector((state: RootState) => profileSelector(state))
 
     return (
         <>
@@ -101,23 +112,19 @@ const View = () => {
                             Access groups
                         </Box>
                         {fileCard?.allowedGroupsIds.map((groupId) => {
-                            return (`Group ${groupId} `)
+                            const group = groups.find(group => group.id === groupId)
+                            return (<Text>{group?.name}</Text>)
                         })}
 
                         <Box fontWeight={"bold"} fontSize="xl" mt={4}>
                             File
                         </Box>
-                        {
-                            fileCard?.fileId ?
-                                `File ${fileCard.fileId}`:
-                                <Box color="gray.600" fontSize="sm">No file</Box>
-                        }
-
+                        {files.find(file => file.id === fileCard?.fileId)?.originalname || <Box color="gray.600" fontSize="sm">No file</Box>}
                         <Flex justifyContent={"space-around"}>
                             <Link href={`/filecards/update?id=${id}`}>
-                                <Button display="block" mt={4} >Change</Button>
+                                <Button display="block" mt={4} disabled={fileCard?.ownerId !== user?.id} >Change</Button>
                             </Link>
-                            <Button onClick={onOpen} mt={4}>Delete</Button>
+                            <Button onClick={onOpen} mt={4} disabled={fileCard?.ownerId !== user?.id} >Delete</Button>
                         </Flex>
                     </Box>
                 </Box>
