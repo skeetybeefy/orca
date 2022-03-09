@@ -4,7 +4,6 @@ import { ICreateFileCardDto, IFileCard, IUpdateFileCardDto } from 'monotypes/IFi
 import { filecardsTestList } from './filecardsTestList';
 
 class FileCardsService {
-    /*
 
     static async create(fileCard: ICreateFileCardDto): Promise<IFileCard> {
         const response = await API.post<IFileCard>(`${ApiRoute.FileCards}`, fileCard)
@@ -29,7 +28,8 @@ class FileCardsService {
         return response.data
     }
 
-    */
+
+    /*
 
     static _fileCards = filecardsTestList
 
@@ -66,6 +66,7 @@ class FileCardsService {
         })
         return id 
     }
+    */
 }
 
 export default FileCardsService

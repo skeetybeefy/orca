@@ -11,15 +11,18 @@ import {
   Patch,
   Post,
   Req,
+  UseGuards,
 } from '@nestjs/common';
 
 import { ApiRoute } from 'monotypes/ApiRoute.enum';
 import { ApiTags } from '@nestjs/swagger';
 import { RequestWithUser } from 'authentication/entities/requestWithUser.interface';
+import { JwtAccessGuard } from 'authentication/guards/jwtAccess.guard';
 
 
 @ApiTags(ApiRoute.FileCards)
 @Controller(ApiRoute.FileCards)
+@UseGuards(JwtAccessGuard)
 export class FileCardsController {
   constructor(private readonly fileCardsService: FileCardsService) { }
 
