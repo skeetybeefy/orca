@@ -13,7 +13,7 @@ export class GroupsService {
   constructor(
     @InjectRepository(Group) private groupsRepository: Repository<Group>,
     private readonly usersService: UsersService,
-  ) {}
+  ) { }
 
   async create({
     ownerId,
@@ -41,6 +41,10 @@ export class GroupsService {
       return group;
     }
     throw new NotFoundException('Group not found');
+  }
+
+  async getByIds(ids: User['id'][]) {
+    return await this.groupsRepository.findByIds(ids);
   }
 
   async update(

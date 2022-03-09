@@ -22,7 +22,7 @@ import { RequestWithUser } from 'authentication/entities/requestWithUser.interfa
 @Controller(ApiRoute.Groups)
 @UseGuards(JwtAccessGuard)
 export class GroupsController {
-  constructor(private readonly groupsService: GroupsService) {}
+  constructor(private readonly groupsService: GroupsService) { }
 
   @Post()
   create(

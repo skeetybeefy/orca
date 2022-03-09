@@ -10,15 +10,28 @@ import {
   Param,
   Patch,
   Post,
+  Req,
 } from '@nestjs/common';
 
-@Controller('file-cards')
+import { ApiRoute } from 'monotypes/ApiRoute.enum';
+import { ApiTags } from '@nestjs/swagger';
+import { RequestWithUser } from 'authentication/entities/requestWithUser.interface';
+
+
+@ApiTags(ApiRoute.FileCards)
+@Controller(ApiRoute.FileCards)
 export class FileCardsController {
-  constructor(private readonly fileCardsService: FileCardsService) {}
+  constructor(private readonly fileCardsService: FileCardsService) { }
 
   @Post()
-  create(@Body() createFileCardDto: CreateFileCardDto) {
-    return this.fileCardsService.create(createFileCardDto);
+  create(
+    @Body() createFileCardDto: CreateFileCardDto,
+    @Req() request: RequestWithUser,
+  ) {
+    const {
+      user: { id: ownerId },
+    } = request;
+    return this.fileCardsService.create({ ...createFileCardDto, ownerId });
   }
 
   @Get()
