@@ -12,5 +12,6 @@ import { FilesService } from './files.service';
   imports: [TypeOrmModule.forFeature([File]), UsersModule, ConfigModule],
   controllers: [FilesController],
   providers: [FilesService],
+  exports: [FilesService],
 })
-export class FilesModule {}
+export class FilesModule { }
