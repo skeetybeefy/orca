@@ -4,6 +4,7 @@ import { FileCard } from 'fileCards/entities/fileCard.entity';
 import { Repository } from 'typeorm';
 import { GroupsService } from 'groups/groups.service';
 import { FilesService } from 'files/files.service';
+import { UsersService } from 'users/users.service';
 import { User } from 'users/entities/user.entity';
 
 import { Injectable, NotFoundException, Inject, forwardRef } from '@nestjs/common';
@@ -20,6 +21,7 @@ export class FileCardsService {
     @InjectRepository(FileCard) private groupsRepository: Repository<FileCard>,
     private readonly groupsService: GroupsService,
     private readonly filesService: FilesService,
+    private readonly usersService: UsersService,
   ) { }
 
   async create({
@@ -28,10 +30,12 @@ export class FileCardsService {
     allowedGroupsIds,
     ...crateFileCardDto
   }: CreateFileCardDto & { ownerId: User['id'] }) {
+    const owner = await this.usersService.getById(ownerId);
     const file = await this.filesService.getById(fileId);
     const allowedGroups = await this.groupsService.getByIds(allowedGroupsIds)
     const newFileCard = await this.groupsRepository.create({
       ...crateFileCardDto,
+      owner,
       file,
       allowedGroups,
     });
@@ -53,7 +57,7 @@ export class FileCardsService {
 
   async update(
     id: FileCard['id'],
-    { allowedGroupsIds, ...updateFileCardDto }: UpdateFileCardDto
+    { allowedGroupsIds, description, fileId, category, ...updateFileCardDto }: UpdateFileCardDto
   ) {
     const filecard = await this.groupsRepository.findOne({ id });
     if (!filecard) {
@@ -62,9 +66,13 @@ export class FileCardsService {
 
     const groups = await this.groupsService.getByIds(allowedGroupsIds);
     filecard.allowedGroups = groups;
+    filecard.description = description;
+    filecard.category = category;
+    filecard.file = await this.filesService.getById(fileId);
     await this.groupsRepository.save(filecard);
 
     await this.groupsRepository.update(id, updateFileCardDto);
+
     const updatedfileCard = await this.groupsRepository.findOne({ id });
     if (updatedfileCard) {
       return updatedfileCard;
