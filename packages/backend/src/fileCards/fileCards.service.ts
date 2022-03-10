@@ -84,6 +84,6 @@ export class FileCardsService {
     const deleteResponse = await this.groupsRepository.delete(id);
     if (!deleteResponse.affected) {
       throw new NotFoundException(`Group #${id} not found`);
-    }
+    } else return id;
   }
 }

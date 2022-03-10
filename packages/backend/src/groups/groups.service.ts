@@ -74,6 +74,6 @@ export class GroupsService {
     const deleteResponse = await this.groupsRepository.delete(id);
     if (!deleteResponse.affected) {
       throw new NotFoundException('Group not found');
-    }
+    } else return id;
   }
 }
