@@ -1,5 +1,5 @@
 import { IFileCard } from 'monotypes/IFileCard.interface';
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 
 import {
     Avatar, AvatarGroup, Box, color, Menu, MenuButton, MenuItem, MenuList
@@ -18,22 +18,46 @@ const FileCard: FC<Partial<IFileCard> & {onClick: () => void, isSelecting: boole
   selectable
 }) => {
 
-  return (
-    <Box w={60} borderColor={selected ? "red.600" : ""} borderWidth="1px" borderRadius="lg" overflow="hidden" _hover=
-    // all cards have hover (gray.400 border) when NOT selecting
-    // unselectable cards dont have a hover while selecting
-    {
-      selectable ? 
-      {
-        boxShadow: "xl",
-        borderColor: selected ? "red.600" : isSelecting ? "red.400" : "gray.400",
-        cursor: "pointer" 
-      } : isSelecting ? {} : {
+  const borderColor = useMemo(() => {
+    if (selected) {
+      return "red.600"
+    } else {
+      return ""
+    }
+  }, [selected])
+
+
+  // all cards have hover (gray.400 border) when NOT selecting
+  // unselectable cards dont have a hover while selecting
+  const hover = useMemo(() => {
+    if (selectable) {
+      if (selected) {
+        return {
+          boxShadow: "xl",
+          borderColor: "red.600",
+          cursor: "pointer"
+        }
+      } else {
+        return {
+          boxShadow: "xl",
+          borderColor: isSelecting ? "red.400" : "gray.400",
+          cursor: "pointer"
+        }
+      }
+      
+    } else if (isSelecting) {
+      return {}
+    } else {
+      return {
         boxShadow: "xl",
         borderColor: "gray.400",
         cursor: "pointer"
       }
-    } 
+    }
+  }, [selectable, selected, isSelecting])
+
+  return (
+    <Box w={60} borderColor={borderColor} borderWidth="1px" borderRadius="lg" overflow="hidden" _hover={hover} 
       onClick={onClick}>
       <Box p="6">
         <Box

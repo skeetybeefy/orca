@@ -1,8 +1,8 @@
 import Page from 'components/common/Page';
 import FileCardUpsertForm from 'components/files/FileCardUpsertForm';
-import MainLayout from 'layouts/MainLayout';
+import ProtectedLayout from 'layouts/ProtectedLayout';
 import { FileCategory } from 'monotypes/FileCategory.enum';
-import { ICreateFileCardDto, IUpdateFileCardDto } from 'monotypes/IFileCard.interface';
+import { ICreateFileCardDto } from 'monotypes/IFileCard.interface';
 import { useRouter } from 'next/router';
 import { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -63,6 +63,6 @@ const Update = () => {
     )
 }
 
-Update.getLayout = MainLayout;
+Update.getLayout = ProtectedLayout;
 
 export default Update;

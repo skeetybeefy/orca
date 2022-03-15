@@ -1,6 +1,6 @@
 import Page from 'components/common/Page';
 import FileCardUpsertForm from 'components/files/FileCardUpsertForm';
-import MainLayout from 'layouts/MainLayout';
+import ProtectedLayout from 'layouts/ProtectedLayout';
 import { FileCategory } from 'monotypes/FileCategory.enum';
 import { ICreateFileCardDto } from 'monotypes/IFileCard.interface';
 import { useRouter } from 'next/router';
@@ -49,6 +49,6 @@ const Create = () => {
     )
 }
 
-Create.getLayout = MainLayout
+Create.getLayout = ProtectedLayout
 
 export default Create

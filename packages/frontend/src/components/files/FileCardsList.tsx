@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { Dispatch, FC, useEffect } from 'react';
+import React, { Dispatch, FC, useEffect, useCallback} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { getAllFileCards } from 'store/actions/filecards';
@@ -29,6 +29,20 @@ const FileCardsList: FC<IFileCardsList> = ({isSelecting, selectedCards, setSelec
     const fileCards = useSelector(selectAllFileCards)
 
     const user = useSelector((state: RootState) => profileSelector(state))
+
+    const memoizedOnClick = useCallback((fileCard) => {
+        if (isSelecting) {
+            if (fileCard.ownerId === user?.id) {
+                if (!selectedCards.includes(fileCard.id)) {
+                    setSelectedCards([...selectedCards, fileCard.id])
+                } else {
+                    setSelectedCards(selectedCards.filter(cardId => fileCard.id !== cardId))
+                }
+            }
+        } else {
+            router.push(`${Routes.FileCards}/view?id=${fileCard.id}`)
+        }
+  }, [isSelecting])
     
     return (
         <Flex w="full" justify={"start"} gap={4} wrap={"wrap"} alignItems="stretch">
@@ -38,19 +52,7 @@ const FileCardsList: FC<IFileCardsList> = ({isSelecting, selectedCards, setSelec
               key={fileCard.id} 
               name={fileCard.name}
               description={fileCard.description}
-              onClick={() => {
-                    if (isSelecting) {
-                        if (fileCard.ownerId === user?.id) {
-                            if (!selectedCards.includes(fileCard.id)) {
-                                setSelectedCards([...selectedCards, fileCard.id])
-                            } else {
-                                setSelectedCards(selectedCards.filter(cardId => fileCard.id !== cardId))
-                            }
-                        }
-                    } else {
-                        router.push(`${Routes.FileCards}/view?id=${fileCard.id}`)
-                    }
-              }}
+              onClick={() => memoizedOnClick(fileCard)}
               isSelecting={isSelecting}
               selected={selectedCards.includes(fileCard.id)}
               selectable={fileCard?.ownerId === user?.id}/>

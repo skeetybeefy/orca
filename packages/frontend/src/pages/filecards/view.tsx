@@ -1,4 +1,4 @@
-import MainLayout from 'layouts/MainLayout';
+import ProtectedLayout from 'layouts/ProtectedLayout';
 import { FileCategory } from 'monotypes/FileCategory.enum';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -113,7 +113,7 @@ const View = () => {
                         </Box>
                         {fileCard?.allowedGroupsIds.map((groupId) => {
                             const group = groups.find(group => group.id === groupId)
-                            return (<Text>{group?.name}</Text>)
+                            return (<Text key={group?.id}>{group?.name}</Text>)
                         })}
 
                         <Box fontWeight={"bold"} fontSize="xl" mt={4}>
@@ -121,7 +121,7 @@ const View = () => {
                         </Box>
                         {files.find(file => file.id === fileCard?.fileId)?.originalname || <Box color="gray.600" fontSize="sm">No file</Box>}
                         <Flex justifyContent={"space-around"}>
-                            <Link href={`/filecards/update?id=${id}`}>
+                            <Link href={`${Routes.FileCards}/update?id=${id}`}>
                                 <Button display="block" mt={4} disabled={fileCard?.ownerId !== user?.id} >Change</Button>
                             </Link>
                             <Button onClick={onOpen} mt={4} disabled={fileCard?.ownerId !== user?.id} >Delete</Button>
@@ -133,6 +133,6 @@ const View = () => {
     )
 }
 
-View.getLayout = MainLayout
+View.getLayout = ProtectedLayout
 
 export default View

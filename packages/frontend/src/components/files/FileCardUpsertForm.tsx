@@ -22,7 +22,7 @@ const FileCardUpsertForm = ({ onSubmit, initialValues, buttonText }: IProps) => 
             onSubmit,
         })
 
-    const groups = useSelector(selectAllGroups) 
+    const groups = useSelector(selectAllGroups)
     const files = useSelector(allFilesSelector)
 
     const onCategoryChange = useCallback(
@@ -38,10 +38,6 @@ const FileCardUpsertForm = ({ onSubmit, initialValues, buttonText }: IProps) => 
             { label: "Text", value: 0 } :
             { label: "Video", value: 1 }
     }, [values])
-
-    // How to get "Text" from FileCategory.Text ??
-    // FileCategory[FileCategory.Text]
-    // Think how to rewrite it later
 
     const onAllowedGroupsIdsChange = useCallback(
         (allowedGroups: MultiValue<{ value: number, label: string | undefined }>) => {
@@ -79,6 +75,24 @@ const FileCardUpsertForm = ({ onSubmit, initialValues, buttonText }: IProps) => 
         }
     },
         [values])
+
+    const mappedGroupsOptions = useMemo(() => {
+        return groups.map(group => {
+            return {
+                label: group.name,
+                value: group.id
+            }
+        })
+    }, [groups])
+
+    const mappedFileOptions = useMemo(() => {
+        return files.map(file => {
+            return {
+                label: file.originalname,
+                value: file.id
+            }
+        })
+    }, [files])
 
     return (
         <form onSubmit={handleSubmit}>
@@ -134,12 +148,7 @@ const FileCardUpsertForm = ({ onSubmit, initialValues, buttonText }: IProps) => 
                         isMulti
                         id="allowedGroupsIds"
                         name="allowedGroupsIds"
-                        options={groups.map(group => {
-                            return {
-                                label: group.name,
-                                value: group.id
-                            }
-                        })}
+                        options={mappedGroupsOptions}
                         value={mappedAllowedGroups}
                         onChange={onAllowedGroupsIdsChange}
                         onBlur={handleBlur}
@@ -149,12 +158,7 @@ const FileCardUpsertForm = ({ onSubmit, initialValues, buttonText }: IProps) => 
                     <FormLabel
                         htmlFor="fileId">File</FormLabel>
                     <Select
-                        options={files.map(file => {
-                            return {
-                                label: file.originalname,
-                                value: file.id
-                            }
-                        })}
+                        options={mappedFileOptions}
                         id="fileId"
                         name="fileId"
                         value={transformedFileId}
