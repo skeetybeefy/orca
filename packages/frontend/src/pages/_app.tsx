@@ -1,11 +1,10 @@
-import theme from 'configs/theme/theme';
-import useMountingApp from 'hooks/useMountingApp';
-import { NextPage } from 'next';
-import { FC, ReactElement, ReactNode } from 'react';
-import { Provider } from 'react-redux';
-import store from 'store';
+import theme from "configs/theme/theme";
+import { NextPage } from "next";
+import { FC, ReactElement, ReactNode } from "react";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider } from "@chakra-ui/react";
 
 type Page<P = {}> = NextPage<P> & {
   getLayout?: (page: ReactNode) => ReactNode;
@@ -16,21 +15,25 @@ type Props = AppProps & {
 };
 
 import type { AppProps } from "next/app";
+const queryClient = new QueryClient({
+  defaultOptions: { queries: { retry: false } },
+});
 
 const App: FC = ({ children }) => {
-  useMountingApp();
-
-  return <>{children}</>;
+  return (
+    <QueryClientProvider client={queryClient}>
+      {children}
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
+  );
 };
 
 const MyApp = ({ Component, pageProps }: Props) => {
   const getLayout = Component.getLayout ?? ((page: ReactElement) => page);
   return (
-    <Provider store={store}>
-      <ChakraProvider theme={theme}>
-        <App>{getLayout(<Component {...pageProps} />)}</App>
-      </ChakraProvider>
-    </Provider>
+    <ChakraProvider theme={theme}>
+      <App>{getLayout(<Component {...pageProps} />)}</App>
+    </ChakraProvider>
   );
 };
 

@@ -1,10 +1,7 @@
 import { useFormik } from "formik";
-import { useRouter } from "next/router";
+import useLoginMutation from "hooks/mutations/profile/useLoginMutation";
+import { ICredentials } from "monotypes/ICredentials.interface";
 import React, { useCallback } from "react";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "store";
-import { loginAsync } from "store/actions/profile";
-import Routes from "types/enums/Routes";
 
 import {
   Button,
@@ -15,14 +12,12 @@ import {
 } from "@chakra-ui/react";
 
 const LoginForm = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const router = useRouter();
+  const loginMutation = useLoginMutation();
   const onLogin = useCallback(
-    async (credentials) => {
-      await dispatch(loginAsync(credentials)).unwrap();
-      router.push(Routes.Dashboard);
+    (credentials: ICredentials) => {
+      loginMutation.mutate(credentials);
     },
-    [dispatch, router]
+    [loginMutation]
   );
 
   const { handleChange, handleSubmit, handleBlur, values } = useFormik({
@@ -31,7 +26,6 @@ const LoginForm = () => {
       password: "",
     },
     onSubmit: onLogin,
-    enableReinitialize: true,
   });
 
   return (

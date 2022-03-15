@@ -1,12 +1,12 @@
 import { AppModule } from 'app.module';
 import { EnvironmentVariable } from 'common/enums/environmentVariable';
 import * as cookieParser from 'cookie-parser';
+import * as express from 'express';
 
 import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory, Reflector } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import * as express from 'express';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -25,9 +25,10 @@ async function bootstrap() {
 
   const config = app.get(ConfigService);
   const port = config.get(EnvironmentVariable.BACKEND_PORT);
+  const frontendName = config.get(EnvironmentVariable.FRONTEND_NAME);
 
   app.enableCors({
-    origin: `http://localhost`,
+    origin: `http://${frontendName}`,
     credentials: true,
   });
 

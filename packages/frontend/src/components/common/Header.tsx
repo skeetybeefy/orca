@@ -5,10 +5,10 @@ import MobileMenu from "components/common/MobileMenu";
 import ProfileMenu from "components/common/ProfileMenu";
 import ThemeSwitcher from "components/common/ThemeSwitcher";
 import menuRoutes from "constants/menuRoutes";
+import useProfileQuery from "hooks/queries/useProfileQuery";
 import { map } from "lodash";
 import NextLink from "next/link";
 import React from "react";
-import { useSelector } from "react-redux";
 
 import {
   Box,
@@ -21,10 +21,9 @@ import {
   Link,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import { userIsAuthenticatedSelector } from "store/selectors/profile";
 
 const Header = () => {
-  const isAuthorized = useSelector(userIsAuthenticatedSelector);
+  const { data: profile, isLoading, error } = useProfileQuery();
 
   const bp = useBreakpointValue({
     base: true,
@@ -50,7 +49,7 @@ const Header = () => {
               );
             })}
             <ThemeSwitcher />
-            {isAuthorized ? (
+            {!isLoading && !error && Boolean(profile) ? (
               <ProfileMenu />
             ) : (
               <ButtonGroup>

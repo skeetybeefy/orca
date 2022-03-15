@@ -1,13 +1,11 @@
 import DoctorRegisterForm from "components/auth/register/DoctorRegisterForm";
 import PatientRegisterForm from "components/auth/register/PatientRegisterForm";
 import Page from "components/common/Page";
+import useRegisterMutation from "hooks/mutations/profile/useRegisterMutation";
 import MainLayout from "layouts/MainLayout";
 import { ICreateUserDto } from "monotypes/IUser.interface";
 import { useRouter } from "next/router";
 import React, { useCallback } from "react";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "store";
-import { registerAsync } from "store/actions/profile";
 import Routes from "types/enums/Routes";
 
 import {
@@ -21,14 +19,14 @@ import {
 } from "@chakra-ui/react";
 
 const Register = () => {
-  const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
+  const registerMutation = useRegisterMutation();
   const onRegister = useCallback(
     async (user: ICreateUserDto) => {
-      await dispatch(registerAsync(user)).unwrap();
+      await registerMutation.mutateAsync(user);
       router.push(Routes.Dashboard);
     },
-    [dispatch, router]
+    [registerMutation, router]
   );
 
   return (

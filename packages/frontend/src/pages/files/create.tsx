@@ -1,12 +1,9 @@
 import Page from "components/common/Page";
-import DocumentUpsertForm from "components/documents/DocumentUpsertForm";
 import { useFormik } from "formik";
+import useCreateFileMutation from "hooks/mutations/files/useCreateFileMutation";
 import ProtectedLayout from "layouts/ProtectedLayout";
 import { useRouter } from "next/router";
 import React, { ChangeEventHandler, useCallback } from "react";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "store";
-import { createFileAsync } from "store/actions/files";
 import Routes from "types/enums/Routes";
 
 import {
@@ -24,7 +21,8 @@ interface FormWithFile {
 
 const Create = () => {
   const router = useRouter();
-  const dispatch = useDispatch<AppDispatch>();
+
+  const createFileMutation = useCreateFileMutation();
 
   const { handleSubmit, setFieldValue } = useFormik({
     initialValues: {
@@ -32,7 +30,7 @@ const Create = () => {
     },
     onSubmit: async ({ file }: FormWithFile) => {
       if (file) {
-        await dispatch(createFileAsync(file)).unwrap();
+        await createFileMutation.mutateAsync(file);
         router.push(Routes.Files);
       }
     },

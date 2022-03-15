@@ -10,10 +10,6 @@ const menuRoutes: IMenuRoute[] = [
     title: "About",
     href: Routes.About,
   },
-  {
-    title: "News",
-    href: Routes.News,
-  },
 ];
 
 export default menuRoutes;

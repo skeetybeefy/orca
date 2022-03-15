@@ -1,16 +1,15 @@
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { userIsAuthenticatedSelector } from "store/selectors/profile";
-import Routes from "types/enums/Routes";
+import useProfileQuery from 'hooks/queries/useProfileQuery';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import Routes from 'types/enums/Routes';
 
 const useRouteProtection = () => {
+  const { data, isSuccess } = useProfileQuery();
   const router = useRouter();
-  const isAuthorized = useSelector(userIsAuthenticatedSelector);
 
   useEffect(() => {
-    if (!isAuthorized) router.replace(Routes.Login);
-  }, [router, isAuthorized]);
+    if (!isSuccess && Boolean(data)) router.replace(Routes.Login);
+  }, [router, data, isSuccess]);
 };
 
 export default useRouteProtection;

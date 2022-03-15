@@ -1,9 +1,8 @@
 import { MultiValue, Select } from "chakra-react-select";
-import { Field, FieldProps, Form, Formik, useFormik } from "formik";
-import { useCallback, useEffect, useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllUsersAsync } from "store/actions/users";
-import { selectAllUsers } from "store/selectors/users";
+import { useFormik } from "formik";
+import useUsersQuery from "hooks/queries/users/useUsersQuery";
+import { ICreateGroupDto } from "monotypes/IGroup.interface";
+import { FC, useCallback, useMemo } from "react";
 
 import {
   Button,
@@ -11,19 +10,23 @@ import {
   FormLabel,
   Input,
   VStack,
+  Text,
 } from "@chakra-ui/react";
-import { ICreateGroupDto } from "monotypes/IGroup.interface";
+import { IUser } from "monotypes/IUser.interface";
 
 interface IProps {
   onSubmit: (values: ICreateGroupDto) => void;
   initialValues: ICreateGroupDto;
   buttonText: string;
+  users: IUser[];
 }
 
-const GroupUpsertForm = ({ onSubmit, initialValues, buttonText }: IProps) => {
-  const dispatch = useDispatch();
-  const users = useSelector(selectAllUsers);
-
+const GroupUpsertForm: FC<IProps> = ({
+  onSubmit,
+  initialValues,
+  buttonText,
+  users,
+}) => {
   const mappedUsersOptions = useMemo(
     () =>
       users.map((user) => {
@@ -105,4 +108,14 @@ const GroupUpsertForm = ({ onSubmit, initialValues, buttonText }: IProps) => {
   );
 };
 
-export default GroupUpsertForm;
+const GroupsUpsertFormWrapper: FC<Omit<IProps, "users">> = (props) => {
+  const { data: users, isLoading, isError, error } = useUsersQuery();
+
+  if (isLoading) return <Text>Loading...</Text>;
+
+  if (isError) return <Text>Error: ${error.message}</Text>;
+
+  return <GroupUpsertForm {...props} users={users || []} />;
+};
+
+export default GroupsUpsertFormWrapper;

@@ -20,11 +20,11 @@ import {
 } from '@nestjs/common';
 
 @Controller('test')
-@UseGuards(AuthorizationPoliciesGuard)
-@CheckPolicies((ability: AppAbility) =>
-  ability.can(AuthorizationAction.Read, Test),
-)
-@UseGuards(JwtAccessGuard)
+// @UseGuards(AuthorizationPoliciesGuard)
+// @CheckPolicies((ability: AppAbility) =>
+//   ability.can(AuthorizationAction.Read, Test),
+// )
+// @UseGuards(JwtAccessGuard)
 export class TestController {
   constructor(private readonly testService: TestService) {}
 
@@ -35,6 +35,7 @@ export class TestController {
 
   @Get()
   findAll() {
+    console.log("FIND ALL")
     return this.testService.findAll();
   }
 

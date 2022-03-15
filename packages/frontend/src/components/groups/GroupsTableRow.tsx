@@ -1,10 +1,9 @@
+import useDeleteGroupByIdMutation from "hooks/mutations/groups/useDeleteGroupByIdMutation";
+import useGroupByIdQuery from "hooks/queries/groups/useGroupByIdQuery";
+import useUserByIdQuery from "hooks/queries/users/useUserByIdQuery";
 import { IGroup } from "monotypes/IGroup.interface";
 import Link from "next/link";
-import { FC, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "store";
-import { deleteGroupById } from "store/actions/groups";
-import { selectUserById, selectUsersByIds } from "store/selectors/users";
+import { FC } from "react";
 
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import {
@@ -30,28 +29,16 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-const GroupsTableRow: FC<IGroup> = ({
-  id,
-  name,
-  membersIds,
-  description,
-  ownerId,
-}) => {
-  const dispatch = useDispatch();
+const GroupsTableRow: FC<IGroup> = ({ id }) => {
+  const { data: group } = useGroupByIdQuery(id);
 
-  const onDelete = useCallback(() => {
-    dispatch(deleteGroupById(id));
-    onClose();
-  }, [dispatch, id]);
+  const deleteGroupByIdMutation = useDeleteGroupByIdMutation(id);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const owner = useSelector((state: RootState) =>
-    selectUserById(state, ownerId)
-  );
-  const members = useSelector(selectUsersByIds(membersIds));
+  const { data: owner } = useUserByIdQuery(group?.ownerId);
 
-  console.log({ members });
+  // const members = useSelector(selectUsersByIds(membersIds));
 
   return (
     <>
@@ -65,7 +52,11 @@ const GroupsTableRow: FC<IGroup> = ({
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="red" mr={3} onClick={onDelete}>
+            <Button
+              colorScheme="red"
+              mr={3}
+              onClick={() => deleteGroupByIdMutation.mutate()}
+            >
               Delete
             </Button>
             <Button onClick={onClose}>Cancel</Button>
@@ -73,21 +64,22 @@ const GroupsTableRow: FC<IGroup> = ({
         </ModalContent>
       </Modal>
       <Tr>
-        <Td>{name}</Td>
-        <Td>{description}</Td>
+        <Td>{group?.name}</Td>
+        <Td>{group?.description}</Td>
         <Td>
           <Menu>
             <MenuButton>
+              {/* TODO fix members */}
               <AvatarGroup size="sm" max={2}>
-                {members.map(({ nickname, id }) => {
+                {/* {members.map(({ nickname, id }) => {
                   return <Avatar key={id} name={nickname} />;
-                })}
+                })} */}
               </AvatarGroup>
             </MenuButton>
             <MenuList>
-              {members.map(({ nickname, id }) => {
+              {/* {members.map(({ nickname, id }) => {
                 return <MenuItem key={id}>{nickname}</MenuItem>;
-              })}
+              })} */}
             </MenuList>
           </Menu>
         </Td>
@@ -104,7 +96,7 @@ const GroupsTableRow: FC<IGroup> = ({
         <Td>
           <Flex justify="end">
             <ButtonGroup>
-              <Link href={`/groups/update?id=${id}`}>
+              <Link passHref href={`/groups/update?id=${id}`}>
                 <Button size="sm">
                   <EditIcon />
                 </Button>

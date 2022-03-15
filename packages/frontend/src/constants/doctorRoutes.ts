@@ -7,20 +7,8 @@ const doctorRoutes: IMenuRoute[] = [
     href: Routes.Groups,
   },
   {
-    title: "Patients",
-    href: Routes.Patients,
-  },
-  {
     title: "Files",
     href: Routes.Files,
-  },
-  {
-    title: "File cards",
-    href: Routes.FileCards,
-  },
-  {
-    title: "Events",
-    href: Routes.Events,
   },
 ];
 

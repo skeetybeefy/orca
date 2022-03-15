@@ -1,4 +1,6 @@
-import React, { useEffect } from "react";
+import useGroupsQuery from "hooks/queries/groups/useGroupsQuery";
+import Link from "next/link";
+import React from "react";
 
 import { AddIcon } from "@chakra-ui/icons";
 import {
@@ -7,57 +9,56 @@ import {
   Table,
   Tbody,
   Td,
+  Text,
   Th,
   Thead,
   Tr,
 } from "@chakra-ui/react";
-import Link from "next/link";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllGroups } from "store/actions/groups";
+
 import GroupsTableRow from "./GroupsTableRow";
-import { selectAllGroups } from "store/selectors/groups";
+import Loader from "components/common/Loader/Loader";
 
 // TODO user avatars
 const GroupsList = () => {
-  const dispatch = useDispatch();
+  const { data: groups, isLoading, isError, error } = useGroupsQuery();
 
-  useEffect(() => {
-    dispatch(getAllGroups());
-  }, [dispatch]);
+  if (isLoading) {
+    return <Loader />;
+  }
 
-  const groups = useSelector(selectAllGroups);
+  if (isError) {
+    return <Text>Error {error.message}</Text>;
+  }
 
   return (
-    <>
-      <Table size="sm">
-        <Thead>
-          <Tr>
-            <Th>Name</Th>
-            <Th>Description</Th>
-            <Th>Members</Th>
-            <Th>Owner</Th>
-            <Th textAlign="end">Manage</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          <Tr>
-            <Td colSpan={4}>You can create a new group</Td>
-            <Td>
-              <Flex justify="end">
-                <Link passHref href="groups/create">
-                  <Button size="sm">
-                    <AddIcon />
-                  </Button>
-                </Link>
-              </Flex>
-            </Td>
-          </Tr>
-          {groups.map((group) => (
-            <GroupsTableRow {...group} key={group.id} />
-          ))}
-        </Tbody>
-      </Table>
-    </>
+    <Table size="sm">
+      <Thead>
+        <Tr>
+          <Th>Name</Th>
+          <Th>Description</Th>
+          <Th>Members</Th>
+          <Th>Owner</Th>
+          <Th textAlign="end">Manage</Th>
+        </Tr>
+      </Thead>
+      <Tbody>
+        <Tr>
+          <Td colSpan={4}>You can create a new group</Td>
+          <Td>
+            <Flex justify="end">
+              <Link passHref href="groups/create">
+                <Button size="sm">
+                  <AddIcon />
+                </Button>
+              </Link>
+            </Flex>
+          </Td>
+        </Tr>
+        {groups?.map((group) => (
+          <GroupsTableRow {...group} key={group.id} />
+        ))}
+      </Tbody>
+    </Table>
   );
 };
 
