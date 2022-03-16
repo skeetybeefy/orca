@@ -1,5 +1,6 @@
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { ICreateGroupDto } from 'monotypes/IGroup.interface';
+import { IUser } from 'monotypes/IUser.interface';
 
 export class CreateGroupDto implements ICreateGroupDto {
   @IsString()
@@ -10,5 +11,5 @@ export class CreateGroupDto implements ICreateGroupDto {
   description: string;
 
   @IsNumber({}, { each: true })
-  membersIds: number[];
+  membersIds: IUser['id'][];
 }

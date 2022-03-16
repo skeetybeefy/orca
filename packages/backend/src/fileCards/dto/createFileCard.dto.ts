@@ -4,10 +4,13 @@ import {
   IsNumber,
   IsOptional,
   IsString,
+  IsInt,
 } from 'class-validator';
+
 import { FileCategory } from 'monotypes/FileCategory.enum';
 import { IFile } from 'monotypes/IFile.interface';
 import { ICreateFileCardDto } from 'monotypes/IFileCard.interface';
+import { IGroup } from 'monotypes/IGroup.interface';
 
 export class CreateFileCardDto implements ICreateFileCardDto {
   @IsString()
@@ -22,7 +25,7 @@ export class CreateFileCardDto implements ICreateFileCardDto {
   category: FileCategory;
 
   @IsNumber({}, { each: true })
-  allowedGroupsIds: number[];
+  allowedGroupsIds: IGroup['id'][];
 
   @IsNumber()
   fileId: IFile['id'];

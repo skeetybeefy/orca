@@ -41,6 +41,8 @@ services:
       - orca
     volumes:
       - ./packages/frontend/src:/usr/src/app/src
+      - ./packages/frontend/public:/usr/src/app/public
+      - ./packages/frontend/.next:/usr/src/app/.next
     ports:
       - ${FRONTEND_PORT}:${FRONTEND_PORT}
     depends_on:
