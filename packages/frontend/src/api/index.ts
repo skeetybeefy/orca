@@ -2,12 +2,7 @@ import axios from "axios";
 
 const baseURL = `${process.env.NEXT_PUBLIC_API_URL}/`;
 
-console.log({ baseURL });
-
-const API = axios.create({
-  baseURL,
-  withCredentials: true,
-});
+const API = axios.create();
 
 API.defaults.baseURL = baseURL;
 API.defaults.withCredentials = true;

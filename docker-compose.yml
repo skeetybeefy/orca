@@ -8,7 +8,7 @@ services:
     volumes:
       - postgres-volume:/data/postgres
     env_file:
-      - ./.env
+      - .env
     networks:
       - orca
 
@@ -18,12 +18,11 @@ services:
       context: ./packages/backend
       target: production
     env_file:
-      - ./.env
+      - .env
     networks:
       - orca
     volumes:
       - uploads:/usr/src/app/uploaded
-      - /usr/src/app/node_modules
     ports:
       - ${BACKEND_PORT}:${BACKEND_PORT}
     depends_on:
@@ -35,12 +34,12 @@ services:
     build:
       context: ./packages/frontend
       target: production
+      args:
+        - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
     env_file:
-      - ./.env
+      - .env
     networks:
       - orca
-    volumes:
-      - /usr/src/app/node_modules
     ports:
       - ${FRONTEND_PORT}:${FRONTEND_PORT}
     depends_on:
@@ -57,7 +56,7 @@ services:
     volumes:
       - pgadmin-volume:/root/.pgadmin
     env_file:
-      - ./.env
+      - .env
     networks:
       - orca
 
