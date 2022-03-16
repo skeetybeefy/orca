@@ -10,7 +10,8 @@ FROM node:16.14-alpine as preproduction
 WORKDIR /usr/src/app
 COPY package.json ./
 COPY tsconfig.json ./
-RUN yarn install --development
+RUN yarn global add next react react-dom
+RUN yarn install
 COPY . .
 RUN yarn build
 

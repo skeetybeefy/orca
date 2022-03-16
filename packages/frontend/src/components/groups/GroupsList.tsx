@@ -27,7 +27,7 @@ const GroupsList = () => {
   }
 
   if (isError) {
-    return <Text>Ошибка {error.message}</Text>;
+    return <Text>Ошибка {error?.message}</Text>;
   }
 
   return (

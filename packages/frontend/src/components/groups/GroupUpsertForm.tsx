@@ -2,6 +2,7 @@ import { MultiValue, Select } from "chakra-react-select";
 import { useFormik } from "formik";
 import useUsersQuery from "hooks/queries/users/useUsersQuery";
 import { ICreateGroupDto } from "monotypes/IGroup.interface";
+import { IUser } from "monotypes/IUser.interface";
 import { FC, useCallback, useMemo } from "react";
 
 import {
@@ -9,10 +10,10 @@ import {
   FormControl,
   FormLabel,
   Input,
-  VStack,
+  Spinner,
   Text,
+  VStack,
 } from "@chakra-ui/react";
-import { IUser } from "monotypes/IUser.interface";
 
 interface IProps {
   onSubmit: (values: ICreateGroupDto) => void;
@@ -112,9 +113,9 @@ const GroupUpsertForm: FC<IProps> = ({
 const GroupsUpsertFormWrapper: FC<Omit<IProps, "users">> = (props) => {
   const { data: users, isLoading, isError, error } = useUsersQuery();
 
-  if (isLoading) return <Text>Loading...</Text>;
+  if (isLoading) return <Spinner />;
 
-  if (isError) return <Text>Error: ${error.message}</Text>;
+  if (isError) return <Text>Ошибка: ${error?.message}</Text>;
 
   return <GroupUpsertForm {...props} users={users || []} />;
 };

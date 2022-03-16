@@ -26,7 +26,7 @@ const FilesList = () => {
   }
 
   if (isError) {
-    return <Text>Ошибка: {error.message}</Text>;
+    return <Text>Ошибка: {error?.message}</Text>;
   }
 
   return (
