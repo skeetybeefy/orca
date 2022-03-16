@@ -35,17 +35,17 @@ const FilesTableRow: FC<IFile> = ({ id, originalname, mimetype }) => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Delete this file?</ModalHeader>
+          <ModalHeader>Удалить файл?</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Text>This action is irreversible.</Text>
+            <Text>Данное действие нельзя отменить</Text>
           </ModalBody>
 
           <ModalFooter>
             <Button colorScheme="red" mr={3} onClick={onDelete}>
-              Delete
+              Удалить
             </Button>
-            <Button onClick={onClose}>Cancel</Button>
+            <Button onClick={onClose}>Отмена</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

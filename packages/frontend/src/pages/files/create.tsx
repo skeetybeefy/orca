@@ -47,7 +47,7 @@ const Create = () => {
     <Page title="Creating a document">
       <VStack align={"stretch"} gap={4}>
         <Heading size="md" w="full" textAlign="start">
-          Create a file
+          Загрузить файл
         </Heading>
         <form onSubmit={handleSubmit}>
           <VStack align="stretch" gap={4}>
@@ -61,7 +61,7 @@ const Create = () => {
               />
             </FormControl>
             <Button w="full" type="submit">
-              Create
+              Загрузить
             </Button>
           </VStack>
         </form>

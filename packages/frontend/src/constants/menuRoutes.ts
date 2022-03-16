@@ -3,12 +3,16 @@ import { IMenuRoute } from "types/interfaces/route";
 
 const menuRoutes: IMenuRoute[] = [
   {
-    title: "Home",
+    title: "Главная",
     href: Routes.Home,
   },
   {
-    title: "About",
+    title: "О нас",
     href: Routes.About,
+  },
+  {
+    title: "Кабинет",
+    href: Routes.Dashboard,
   },
 ];
 

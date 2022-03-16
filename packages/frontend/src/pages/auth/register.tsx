@@ -32,11 +32,11 @@ const Register = () => {
   return (
     <Page title="Register">
       <VStack align="stretch" w="full" gap={4}>
-        <Heading>Register</Heading>
+        <Heading>Регистрация</Heading>
         <Tabs>
           <TabList>
-            <Tab>Doctor</Tab>
-            <Tab>Patient</Tab>
+            <Tab>Врач</Tab>
+            <Tab>Пациент</Tab>
           </TabList>
 
           <TabPanels>

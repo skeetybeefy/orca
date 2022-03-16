@@ -42,13 +42,13 @@ const Update = () => {
   }, [group]);
 
   return (
-    <Page title="Changing a group">
+    <Page title="Редактирование группы">
       <VStack align="stretch" gap={4}>
         <Heading size="md" w="full" textAlign="start">
-          Change a group
+        Редактирование группы
         </Heading>
         <GroupUpsertForm
-          buttonText="Change"
+          buttonText="Сохранить"
           onSubmit={onUpdate}
           initialValues={initialValues}
         />

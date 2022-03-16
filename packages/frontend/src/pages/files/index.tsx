@@ -7,10 +7,10 @@ import { Heading, VStack } from "@chakra-ui/react";
 
 const Files = () => {
   return (
-    <Page title="Files">
+    <Page title="Файлы">
       <VStack gap={4}>
         <Heading size="md" w="full" textAlign="start">
-          Your Files
+          Ваши файлы
         </Heading>
         <FilesList />
       </VStack>

@@ -43,18 +43,18 @@ const LoginForm = () => {
           />
         </FormControl>
         <FormControl>
-          <FormLabel htmlFor="password">Password</FormLabel>
+          <FormLabel htmlFor="password">Пароль</FormLabel>
           <Input
             value={values["password"]}
             onChange={handleChange}
             onBlur={handleBlur}
             id="password"
             type="password"
-            placeholder="Password"
+            placeholder="password"
           />
         </FormControl>
         <Button type="submit" w="full">
-          Login
+          Войти
         </Button>
       </VStack>
     </form>

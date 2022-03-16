@@ -34,10 +34,10 @@ const Create = () => {
     <Page title="Creating a group">
       <VStack align="stretch" gap={4}>
         <Heading size="md" w="full" textAlign="start">
-          Create a group
+          Создание группы
         </Heading>
         <GroupUpsertForm
-          buttonText="Create"
+          buttonText="Создать"
           onSubmit={onCreate}
           initialValues={initialValues}
         />

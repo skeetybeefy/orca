@@ -45,10 +45,10 @@ const GroupsTableRow: FC<IGroup> = ({ id }) => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Delete this group?</ModalHeader>
+          <ModalHeader>Удалить группу &quot;{group?.name}&quot;?</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Text>This action is irreversible.</Text>
+            <Text>Данное действие нельзя отменить</Text>
           </ModalBody>
 
           <ModalFooter>
@@ -57,9 +57,9 @@ const GroupsTableRow: FC<IGroup> = ({ id }) => {
               mr={3}
               onClick={() => deleteGroupByIdMutation.mutate()}
             >
-              Delete
+              Удалить
             </Button>
-            <Button onClick={onClose}>Cancel</Button>
+            <Button onClick={onClose}>Отмена</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

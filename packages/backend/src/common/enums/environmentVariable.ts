@@ -15,4 +15,5 @@ export enum EnvironmentVariable {
 
   FRONTEND_NAME = 'FRONTEND_NAME',
   FRONTEND_PORT = 'FRONTEND_PORT',
+  FRONTEND_ORIGIN = 'FRONTEND_ORIGIN'
 }

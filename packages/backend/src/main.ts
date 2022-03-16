@@ -25,10 +25,11 @@ async function bootstrap() {
 
   const config = app.get(ConfigService);
   const port = config.get(EnvironmentVariable.BACKEND_PORT);
-  const frontendName = config.get(EnvironmentVariable.FRONTEND_NAME);
+  // const frontendName = config.get(EnvironmentVariable.FRONTEND_NAME);
+  const frontendOrigin = config.get(EnvironmentVariable.FRONTEND_ORIGIN);
 
   app.enableCors({
-    origin: `http://${frontendName}`,
+    origin: frontendOrigin,
     credentials: true,
   });
 

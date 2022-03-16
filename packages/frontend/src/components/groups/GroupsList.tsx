@@ -27,23 +27,23 @@ const GroupsList = () => {
   }
 
   if (isError) {
-    return <Text>Error {error.message}</Text>;
+    return <Text>Ошибка {error.message}</Text>;
   }
 
   return (
     <Table size="sm">
       <Thead>
         <Tr>
-          <Th>Name</Th>
-          <Th>Description</Th>
-          <Th>Members</Th>
-          <Th>Owner</Th>
-          <Th textAlign="end">Manage</Th>
+          <Th>Название</Th>
+          <Th>Описание</Th>
+          <Th>Участники</Th>
+          <Th>Владелец</Th>
+          <Th textAlign="end">Действия</Th>
         </Tr>
       </Thead>
       <Tbody>
         <Tr>
-          <Td colSpan={4}>You can create a new group</Td>
+          <Td colSpan={4}>Создать новую группу</Td>
           <Td>
             <Flex justify="end">
               <Link passHref href="groups/create">

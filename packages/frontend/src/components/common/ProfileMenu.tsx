@@ -14,10 +14,10 @@ const ProfileMenu = () => {
       </MenuButton>
 
       <MenuList>
-        <MenuItem>Profile</MenuItem>
-        <MenuItem>Settings</MenuItem>
+        <MenuItem>Профиль</MenuItem>
+        <MenuItem>Настройки</MenuItem>
 
-        <MenuItem onClick={() => logoutMutation.mutate()}>Logout</MenuItem>
+        <MenuItem onClick={() => logoutMutation.mutate()}>Выйти</MenuItem>
       </MenuList>
     </Menu>
   );

@@ -66,7 +66,7 @@ const GroupUpsertForm: FC<IProps> = ({
     <form onSubmit={handleSubmit}>
       <VStack p={2} gap={4}>
         <FormControl isRequired>
-          <FormLabel htmlFor="name">Name</FormLabel>
+          <FormLabel htmlFor="name">Название</FormLabel>
           <Input
             value={values["name"]}
             onChange={handleChange}
@@ -74,11 +74,11 @@ const GroupUpsertForm: FC<IProps> = ({
             name={"name"}
             id="name"
             type="text"
-            placeholder="Group name"
+            placeholder="Хирурги#1"
           />
         </FormControl>
         <FormControl>
-          <FormLabel htmlFor="description">Description</FormLabel>
+          <FormLabel htmlFor="description">Описание</FormLabel>
           <Input
             value={values["description"]}
             onChange={handleChange}
@@ -86,17 +86,18 @@ const GroupUpsertForm: FC<IProps> = ({
             name={"description"}
             id="description"
             type="text"
-            placeholder="Group description"
+            placeholder="Хирурги первого отделения"
           />
         </FormControl>
         <FormControl>
-          <FormLabel htmlFor="membersIds">Members</FormLabel>
+          <FormLabel htmlFor="membersIds">Участники</FormLabel>
           <Select
             isMulti
             id="membersIds"
             name="membersIds"
             value={mappedSelectorValues}
             options={mappedUsersOptions}
+            placeholder="Выбрать..."
             onChange={onSelectorValueChange}
           />
         </FormControl>

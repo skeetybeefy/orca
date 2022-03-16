@@ -10,7 +10,7 @@ const Groups = () => {
     <Page title="Groups">
       <VStack gap={4}>
         <Heading size="md" w="full" textAlign="start">
-          Your groups
+          Ваши группы
         </Heading>
         <GroupsList />
       </VStack>

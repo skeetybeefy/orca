@@ -43,7 +43,7 @@ const PatientRegisterForm: FC<IRegisterFormProps> = ({ onRegister }) => {
           />
         </FormControl>
         <FormControl isRequired>
-          <FormLabel htmlFor="password">Password</FormLabel>
+          <FormLabel htmlFor="password">Пароль</FormLabel>
           <Input
             value={values["password"]}
             onChange={handleChange}
@@ -55,7 +55,7 @@ const PatientRegisterForm: FC<IRegisterFormProps> = ({ onRegister }) => {
           />
         </FormControl>
         <FormControl isRequired>
-          <FormLabel htmlFor="nickname">Nickname</FormLabel>
+          <FormLabel htmlFor="nickname">Псевдоним</FormLabel>
           <Input
             value={values["nickname"]}
             onChange={handleChange}
@@ -63,11 +63,11 @@ const PatientRegisterForm: FC<IRegisterFormProps> = ({ onRegister }) => {
             name={"nickname"}
             id="nickname"
             type="text"
-            placeholder="Moses"
+            placeholder="nickname"
           />
         </FormControl>
         <FormControl isRequired>
-          <FormLabel htmlFor="firstName">Firstname</FormLabel>
+          <FormLabel htmlFor="firstName">Имя</FormLabel>
           <Input
             value={values["firstName"]}
             onChange={handleChange}
@@ -75,11 +75,11 @@ const PatientRegisterForm: FC<IRegisterFormProps> = ({ onRegister }) => {
             name={"firstName"}
             id="firstName"
             type="text"
-            placeholder="Ivan"
+            placeholder="Иван"
           />
         </FormControl>
         <FormControl isRequired>
-          <FormLabel htmlFor="lastName">Lastname</FormLabel>
+          <FormLabel htmlFor="lastName">Фамилия</FormLabel>
           <Input
             value={values["lastName"]}
             onChange={handleChange}
@@ -87,11 +87,11 @@ const PatientRegisterForm: FC<IRegisterFormProps> = ({ onRegister }) => {
             name={"lastName"}
             id="lastName"
             type="text"
-            placeholder="Ivanov"
+            placeholder="Иванов"
           />
         </FormControl>
         <FormControl>
-          <FormLabel htmlFor="middleName">Middlename</FormLabel>
+          <FormLabel htmlFor="middleName">Отчество</FormLabel>
           <Input
             value={values["middleName"]}
             onChange={handleChange}
@@ -99,11 +99,11 @@ const PatientRegisterForm: FC<IRegisterFormProps> = ({ onRegister }) => {
             name={"middleName"}
             id="middleName"
             type="text"
-            placeholder="Ivanovich"
+            placeholder="Иванович"
           />
         </FormControl>
         <FormControl isRequired>
-          <FormLabel htmlFor="addressRegion">Region</FormLabel>
+          <FormLabel htmlFor="addressRegion">Регион</FormLabel>
           <Input
             value={values["addressRegion"]}
             onChange={handleChange}
@@ -111,11 +111,11 @@ const PatientRegisterForm: FC<IRegisterFormProps> = ({ onRegister }) => {
             name={"addressRegion"}
             id="addressRegion"
             type="text"
-            placeholder="Tatarstan"
+            placeholder="Татарстан"
           />
         </FormControl>
         <FormControl isRequired>
-          <FormLabel htmlFor="addressSettlement">Settlement</FormLabel>
+          <FormLabel htmlFor="addressSettlement">Город / поселение</FormLabel>
           <Input
             value={values["addressSettlement"]}
             onChange={handleChange}
@@ -123,11 +123,11 @@ const PatientRegisterForm: FC<IRegisterFormProps> = ({ onRegister }) => {
             name={"addressSettlement"}
             id="addressSettlement"
             type="text"
-            placeholder="Kazan"
+            placeholder="Казань"
           />
         </FormControl>
         <FormControl isRequired>
-          <FormLabel htmlFor="addressLocation">Location</FormLabel>
+          <FormLabel htmlFor="addressLocation">Адрес</FormLabel>
           <Input
             value={values["addressLocation"]}
             onChange={handleChange}
@@ -135,12 +135,12 @@ const PatientRegisterForm: FC<IRegisterFormProps> = ({ onRegister }) => {
             name={"addressLocation"}
             id="addressLocation"
             type="text"
-            placeholder="Vishevskoho st."
+            placeholder="ул. Вишневского"
           />
         </FormControl>
 
         <Button type="submit" w="full">
-          Register
+          Зарегистрироваться
         </Button>
       </VStack>
     </form>

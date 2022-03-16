@@ -3,11 +3,11 @@ import { IMenuRoute } from "types/interfaces/route";
 
 const doctorRoutes: IMenuRoute[] = [
   {
-    title: "Groups",
+    title: "Группы",
     href: Routes.Groups,
   },
   {
-    title: "Files",
+    title: "Файлы",
     href: Routes.Files,
   },
 ];

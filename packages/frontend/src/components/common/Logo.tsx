@@ -7,7 +7,7 @@ import { Heading, Link } from "@chakra-ui/react";
 const Logo = () => {
   return (
     <NextLink href={Routes.Home} passHref>
-      <Link as={Heading}>Moses</Link>
+      <Link as={Heading}>Океан Хирургия</Link>
     </NextLink>
   );
 };

@@ -26,22 +26,22 @@ const FilesList = () => {
   }
 
   if (isError) {
-    return <Text>Error: {error.message}</Text>;
+    return <Text>Ошибка: {error.message}</Text>;
   }
 
   return (
     <Table size="sm">
       <Thead>
         <Tr>
-          <Th>Filename</Th>
+          <Th>Название</Th>
           <Th>Url</Th>
-          <Th>Mimetype</Th>
-          <Th>Actions</Th>
+          <Th>Тип</Th>
+          <Th>Действия</Th>
         </Tr>
       </Thead>
       <Tbody>
         <Tr>
-          <Td colSpan={3}>Upload your files</Td>
+          <Td colSpan={3}>Загрузить файл</Td>
           <Td>
             <Flex justify="end">
               <Link passHref href="/files/create">

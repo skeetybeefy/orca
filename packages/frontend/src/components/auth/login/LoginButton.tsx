@@ -7,7 +7,7 @@ import { Button } from '@chakra-ui/react';
 const LoginButton = () => {
   return (
     <NextLink href={Routes.Login} passHref>
-      <Button>Login</Button>
+      <Button>Войти</Button>
     </NextLink>
   );
 };

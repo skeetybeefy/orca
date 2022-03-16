@@ -9,7 +9,7 @@ const Login = () => {
   return (
     <Page title="Login">
       <VStack align="stretch" w="full" gap={4}>
-        <Heading>Login</Heading>
+        <Heading>Вход</Heading>
         <LoginForm />
       </VStack>
     </Page>
