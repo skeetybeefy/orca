@@ -10,6 +10,7 @@ COPY tsconfig.build.json ./
 FROM node:16.14-alpine as preproduction
 WORKDIR /usr/src/app
 COPY package.json ./
+RUN yarn global add rimraf @nestjs/cli
 RUN yarn install
 COPY . .
 RUN yarn build
