@@ -8,7 +8,7 @@ services:
     volumes:
       - postgres-volume-dev:/data/postgres
     env_file:
-      - ./.env.dev
+      - ./.dev.env
     networks:
       - orca
 
@@ -18,7 +18,7 @@ services:
       context: ./packages/backend
       target: development
     env_file:
-      - ./.env.dev
+      - ./.dev.env
     networks:
       - orca
     volumes:
@@ -36,7 +36,7 @@ services:
       context: ./packages/frontend
       target: development
     env_file:
-      - ./.env.dev
+      - ./.dev.env
     networks:
       - orca
     volumes:
@@ -59,7 +59,7 @@ services:
     volumes:
       - pgadmin-volume-dev:/root/.pgadmin
     env_file:
-      - ./.env.dev
+      - ./.dev.env
     networks:
       - orca
 
