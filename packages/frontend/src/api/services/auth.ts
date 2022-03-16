@@ -12,7 +12,7 @@ class AuthService {
 
   static async logIn(credentials: ICredentials): Promise<IUser> {
     const response = await API.post<IUser>(
-      `${ApiRoute.Authentication}/${AuthenticationRoute.LogIn}`,
+      `/${ApiRoute.Authentication}/${AuthenticationRoute.LogIn}`,
       credentials
     );
     return response.data;
