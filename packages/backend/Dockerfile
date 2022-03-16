@@ -10,7 +10,7 @@ COPY tsconfig.build.json ./
 FROM node:16.14-alpine as preproduction
 WORKDIR /usr/src/app
 COPY package.json ./
-RUN yarn install --development
+RUN yarn install
 COPY . .
 RUN yarn build
 
