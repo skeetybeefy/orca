@@ -1,4 +1,3 @@
-import Loader from "components/common/Loader/Loader";
 import useFilesQuery from "hooks/queries/files/useFilesQuery";
 import Link from "next/link";
 import React from "react";
@@ -7,6 +6,7 @@ import { AddIcon } from "@chakra-ui/icons";
 import {
   Button,
   Flex,
+  Spinner,
   Table,
   Tbody,
   Td,
@@ -22,7 +22,7 @@ const FilesList = () => {
   const { data: files, isLoading, isError, error } = useFilesQuery();
 
   if (isLoading) {
-    return <Loader />;
+    return <Spinner />;
   }
 
   if (isError) {

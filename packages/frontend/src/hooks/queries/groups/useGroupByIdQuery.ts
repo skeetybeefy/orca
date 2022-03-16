@@ -8,7 +8,7 @@ const useGroupByIdQuery = (id: IGroup["id"] | undefined) => {
     Entity.Groups,
     GroupsService.getAll,
     {
-      select: (groups) => groups.find((group) => group.id === id),
+      select: (items) => items.find((item) => item.id === id),
       enabled: !!id,
     }
   );

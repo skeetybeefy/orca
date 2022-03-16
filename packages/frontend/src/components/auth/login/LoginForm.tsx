@@ -34,6 +34,7 @@ const LoginForm = () => {
         <FormControl>
           <FormLabel htmlFor="email">Email</FormLabel>
           <Input
+            autoFocus
             id="email"
             type="email"
             value={values["email"]}

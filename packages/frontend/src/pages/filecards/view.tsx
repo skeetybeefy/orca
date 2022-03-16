@@ -1,138 +1,172 @@
-import ProtectedLayout from 'layouts/ProtectedLayout';
-import { FileCategory } from 'monotypes/FileCategory.enum';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useCallback, useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'store';
-import { deleteFileCardById, getAllFileCards } from 'store/actions/filecards';
-import { selectFileCardById } from 'store/selectors/filecards';
-import { allFilesSelector } from 'store/selectors/files';
-import { selectAllGroups } from 'store/selectors/groups';
-import { profileSelector } from 'store/selectors/profile';
-import Routes from 'types/enums/Routes';
+import useDeleteFileCardByIdMutation from "hooks/mutations/fileCards/useDeleteFileCardByIdMutation";
+import useFileCardByIdQuery from "hooks/queries/fileCards/useFileCardByIdQuery";
+import useFileByIdQuery from "hooks/queries/files/useFileByIdQuery";
+import useFilesQuery from "hooks/queries/files/useFilesQuery";
+import useGroupsQuery from "hooks/queries/groups/useGroupsQuery";
+import useProfileQuery from "hooks/queries/useProfileQuery";
+import ProtectedLayout from "layouts/ProtectedLayout";
+import { ApiRoute } from "monotypes/ApiRoute.enum";
+import { FileCategory } from "monotypes/FileCategory.enum";
+import NextLink from "next/link";
+import { useRouter } from "next/router";
+import { useCallback, useMemo } from "react";
+import Routes from "types/enums/Routes";
 
 import {
-    Box, Button, Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader,
-    ModalOverlay, Text, useDisclosure, VStack
-} from '@chakra-ui/react';
+  Box,
+  Button,
+  Flex,
+  Link,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+  useDisclosure,
+  VStack,
+} from "@chakra-ui/react";
 
 const View = () => {
-    const router = useRouter()
-    let { id } = router.query
-    const dispatch = useDispatch()
+  const router = useRouter();
+  let { id } = router.query;
 
-    const parsedId = useMemo(() => {
-        if (!id) return -1;
-        const idString = Array.isArray(id) ? id.join("") : id?.toString();
-        return Number.parseInt(idString);
-    }, [id]);
+  const parsedId = useMemo(() => {
+    if (!id) return -1;
+    const idString = Array.isArray(id) ? id.join("") : id?.toString();
+    return Number.parseInt(idString);
+  }, [id]);
 
-    useEffect(() => {
-        dispatch(getAllFileCards())
-    }, [dispatch, router])
+  const { data: groups } = useGroupsQuery();
+  const { data: files } = useFilesQuery();
+  const { data: user } = useProfileQuery();
+  const { data: fileCard } = useFileCardByIdQuery(parsedId);
+  const { data: file } = useFileByIdQuery(fileCard?.fileId);
 
-    const groups = useSelector(selectAllGroups) 
-    const files = useSelector(allFilesSelector)
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const { isOpen, onOpen, onClose } = useDisclosure();
+  const deleteFileCardByIdMutation = useDeleteFileCardByIdMutation();
 
-    const onDelete = useCallback(() => {
-        dispatch(deleteFileCardById(parsedId))
-        onClose()
-        router.push(Routes.FileCards)
-    },
-        [dispatch, parsedId])
+  const onDelete = useCallback(() => {
+    deleteFileCardByIdMutation.mutate(parsedId);
+    onClose();
+    router.push(Routes.FileCards);
+  }, [deleteFileCardByIdMutation, parsedId, onClose, router]);
 
-    const fileCard = useSelector((state: RootState) => selectFileCardById(state, parsedId)
-    )
+  return (
+    <>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Удалить карточку файла?</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text>Данное действие нельзя отменить</Text>
+          </ModalBody>
 
-    const user = useSelector((state: RootState) => profileSelector(state))
+          <ModalFooter>
+            <Button colorScheme="red" mr={3} onClick={onDelete}>
+              Удалить
+            </Button>
+            <Button onClick={onClose}>Отмена</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+      <VStack mt={10} w="full">
+        <Box w="full" borderWidth="1px" borderRadius="lg" overflow="hidden">
+          <Box p="6">
+            <Box fontWeight={"bold"} fontSize="xl">
+              Название
+            </Box>
+            {fileCard?.name}
 
-    return (
-        <>
-            <Modal isOpen={isOpen} onClose={onClose}>
-                <ModalOverlay />
-                <ModalContent>
-                    <ModalHeader>Delete this filecard?</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody>
-                        <Text>This action is irreversible.</Text>
-                    </ModalBody>
+            <Box fontWeight={"bold"} fontSize="xl" mt={4}>
+              Описание
+            </Box>
+            {fileCard?.description ? (
+              fileCard?.description
+            ) : (
+              <Box color="gray.600" fontSize="sm">
+                -
+              </Box>
+            )}
 
-                    <ModalFooter>
-                        <Button colorScheme="red" mr={3} onClick={onDelete}>
-                            Delete
-                        </Button>
-                        <Button onClick={onClose}>Cancel</Button>
-                    </ModalFooter>
-                </ModalContent>
-            </Modal>
-            <VStack mt={10} w="full">
-                <Box w={60} borderWidth="1px" borderRadius="lg" overflow="hidden">
-                    <Box p="6">
+            <Box fontWeight={"bold"} fontSize="xl" mt={4}>
+              Категория
+            </Box>
+            {typeof fileCard?.category === "number" ? (
+              FileCategory[fileCard?.category]
+            ) : (
+              <Box color="gray.600" fontSize="sm">
+                -
+              </Box>
+            )}
 
-                        <Box fontWeight={"bold"} fontSize="xl">
-                            Name
-                        </Box>
-                        {fileCard?.name}
+            <Box fontWeight={"bold"} fontSize="xl" mt={4}>
+              Владелец
+            </Box>
+            {fileCard?.ownerId ? (
+              `User ${fileCard.ownerId}`
+            ) : (
+              <Box color="gray.600" fontSize="sm">
+                -
+              </Box>
+            )}
 
-                        <Box fontWeight={"bold"} fontSize="xl" mt={4}>
-                            Description
-                        </Box>
-                        {
-                            fileCard?.description ?
-                                fileCard?.description :
-                                <Box color="gray.600" fontSize="sm">Empty description</Box>
-                        }
+            <Box fontWeight="bold" fontSize="xl" mt={4}>
+              Группы доступа
+            </Box>
+            {fileCard?.allowedGroupsIds.map((groupId) => {
+              const group = groups?.find((group) => group.id === groupId);
+              return <Text key={group?.id}>{group?.name}</Text>;
+            })}
 
-                        <Box fontWeight={"bold"} fontSize="xl" mt={4}>
-                            Category
-                        </Box>
-                        {
-                            typeof fileCard?.category === "number" ?
-                                FileCategory[fileCard?.category] :
-                                <Box color="gray.600" fontSize="sm">Category is not specified</Box>
-                        }
+            <Box fontWeight={"bold"} fontSize="xl" mt={4}>
+              Файл
+            </Box>
+            {files?.find((file) => file.id === fileCard?.fileId)
+              ?.originalname || (
+              <Box color="gray.600" fontSize="sm">
+                Нет файла
+              </Box>
+            )}
+            <Flex align={"start"} gap={4}>
+              <Button
+                as={Link}
+                href={`${process.env.NEXT_PUBLIC_API_URL}/${ApiRoute.Files}/${file?.id}`}
+                display="block"
+                lineHeight={10}
+                mt={4}
+                disabled={fileCard?.ownerId !== user?.id}
+              >
+                Скачать
+              </Button>
+              <NextLink passHref href={`${Routes.FileCards}/update?id=${id}`}>
+                <Button
+                  display="block"
+                  mt={4}
+                  disabled={fileCard?.ownerId !== user?.id}
+                >
+                  Редактировать
+                </Button>
+              </NextLink>
+              <Button
+                onClick={onOpen}
+                mt={4}
+                disabled={fileCard?.ownerId !== user?.id}
+              >
+                Удалить
+              </Button>
+            </Flex>
+          </Box>
+        </Box>
+      </VStack>
+    </>
+  );
+};
 
-                        <Box fontWeight={"bold"} fontSize="xl" mt={4}>
-                            Owner
-                        </Box>
-                        {
-                            fileCard?.ownerId ?
-                                `User ${fileCard.ownerId}` :
-                                <Box color="gray.600" fontSize="sm">No owner</Box>
-                        }
+View.getLayout = ProtectedLayout;
 
-                        <Box
-                            fontWeight="bold"
-                            fontSize="xl"
-                            mt={4}
-                        >
-                            Access groups
-                        </Box>
-                        {fileCard?.allowedGroupsIds.map((groupId) => {
-                            const group = groups.find(group => group.id === groupId)
-                            return (<Text key={group?.id}>{group?.name}</Text>)
-                        })}
-
-                        <Box fontWeight={"bold"} fontSize="xl" mt={4}>
-                            File
-                        </Box>
-                        {files.find(file => file.id === fileCard?.fileId)?.originalname || <Box color="gray.600" fontSize="sm">No file</Box>}
-                        <Flex justifyContent={"space-around"}>
-                            <Link href={`${Routes.FileCards}/update?id=${id}`}>
-                                <Button display="block" mt={4} disabled={fileCard?.ownerId !== user?.id} >Change</Button>
-                            </Link>
-                            <Button onClick={onOpen} mt={4} disabled={fileCard?.ownerId !== user?.id} >Delete</Button>
-                        </Flex>
-                    </Box>
-                </Box>
-            </VStack>
-        </>
-    )
-}
-
-View.getLayout = ProtectedLayout
-
-export default View
+export default View;

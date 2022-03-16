@@ -6,6 +6,7 @@ import { AddIcon } from "@chakra-ui/icons";
 import {
   Button,
   Flex,
+  Spinner,
   Table,
   Tbody,
   Td,
@@ -16,14 +17,13 @@ import {
 } from "@chakra-ui/react";
 
 import GroupsTableRow from "./GroupsTableRow";
-import Loader from "components/common/Loader/Loader";
 
 // TODO user avatars
 const GroupsList = () => {
   const { data: groups, isLoading, isError, error } = useGroupsQuery();
 
   if (isLoading) {
-    return <Loader />;
+    return <Spinner />;
   }
 
   if (isError) {

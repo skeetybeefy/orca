@@ -8,8 +8,9 @@ const useLogoutMutation = () => {
   const queryClient = useQueryClient();
   const router = useRouter();
   return useMutation(AuthService.logOut, {
-    onMutate() {
-      queryClient.invalidateQueries(Entity.Profile);
+    async onMutate() {
+      queryClient.removeQueries(Entity.Profile);
+      await queryClient.cancelQueries(Entity.Profile);
       router.push(Routes.Home);
     },
   });

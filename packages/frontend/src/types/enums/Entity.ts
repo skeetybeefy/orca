@@ -1,4 +1,5 @@
 enum Entity {
+  FileCards = "filecards",
   Files = "files",
   Groups = "groups",
   Users = "users",
