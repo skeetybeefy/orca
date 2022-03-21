@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true
+  },
+  "references": [
+    { "path": "backend" },
+    { "path": "frontend" },
+    { "path": "types" }
+  ]
+}
