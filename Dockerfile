@@ -13,7 +13,16 @@ COPY tsconfig.json ./
 COPY lerna.json ./
 COPY .eslintrc.json ./
 COPY packages/backend/tsconfig.json ./packages/backend/
+COPY packages/backend/tsconfig.build.json ./packages/backend/
 COPY packages/frontend/tsconfig.json ./packages/frontend/
 COPY packages/types/tsconfig.json ./packages/types/
 COPY --from=warmup /usr/src/app ./
 RUN yarn run lerna bootstrap
+
+FROM development as backend.development
+WORKDIR /usr/src/app/packages/backend
+CMD ["yarn", "start:dev"]
+
+FROM development as frontend.development
+WORKDIR /usr/src/app/packages/frontend
+CMD ["yarn", "start:dev"]

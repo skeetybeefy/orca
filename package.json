@@ -16,7 +16,7 @@
     "prod": "yarn prod:build && yarn prod:start",
     "setup": "lerna run setup",
     "test:build": "docker-compose --env-file env/dev.env -f docker-compose.test.yml build",
-    "test:start": "docker-compose --verbose --env-file env/dev.env -f docker-compose.test.yml up",
+    "test:start": "docker-compose --env-file env/dev.env -f docker-compose.test.yml up",
     "test": "yarn test:build && yarn test:start"
   },
   "devDependencies": {

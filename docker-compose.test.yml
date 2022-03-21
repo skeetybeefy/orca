@@ -4,7 +4,7 @@ services:
     container_name: backend.development
     build:
       context: ./
-      target: development
+      target: backend.development
     env_file:
       - env/dev.env
     networks:
@@ -16,13 +16,12 @@ services:
       - ${BACKEND_PORT}:${BACKEND_PORT}
     depends_on:
       - postgres
-    command: yarn run lerna run start:dev --scope @orca/backend
 
   frontend:
     container_name: frontend.development
     build:
       context: ./
-      target: development
+      target: frontend.development
     env_file:
       - env/dev.env
     networks:
@@ -35,7 +34,6 @@ services:
       - ${FRONTEND_PORT}:${FRONTEND_PORT}
     depends_on:
       - backend
-    command: yarn run lerna run start:dev --scope @orca/frontend
 
   postgres:
     container_name: postgres.development
