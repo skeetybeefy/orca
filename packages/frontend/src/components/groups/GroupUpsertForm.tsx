@@ -1,19 +1,10 @@
 import { MultiValue, Select } from "chakra-react-select";
 import { useFormik } from "formik";
 import useUsersQuery from "hooks/queries/users/useUsersQuery";
-import { ICreateGroupDto } from "monotypes/IGroup.interface";
-import { IUser } from "monotypes/IUser.interface";
 import { FC, useCallback, useMemo } from "react";
 
-import {
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
-  Spinner,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Button, FormControl, FormLabel, Input, Spinner, Text, VStack } from "@chakra-ui/react";
+import { ICreateGroupDto, IUser } from "@orca/types";
 
 interface IProps {
   onSubmit: (values: ICreateGroupDto) => void;

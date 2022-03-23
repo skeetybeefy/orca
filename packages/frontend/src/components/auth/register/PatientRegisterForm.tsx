@@ -1,15 +1,9 @@
 import { IRegisterFormProps } from "components/auth/register/DoctorRegisterForm";
+import { useFormik } from "formik";
 import React, { FC } from "react";
 
-import {
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
-  VStack,
-} from "@chakra-ui/react";
-import { useFormik } from "formik";
-import { Role } from "monotypes/Role.enum";
+import { Button, FormControl, FormLabel, Input, VStack } from "@chakra-ui/react";
+import { Role } from "@orca/types";
 
 const PatientRegisterForm: FC<IRegisterFormProps> = ({ onRegister }) => {
   const { handleChange, handleBlur, handleSubmit, values } = useFormik({

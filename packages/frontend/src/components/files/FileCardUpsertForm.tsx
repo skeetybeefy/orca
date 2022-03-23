@@ -1,18 +1,11 @@
 import { MultiValue, Select, SingleValue } from "chakra-react-select";
 import { useFormik } from "formik";
-import { FileCategory } from "monotypes/FileCategory.enum";
-import { ICreateFileCardDto } from "monotypes/IFileCard.interface";
+import useFilesQuery from "hooks/queries/files/useFilesQuery";
+import useGroupsQuery from "hooks/queries/groups/useGroupsQuery";
 import { useCallback, useMemo } from "react";
 
-import {
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
-  VStack,
-} from "@chakra-ui/react";
-import useGroupsQuery from "hooks/queries/groups/useGroupsQuery";
-import useFilesQuery from "hooks/queries/files/useFilesQuery";
+import { Button, FormControl, FormLabel, Input, VStack } from "@chakra-ui/react";
+import { FileCategory, ICreateFileCardDto } from "@orca/types";
 
 interface IProps {
   onSubmit: (values: ICreateFileCardDto) => void;

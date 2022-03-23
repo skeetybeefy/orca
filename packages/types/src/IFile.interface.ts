@@ -1,10 +1,10 @@
-import { IUser } from "monotypes/IUser.interface";
+import { IUser } from "./IUser.interface";
 
 export interface IFile {
   id: number;
+  originalname: string;
   filename: string;
   path: string;
   mimetype: string;
-  originalname: string;
   ownerId: IUser["id"];
 }

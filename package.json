@@ -14,7 +14,7 @@
     "prod:build": "docker-compose --env-file env/prod.env -f docker-compose.prod.yml build",
     "prod:start": "docker-compose --env-file env/prod.env -f docker-compose.prod.yml up",
     "prod": "yarn prod:build && yarn prod:start",
-    "setup": "lerna run setup"
+    "setup": "lerna run build --scope @orca/types && lerna bootstrap"
   },
   "devDependencies": {
     "lerna": "^4.0.0"

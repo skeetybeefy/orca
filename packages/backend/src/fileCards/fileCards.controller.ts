@@ -1,24 +1,12 @@
-import { CreateFileCardDto } from 'fileCards/dto/createFileCard.dto';
-import { UpdateFileCardDto } from 'fileCards/dto/updateFileCard.dto';
-import { FileCardsService } from 'fileCards/fileCards.service';
+import { RequestWithUser } from "authentication/entities/requestWithUser.interface";
+import { JwtAccessGuard } from "authentication/guards/jwtAccess.guard";
+import { CreateFileCardDto } from "fileCards/dto/createFileCard.dto";
+import { UpdateFileCardDto } from "fileCards/dto/updateFileCard.dto";
+import { FileCardsService } from "fileCards/fileCards.service";
 
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Patch,
-  Post,
-  Req,
-  UseGuards,
-} from '@nestjs/common';
-
-import { ApiRoute } from 'monotypes/ApiRoute.enum';
-import { ApiTags } from '@nestjs/swagger';
-import { RequestWithUser } from 'authentication/entities/requestWithUser.interface';
-import { JwtAccessGuard } from 'authentication/guards/jwtAccess.guard';
-
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards } from "@nestjs/common";
+import { ApiTags } from "@nestjs/swagger";
+import { ApiRoute } from "@orca/types";
 
 @ApiTags(ApiRoute.FileCards)
 @Controller(ApiRoute.FileCards)

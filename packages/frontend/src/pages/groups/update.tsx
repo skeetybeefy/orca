@@ -3,12 +3,12 @@ import GroupUpsertForm from "components/groups/GroupUpsertForm";
 import useUpdateGroupByIdMutation from "hooks/mutations/groups/useUpdateGroupByIdMutation";
 import useGroupByIdQuery from "hooks/queries/groups/useGroupByIdQuery";
 import ProtectedLayout from "layouts/ProtectedLayout";
-import { ICreateGroupDto } from "monotypes/IGroup.interface";
 import { useRouter } from "next/router";
 import { useCallback, useMemo } from "react";
 import Routes from "types/enums/Routes";
 
 import { Heading, VStack } from "@chakra-ui/react";
+import { ICreateGroupDto } from "@orca/types";
 
 const Update = () => {
   const router = useRouter();

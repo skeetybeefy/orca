@@ -1,8 +1,8 @@
 import FileCardsService from "api/services/filecards";
-import { IFile } from "monotypes/IFile.interface";
-import { IFileCard } from "monotypes/IFileCard.interface";
 import { useQuery } from "react-query";
 import Entity from "types/enums/Entity";
+
+import { IFile, IFileCard } from "@orca/types";
 
 const useFileCardByIdQuery = (id: IFile["id"] | undefined) => {
   return useQuery<IFileCard[], Error, IFileCard | undefined>(

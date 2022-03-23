@@ -1,7 +1,8 @@
 import GroupsService from "api/services/groups";
-import { IGroup } from "monotypes/IGroup.interface";
 import { useMutation, useQueryClient } from "react-query";
 import Entity from "types/enums/Entity";
+
+import { IGroup } from "@orca/types";
 
 const useDeleteGroupByIdMutation = (id: IGroup["id"]) => {
   const queryClient = useQueryClient();

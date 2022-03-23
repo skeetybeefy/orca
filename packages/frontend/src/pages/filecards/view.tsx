@@ -5,29 +5,16 @@ import useFilesQuery from "hooks/queries/files/useFilesQuery";
 import useGroupsQuery from "hooks/queries/groups/useGroupsQuery";
 import useProfileQuery from "hooks/queries/useProfileQuery";
 import ProtectedLayout from "layouts/ProtectedLayout";
-import { ApiRoute } from "monotypes/ApiRoute.enum";
-import { FileCategory } from "monotypes/FileCategory.enum";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useCallback, useMemo } from "react";
 import Routes from "types/enums/Routes";
 
 import {
-  Box,
-  Button,
-  Flex,
-  Link,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  Text,
-  useDisclosure,
-  VStack,
+    Box, Button, Flex, Link, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter,
+    ModalHeader, ModalOverlay, Text, useDisclosure, VStack
 } from "@chakra-ui/react";
+import { ApiRoute, FileCategory } from "@orca/types";
 
 const View = () => {
   const router = useRouter();

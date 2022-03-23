@@ -1,10 +1,6 @@
 import API from "api";
-import { ApiRoute } from "monotypes/ApiRoute.enum";
-import {
-  ICreateUserDto,
-  IUpdateUserDto,
-  IUser,
-} from "monotypes/IUser.interface";
+
+import { ApiRoute, ICreateUserDto, IUpdateUserDto, IUser } from "@orca/types";
 
 class UsersService {
   static async create(user: ICreateUserDto): Promise<IUser> {

@@ -1,7 +1,7 @@
-import { IFileCard } from "monotypes/IFileCard.interface";
 import React, { FC, useMemo } from "react";
 
 import { Box } from "@chakra-ui/react";
+import { IFileCard } from "@orca/types";
 
 const FileCard: FC<
   Partial<IFileCard> & {

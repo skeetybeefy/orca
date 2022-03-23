@@ -1,25 +1,17 @@
-import { RequestWithUser } from 'authentication/entities/requestWithUser.interface';
-import { JwtAccessGuard } from 'authentication/guards/jwtAccess.guard';
-import { File } from 'files/entities/file.entity';
-import { FilesService } from 'files/files.service';
-import { LocalFilesInterceptor } from 'files/localFiles.interceptor';
-import { createReadStream } from 'fs';
-import { ApiRoute } from 'monotypes/ApiRoute.enum';
-import { join } from 'path';
+import { RequestWithUser } from "authentication/entities/requestWithUser.interface";
+import { JwtAccessGuard } from "authentication/guards/jwtAccess.guard";
+import { File } from "files/entities/file.entity";
+import { FilesService } from "files/files.service";
+import { LocalFilesInterceptor } from "files/localFiles.interceptor";
+import { createReadStream } from "fs";
+import { join } from "path";
 
 import {
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Req,
-  StreamableFile,
-  UploadedFile,
-  UseGuards,
-  UseInterceptors,
-} from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+    Controller, Delete, Get, Param, Post, Req, StreamableFile, UploadedFile, UseGuards,
+    UseInterceptors
+} from "@nestjs/common";
+import { ApiTags } from "@nestjs/swagger";
+import { ApiRoute } from "@orca/types";
 
 @ApiTags(ApiRoute.Files)
 @Controller(ApiRoute.Files)

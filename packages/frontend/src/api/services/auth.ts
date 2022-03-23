@@ -1,8 +1,6 @@
 import API from "api";
-import { ApiRoute } from "monotypes/ApiRoute.enum";
-import { AuthenticationRoute } from "monotypes/AuthenticationRoutes.enum";
-import { ICredentials } from "monotypes/ICredentials.interface";
-import { ICreateUserDto, IUser } from "monotypes/IUser.interface";
+
+import { ApiRoute, AuthenticationRoute, ICreateUserDto, ICredentials, IUser } from "@orca/types";
 
 class AuthService {
   static async authenticate(): Promise<IUser> {

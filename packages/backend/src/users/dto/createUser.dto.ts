@@ -1,14 +1,9 @@
 import {
-  IsEmail,
-  IsEnum,
-  IsNotEmpty,
-  IsNumberString,
-  IsString,
-  MinLength,
-  ValidateIf,
-} from 'class-validator';
-import { ICreateUserDto } from 'monotypes/IUser.interface';
-import { Role } from 'users/entities/role.enum';
+    IsEmail, IsEnum, IsNotEmpty, IsNumberString, IsString, MinLength, ValidateIf
+} from "class-validator";
+import { Role } from "users/entities/role.enum";
+
+import { ICreateUserDto } from "@orca/types";
 
 export class CreateUserDto implements ICreateUserDto {
   @IsEnum(Role)

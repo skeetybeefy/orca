@@ -1,15 +1,9 @@
 import { useFormik } from "formik";
 import useLoginMutation from "hooks/mutations/profile/useLoginMutation";
-import { ICredentials } from "monotypes/ICredentials.interface";
 import React, { useCallback } from "react";
 
-import {
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
-  VStack,
-} from "@chakra-ui/react";
+import { Button, FormControl, FormLabel, Input, VStack } from "@chakra-ui/react";
+import { ICredentials } from "@orca/types";
 
 const LoginForm = () => {
   const loginMutation = useLoginMutation();

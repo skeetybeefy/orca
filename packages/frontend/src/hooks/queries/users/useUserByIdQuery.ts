@@ -1,7 +1,8 @@
 import UsersService from "api/services/users";
-import { IUser } from "monotypes/IUser.interface";
 import { useQuery, UseQueryOptions } from "react-query";
 import Entity from "types/enums/Entity";
+
+import { IUser } from "@orca/types";
 
 const useUserByIdQuery = (
   id: IUser["id"] | undefined,

@@ -1,15 +1,8 @@
+import { useFormik } from "formik";
 import React, { FC } from "react";
 
-import {
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
-  VStack,
-} from "@chakra-ui/react";
-import { ICreateUserDto } from "monotypes/IUser.interface";
-import { useFormik } from "formik";
-import { Role } from "monotypes/Role.enum";
+import { Button, FormControl, FormLabel, Input, VStack } from "@chakra-ui/react";
+import { ICreateUserDto, Role } from "@orca/types";
 
 export interface IRegisterFormProps {
   onRegister: (user: ICreateUserDto) => void;

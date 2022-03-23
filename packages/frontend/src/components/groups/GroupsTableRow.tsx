@@ -1,33 +1,16 @@
 import useDeleteGroupByIdMutation from "hooks/mutations/groups/useDeleteGroupByIdMutation";
 import useGroupByIdQuery from "hooks/queries/groups/useGroupByIdQuery";
 import useUserByIdQuery from "hooks/queries/users/useUserByIdQuery";
-import { IGroup } from "monotypes/IGroup.interface";
 import Link from "next/link";
 import { FC } from "react";
 
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import {
-  Avatar,
-  AvatarGroup,
-  Button,
-  ButtonGroup,
-  Flex,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  Td,
-  Text,
-  Tr,
-  useDisclosure,
+    Avatar, AvatarGroup, Button, ButtonGroup, Flex, Menu, MenuButton, MenuItem, MenuList, Modal,
+    ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Td, Text, Tr,
+    useDisclosure
 } from "@chakra-ui/react";
+import { IGroup } from "@orca/types";
 
 const GroupsTableRow: FC<IGroup> = ({ id }) => {
   const { data: group } = useGroupByIdQuery(id);

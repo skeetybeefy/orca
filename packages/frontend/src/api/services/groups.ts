@@ -1,10 +1,6 @@
 import API from "api";
-import { ApiRoute } from "monotypes/ApiRoute.enum";
-import {
-  ICreateGroupDto,
-  IGroup,
-  IUpdateGroupDto,
-} from "monotypes/IGroup.interface";
+
+import { ApiRoute, ICreateGroupDto, IGroup, IUpdateGroupDto } from "@orca/types";
 
 class GroupsService {
   static async create(group: ICreateGroupDto): Promise<IGroup> {

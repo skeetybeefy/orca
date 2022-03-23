@@ -1,26 +1,13 @@
 import useDeleteFileByIdMutation from "hooks/mutations/files/useDeleteFileByIdMutation";
-import { ApiRoute } from "monotypes/ApiRoute.enum";
-import { IFile } from "monotypes/IFile.interface";
 import Link from "next/link";
 import { FC, useCallback } from "react";
 
 import { DeleteIcon } from "@chakra-ui/icons";
 import {
-  Button,
-  ButtonGroup,
-  Flex,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  Td,
-  Text,
-  Tr,
-  useDisclosure,
+    Button, ButtonGroup, Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter,
+    ModalHeader, ModalOverlay, Td, Text, Tr, useDisclosure
 } from "@chakra-ui/react";
+import { ApiRoute, IFile } from "@orca/types";
 
 const FilesTableRow: FC<IFile> = ({ id, originalname, mimetype }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();

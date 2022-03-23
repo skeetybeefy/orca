@@ -1,16 +1,10 @@
-import { Exclude } from 'class-transformer';
-import { IGroup } from 'monotypes/IGroup.interface';
+import { Exclude } from "class-transformer";
 import {
-  Column,
-  Entity,
-  JoinColumn,
-  JoinTable,
-  ManyToMany,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-  RelationId,
-} from 'typeorm';
-import { User } from 'users/entities/user.entity';
+    Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn, RelationId
+} from "typeorm";
+import { User } from "users/entities/user.entity";
+
+import { IGroup } from "@orca/types";
 
 @Entity()
 export class Group implements IGroup {

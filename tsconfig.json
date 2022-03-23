@@ -4,8 +4,8 @@
     "skipLibCheck": true
   },
   "references": [
-    { "path": "backend" },
-    { "path": "frontend" },
-    { "path": "types" }
+    { "path": "packages/backend" },
+    { "path": "packages/frontend" },
+    { "path": "packages/types" }
   ]
 }

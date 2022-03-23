@@ -1,13 +1,8 @@
-import { Exclude } from 'class-transformer';
-import { IFile } from 'monotypes/IFile.interface';
-import {
-  Column,
-  Entity,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-  RelationId,
-} from 'typeorm';
-import { User } from 'users/entities/user.entity';
+import { Exclude } from "class-transformer";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, RelationId } from "typeorm";
+import { User } from "users/entities/user.entity";
+
+import { IFile } from "@orca/types";
 
 @Entity()
 export class File implements IFile {

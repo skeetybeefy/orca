@@ -1,15 +1,10 @@
-import { Exclude } from 'class-transformer';
-import { File } from 'files/entities/file.entity';
-import { Group } from 'groups/entities/group.entity';
-import { IUser } from 'monotypes/IUser.interface';
-import { Role } from 'users/entities/role.enum';
-import {
-  Column,
-  Entity,
-  ManyToMany,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Exclude } from "class-transformer";
+import { File } from "files/entities/file.entity";
+import { Group } from "groups/entities/group.entity";
+import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Role } from "users/entities/role.enum";
+
+import { IUser } from "@orca/types";
 
 @Entity()
 export class User implements Omit<IUser, 'groupsIds' | 'files'> {

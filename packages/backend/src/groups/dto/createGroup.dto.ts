@@ -1,6 +1,6 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
-import { ICreateGroupDto } from 'monotypes/IGroup.interface';
-import { IUser } from 'monotypes/IUser.interface';
+import { IsNotEmpty, IsNumber, IsString } from "class-validator";
+
+import { ICreateGroupDto, IUser } from "@orca/types";
 
 export class CreateGroupDto implements ICreateGroupDto {
   @IsString()

@@ -2,13 +2,12 @@ import Page from "components/common/Page";
 import FileCardUpsertForm from "components/files/FileCardUpsertForm";
 import useCreateFileCardMutation from "hooks/mutations/fileCards/useCreateFileCardMutation";
 import ProtectedLayout from "layouts/ProtectedLayout";
-import { FileCategory } from "monotypes/FileCategory.enum";
-import { ICreateFileCardDto } from "monotypes/IFileCard.interface";
 import { useRouter } from "next/router";
 import { useCallback, useMemo } from "react";
 import Routes from "types/enums/Routes";
 
 import { Heading, VStack } from "@chakra-ui/react";
+import { FileCategory, ICreateFileCardDto } from "@orca/types";
 
 const Create = () => {
   const router = useRouter();

@@ -1,7 +1,8 @@
 import FilesService from "api/services/files";
-import { IFile } from "monotypes/IFile.interface";
 import { useMutation, useQueryClient } from "react-query";
 import Entity from "types/enums/Entity";
+
+import { IFile } from "@orca/types";
 
 const useDeleteFileByIdMutation = (id: IFile["id"]) => {
   const queryClient = useQueryClient();

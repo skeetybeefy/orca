@@ -1,18 +1,12 @@
-import { Exclude } from 'class-transformer';
-import { File } from 'files/entities/file.entity';
-import { Group } from 'groups/entities/group.entity';
-import { FileCategory } from 'monotypes/FileCategory.enum';
-import { IFileCard } from 'monotypes/IFileCard.interface';
+import { Exclude } from "class-transformer";
+import { File } from "files/entities/file.entity";
+import { Group } from "groups/entities/group.entity";
 import {
-  Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-  RelationId,
-} from 'typeorm';
-import { User } from 'users/entities/user.entity';
+    Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn, RelationId
+} from "typeorm";
+import { User } from "users/entities/user.entity";
+
+import { FileCategory, IFileCard } from "@orca/types";
 
 @Entity()
 export class FileCard

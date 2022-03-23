@@ -1,7 +1,8 @@
 import GroupsService from "api/services/groups";
-import { IGroup } from "monotypes/IGroup.interface";
 import { useQuery } from "react-query";
 import Entity from "types/enums/Entity";
+
+import { IGroup } from "@orca/types";
 
 const useGroupByIdQuery = (id: IGroup["id"] | undefined) => {
   return useQuery<IGroup[], Error, IGroup | undefined>(

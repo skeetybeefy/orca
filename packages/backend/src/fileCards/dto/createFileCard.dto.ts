@@ -1,16 +1,6 @@
-import {
-  IsEnum,
-  IsNotEmpty,
-  IsNumber,
-  IsOptional,
-  IsString,
-  IsInt,
-} from 'class-validator';
+import { IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 
-import { FileCategory } from 'monotypes/FileCategory.enum';
-import { IFile } from 'monotypes/IFile.interface';
-import { ICreateFileCardDto } from 'monotypes/IFileCard.interface';
-import { IGroup } from 'monotypes/IGroup.interface';
+import { FileCategory, ICreateFileCardDto, IFile, IGroup } from "@orca/types";
 
 export class CreateFileCardDto implements ICreateFileCardDto {
   @IsString()

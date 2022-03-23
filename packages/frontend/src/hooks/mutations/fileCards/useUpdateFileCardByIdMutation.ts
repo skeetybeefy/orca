@@ -1,7 +1,8 @@
 import FileCardsService from "api/services/filecards";
-import { IFileCard, IUpdateFileCardDto } from "monotypes/IFileCard.interface";
 import { useMutation, useQueryClient } from "react-query";
 import Entity from "types/enums/Entity";
+
+import { IFileCard, IUpdateFileCardDto } from "@orca/types";
 
 const useUpdateFileCardByIdMutation = (id: IFileCard["id"]) => {
   const queryClient = useQueryClient();

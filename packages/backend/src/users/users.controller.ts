@@ -1,20 +1,11 @@
-import { JwtAccessGuard } from 'authentication/guards/jwtAccess.guard';
-import { ApiRoute } from 'monotypes/ApiRoute.enum';
-import { CreateUserDto } from 'users/dto/createUser.dto';
-import { UpdateUserDto } from 'users/dto/updateUser.dto';
-import { UsersService } from 'users/users.service';
+import { JwtAccessGuard } from "authentication/guards/jwtAccess.guard";
+import { CreateUserDto } from "users/dto/createUser.dto";
+import { UpdateUserDto } from "users/dto/updateUser.dto";
+import { UsersService } from "users/users.service";
 
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Patch,
-  Post,
-  UseGuards,
-} from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from "@nestjs/common";
+import { ApiTags } from "@nestjs/swagger";
+import { ApiRoute } from "@orca/types";
 
 @ApiTags(ApiRoute.Users)
 @Controller(ApiRoute.Users)

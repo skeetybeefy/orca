@@ -1,6 +1,6 @@
-import API from 'api';
-import { ApiRoute } from 'monotypes/ApiRoute.enum';
-import { ICreateFileCardDto, IFileCard, IUpdateFileCardDto } from 'monotypes/IFileCard.interface';
+import API from "api";
+
+import { ApiRoute, ICreateFileCardDto, IFileCard, IUpdateFileCardDto } from "@orca/types";
 
 class FileCardsService {
 

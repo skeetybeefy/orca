@@ -1,22 +1,12 @@
-import { JwtAccessGuard } from 'authentication/guards/jwtAccess.guard';
-import { CreateGroupDto } from 'groups/dto/createGroup.dto';
-import { UpdateGroupDto } from 'groups/dto/updateGroup.dto';
-import { GroupsService } from 'groups/groups.service';
-import { ApiRoute } from 'monotypes/ApiRoute.enum';
+import { RequestWithUser } from "authentication/entities/requestWithUser.interface";
+import { JwtAccessGuard } from "authentication/guards/jwtAccess.guard";
+import { CreateGroupDto } from "groups/dto/createGroup.dto";
+import { UpdateGroupDto } from "groups/dto/updateGroup.dto";
+import { GroupsService } from "groups/groups.service";
 
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Patch,
-  Post,
-  Req,
-  UseGuards,
-} from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
-import { RequestWithUser } from 'authentication/entities/requestWithUser.interface';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards } from "@nestjs/common";
+import { ApiTags } from "@nestjs/swagger";
+import { ApiRoute } from "@orca/types";
 
 @ApiTags(ApiRoute.Groups)
 @Controller(ApiRoute.Groups)

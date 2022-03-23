@@ -1,6 +1,6 @@
 import API from "api";
-import { ApiRoute } from "monotypes/ApiRoute.enum";
-import { IFile } from "monotypes/IFile.interface";
+
+import { ApiRoute, IFile } from "@orca/types";
 
 class FilesService {
   static async create(file: File): Promise<IFile> {

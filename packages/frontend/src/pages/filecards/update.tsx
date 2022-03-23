@@ -3,14 +3,12 @@ import FileCardUpsertForm from "components/files/FileCardUpsertForm";
 import useUpdateFileCardByIdMutation from "hooks/mutations/fileCards/useUpdateFileCardByIdMutation";
 import useFileCardByIdQuery from "hooks/queries/fileCards/useFileCardByIdQuery";
 import ProtectedLayout from "layouts/ProtectedLayout";
-import { FileCategory } from "monotypes/FileCategory.enum";
-import { ICreateFileCardDto } from "monotypes/IFileCard.interface";
 import { useRouter } from "next/router";
 import { useCallback, useMemo } from "react";
-import { useDispatch } from "react-redux";
 import Routes from "types/enums/Routes";
 
 import { Heading, VStack } from "@chakra-ui/react";
+import { FileCategory, ICreateFileCardDto } from "@orca/types";
 
 const Update = () => {
   const router = useRouter();

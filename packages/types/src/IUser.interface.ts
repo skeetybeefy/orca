@@ -1,5 +1,5 @@
-import { IGroup } from 'monotypes/IGroup.interface';
-import { Role } from 'monotypes/Role.enum';
+import { IGroup } from "./IGroup.interface";
+import { Role } from "./Role.enum";
 
 interface IBaseUser {
   id: number;
@@ -13,7 +13,7 @@ interface IBaseUser {
   addressSettlement: string;
   addressLocation: string;
   password: string;
-  groupsIds: IGroup['id'][];
+  groupsIds: IGroup["id"][];
   files: string[];
 }
 
@@ -26,7 +26,7 @@ interface IMedicalInformation {
 
 export type IUser = IBaseUser & IMedicalInformation;
 
-export type ICreateUserDto = Omit<IBaseUser, 'id' | 'groupsIds' | 'files'> &
+export type ICreateUserDto = Omit<IBaseUser, "id" | "groupsIds" | "files"> &
   Partial<IMedicalInformation>;
 
-export type IUpdateUserDto = Pick<IUser, 'id'> & Partial<ICreateUserDto>;
+export type IUpdateUserDto = Pick<IUser, "id"> & Partial<ICreateUserDto>;

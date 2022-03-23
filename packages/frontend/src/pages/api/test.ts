@@ -1,8 +1,9 @@
 import API from "api";
-import axios from "axios";
+import getRequestOptions from "util/getRequestOptions";
 
 const handler = async (req, res) => {
-  const { data } = await API.get("test");
+  const options = getRequestOptions(req);
+  const { data } = await API.get("test", options);
   res.send(data);
 };
 
