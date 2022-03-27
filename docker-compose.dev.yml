@@ -16,7 +16,7 @@ services:
       - ${BACKEND_PORT}:${BACKEND_PORT}
     depends_on:
       - postgres
-    command: yarn run lerna run start:dev --scope @orca/backend
+    command: yarn run lerna run start:dev --scope @orca/backend --stream
 
   frontend:
     container_name: frontend.development
@@ -35,7 +35,7 @@ services:
       - ${FRONTEND_PORT}:${FRONTEND_PORT}
     depends_on:
       - backend
-    command: yarn run lerna run start:dev --scope @orca/frontend
+    command: yarn run lerna run start:dev --scope @orca/frontend --stream
 
   postgres:
     container_name: postgres.development
