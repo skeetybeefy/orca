@@ -1,11 +1,14 @@
-import FilesService from "api/services/files";
-import { useQuery } from "react-query";
-import Entity from "types/enums/Entity";
+import axios from 'axios';
+import { useQuery } from 'react-query';
+import Entity from 'types/enums/Entity';
 
-import { IFile } from "@orca/types";
+import { IFile } from '@orca/types';
 
 const useFilesQuery = () => {
-  return useQuery<IFile[], Error>(Entity.Files, FilesService.getAll);
+  return useQuery<IFile[], Error>(Entity.Files, async () => {
+    const response = await axios.get("/api/files")
+    return response.data
+  });
 };
 
 export default useFilesQuery;

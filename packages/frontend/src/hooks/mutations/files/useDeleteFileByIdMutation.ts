@@ -1,12 +1,15 @@
-import FilesService from "api/services/files";
-import { useMutation, useQueryClient } from "react-query";
-import Entity from "types/enums/Entity";
+import axios from 'axios';
+import { useMutation, useQueryClient } from 'react-query';
+import Entity from 'types/enums/Entity';
 
-import { IFile } from "@orca/types";
+import { IFile } from '@orca/types';
 
 const useDeleteFileByIdMutation = (id: IFile["id"]) => {
   const queryClient = useQueryClient();
-  return useMutation(() => FilesService.deleteById(id), {
+  return useMutation(async () => {
+    const response = await axios.delete(`/api/files/${id}`)
+    return response.data
+  }, {
     onSettled() {
       queryClient.invalidateQueries(Entity.Files);
     },

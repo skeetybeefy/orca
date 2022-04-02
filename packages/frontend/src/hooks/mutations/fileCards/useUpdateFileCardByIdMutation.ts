@@ -1,14 +1,15 @@
-import FileCardsService from "api/services/filecards";
-import { useMutation, useQueryClient } from "react-query";
-import Entity from "types/enums/Entity";
+import axios from 'axios';
+import { useMutation, useQueryClient } from 'react-query';
+import Entity from 'types/enums/Entity';
 
-import { IFileCard, IUpdateFileCardDto } from "@orca/types";
+import { IFileCard, IUpdateFileCardDto } from '@orca/types';
 
 const useUpdateFileCardByIdMutation = (id: IFileCard["id"]) => {
   const queryClient = useQueryClient();
-  return useMutation(
-    (updatedItem: IUpdateFileCardDto) =>
-      FileCardsService.updateById(id, updatedItem),
+  return useMutation(async (updatedItem: IUpdateFileCardDto) => {
+    const { data } = await axios.patch(`/api/fileCards/${id}`, updatedItem)
+    return data
+  },
     {
       onSettled() {
         queryClient.invalidateQueries(Entity.FileCards);

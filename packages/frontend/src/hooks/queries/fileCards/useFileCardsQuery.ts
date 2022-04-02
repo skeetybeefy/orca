@@ -1,13 +1,16 @@
-import FileCardsService from "api/services/filecards";
-import { useQuery } from "react-query";
-import Entity from "types/enums/Entity";
+import axios from 'axios';
+import { useQuery } from 'react-query';
+import Entity from 'types/enums/Entity';
 
-import { IFileCard } from "@orca/types";
+import { IFileCard } from '@orca/types';
 
 const useFileCardsQuery = () => {
   return useQuery<IFileCard[], Error>(
     Entity.FileCards,
-    FileCardsService.getAll
+    async () => {
+      const { data } = await axios.get("/api/fileCards")
+      return data
+    }
   );
 };
 

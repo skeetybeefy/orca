@@ -1,14 +1,15 @@
-import GroupsService from "api/services/groups";
-import { useMutation, useQueryClient } from "react-query";
-import Entity from "types/enums/Entity";
+import axios from 'axios';
+import { useMutation, useQueryClient } from 'react-query';
+import Entity from 'types/enums/Entity';
 
-import { IGroup, IUpdateGroupDto } from "@orca/types";
+import { IGroup, IUpdateGroupDto } from '@orca/types';
 
 const useUpdateGroupByIdMutation = (id: IGroup["id"]) => {
   const queryClient = useQueryClient();
-  return useMutation(
-    (updatedGroup: IUpdateGroupDto) =>
-      GroupsService.updateById(id, updatedGroup),
+  return useMutation(async (updatedGroup: IUpdateGroupDto): Promise<IGroup> => {
+    const { data } = await axios.patch(`/api/groups/${id}`, updatedGroup)
+    return data
+  },
     {
       onSettled() {
         queryClient.invalidateQueries(Entity.Groups);

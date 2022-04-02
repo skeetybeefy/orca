@@ -1,8 +1,8 @@
-import UsersService from "api/services/users";
-import { useQuery, UseQueryOptions } from "react-query";
-import Entity from "types/enums/Entity";
+import axios from 'axios';
+import { useQuery, UseQueryOptions } from 'react-query';
+import Entity from 'types/enums/Entity';
 
-import { IUser } from "@orca/types";
+import { IUser } from '@orca/types';
 
 const useUserByIdQuery = (
   id: IUser["id"] | undefined,
@@ -10,7 +10,10 @@ const useUserByIdQuery = (
 ) => {
   return useQuery<IUser[], Error, IUser | undefined>(
     Entity.Users,
-    UsersService.getAll,
+    async () => {
+      const { data } = await axios.get("/api/users/getAll")
+      return data
+    },
     {
       select: (users) => users.find((user) => user.id === id),
       enabled: !!id,

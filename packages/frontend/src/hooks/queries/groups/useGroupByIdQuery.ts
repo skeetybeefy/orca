@@ -1,13 +1,16 @@
-import GroupsService from "api/services/groups";
-import { useQuery } from "react-query";
-import Entity from "types/enums/Entity";
+import axios from 'axios';
+import { useQuery } from 'react-query';
+import Entity from 'types/enums/Entity';
 
-import { IGroup } from "@orca/types";
+import { IGroup } from '@orca/types';
 
 const useGroupByIdQuery = (id: IGroup["id"] | undefined) => {
   return useQuery<IGroup[], Error, IGroup | undefined>(
     Entity.Groups,
-    GroupsService.getAll,
+    async () => {
+      const response = await axios.get("/api/groups")
+      return response.data
+    },
     {
       select: (items) => items.find((item) => item.id === id),
       enabled: !!id,

@@ -1,10 +1,15 @@
-import FileCardsService from "api/services/filecards";
-import { useMutation, useQueryClient } from "react-query";
-import Entity from "types/enums/Entity";
+import axios from 'axios';
+import { useMutation, useQueryClient } from 'react-query';
+import Entity from 'types/enums/Entity';
+
+import { ICreateFileCardDto } from '@orca/types';
 
 const useCreateFileCardMutation = () => {
   const queryClient = useQueryClient();
-  return useMutation(FileCardsService.create, {
+  return useMutation(async (fileCard: ICreateFileCardDto) => {
+    const { data } = await axios.post("/api/fileCards", fileCard)
+    return data
+  }, {
     onSettled() {
       queryClient.invalidateQueries(Entity.FileCards);
     },

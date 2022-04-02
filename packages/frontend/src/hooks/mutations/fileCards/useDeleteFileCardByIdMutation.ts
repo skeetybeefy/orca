@@ -1,12 +1,15 @@
-import FileCardsService from "api/services/filecards";
-import { useMutation, useQueryClient } from "react-query";
-import Entity from "types/enums/Entity";
+import axios from 'axios';
+import { useMutation, useQueryClient } from 'react-query';
+import Entity from 'types/enums/Entity';
 
-import { IFileCard } from "@orca/types";
+import { IFileCard } from '@orca/types';
 
 const useDeleteFileCardByIdMutation = () => {
   const queryClient = useQueryClient();
-  return useMutation((id: IFileCard["id"]) => FileCardsService.deleteById(id), {
+  return useMutation(async (id: IFileCard["id"]) => {
+    const { data } = await axios.delete(`/api/fileCards/${id}`)
+    return data
+  }, {
     onSettled() {
       queryClient.invalidateQueries(Entity.FileCards);
     },
