@@ -1,6 +1,6 @@
-import { NextRequest } from "next/dist/server/web/spec-extension/request";
+import { NextApiRequest } from "next/types";
 
-const getJwtCookiesFromRequest = (req: NextRequest) => {
+const getJwtCookiesFromRequest = (req: NextApiRequest) => {
   return Object.entries(req.cookies)
     .map(([key, value]) => `${key}=${value}`)
     .join(";");

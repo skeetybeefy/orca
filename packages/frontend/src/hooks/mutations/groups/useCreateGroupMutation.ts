@@ -7,7 +7,7 @@ import { ICreateGroupDto, IGroup } from '@orca/types';
 const useCreateGroupMutation = () => {
   const queryClient = useQueryClient();
   return useMutation(async (group: ICreateGroupDto): Promise<IGroup> => {
-    const { data } = await axios.post("/api/groups", group)
+    const { data } = await axios.post<IGroup>("/api/groups", group)
     return data
   }, {
     onSettled() {

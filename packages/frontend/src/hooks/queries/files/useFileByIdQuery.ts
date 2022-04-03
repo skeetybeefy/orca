@@ -8,7 +8,7 @@ const useFileByIdQuery = (id: IFile["id"] | undefined) => {
   return useQuery<IFile[], Error, IFile | undefined>(
     Entity.Files,
     async () => {
-      const response = await axios.get("api/files")
+      const response = await axios.get<IFile[]>("api/files")
       return response.data
     },
     {

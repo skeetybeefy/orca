@@ -8,7 +8,7 @@ const useFileCardsQuery = () => {
   return useQuery<IFileCard[], Error>(
     Entity.FileCards,
     async () => {
-      const { data } = await axios.get("/api/fileCards")
+      const { data } = await axios.get<IFileCard[]>("/api/fileCards")
       return data
     }
   );

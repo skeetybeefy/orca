@@ -7,7 +7,7 @@ import { IFileCard, IUpdateFileCardDto } from '@orca/types';
 const useUpdateFileCardByIdMutation = (id: IFileCard["id"]) => {
   const queryClient = useQueryClient();
   return useMutation(async (updatedItem: IUpdateFileCardDto) => {
-    const { data } = await axios.patch(`/api/fileCards/${id}`, updatedItem)
+    const { data } = await axios.patch<IFileCard>(`/api/fileCards/${id}`, updatedItem)
     return data
   },
     {

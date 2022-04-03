@@ -6,7 +6,7 @@ import { IUser } from '@orca/types';
 
 const useUsersQuery = () => {
   return useQuery<IUser[], Error>(Entity.Users, async () => {
-    const { data } = await axios.get("/api/users/getAll")
+    const { data } = await axios.get<IUser[]>("/api/users/getAll")
     return data
   });
 };
