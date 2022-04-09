@@ -1,7 +1,7 @@
 import { IGroup } from "./IGroup.interface";
 import { Role } from "./Role.enum";
 
-interface IBaseUser {
+export interface IBaseUser {
   id: number;
   role: Role;
   email: string;
@@ -17,7 +17,7 @@ interface IBaseUser {
   files: string[];
 }
 
-interface IMedicalInformation {
+export interface IMedicalInformation {
   diplomaNumber: string;
   qualification: string;
   specification: string;
