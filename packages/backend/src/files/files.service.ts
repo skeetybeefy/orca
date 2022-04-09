@@ -55,4 +55,12 @@ export class FilesService {
     }
     return id;
   }
+
+  async removeBulk(ids: ReadonlyArray<File["id"]>) {
+    const deleteResponse = await this.filesRepository.delete(ids as number[])
+    if (deleteResponse.affected !== ids.length) {
+      // TODO switch to transactions
+      // because we need to see which files didnt change
+    } else return ids
+  }
 }
