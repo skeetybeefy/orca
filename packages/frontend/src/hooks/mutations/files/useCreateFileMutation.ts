@@ -1,3 +1,4 @@
+import { IFile } from '@orca/types';
 import axios from 'axios';
 import { useMutation, useQueryClient } from 'react-query';
 import Entity from 'types/enums/Entity';
@@ -7,7 +8,7 @@ const useCreateFileMutation = () => {
   return useMutation(async (file: File) => {
     const data = new FormData()
     data.append("file", file as File)
-    const response = await axios.post("/api/files", data)
+    const response = await axios.post<IFile>("/api/files", data)
     return response.data
   }, {
     onSettled() {
