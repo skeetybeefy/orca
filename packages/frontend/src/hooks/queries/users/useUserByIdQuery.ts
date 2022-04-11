@@ -11,7 +11,7 @@ const useUserByIdQuery = (
   return useQuery<IUser[], Error, IUser | undefined>(
     Entity.Users,
     async () => {
-      const { data } = await axios.get("/api/users/getAll")
+      const { data } = await axios.get<IUser[]>("/api/users/getAll")
       return data
     },
     {

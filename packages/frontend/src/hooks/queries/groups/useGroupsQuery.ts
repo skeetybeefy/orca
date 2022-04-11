@@ -6,7 +6,7 @@ import { IGroup } from '@orca/types';
 
 const useGroupsQuery = () => {
   return useQuery<IGroup[], Error>(Entity.Groups, async () => {
-    const response = await axios.get("/api/groups")
+    const response = await axios.get<IGroup[]>("/api/groups")
     return response.data
   });
 };

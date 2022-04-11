@@ -1,9 +1,9 @@
-import { AxiosRequestConfig } from "axios";
-import { NextRequest } from "next/dist/server/web/spec-extension/request";
-import getJwtCookiesFromRequest from "util/getJwtCookiesFromRequest";
+import { AxiosRequestConfig } from 'axios';
+import { NextApiRequest } from 'next/types';
+import getJwtCookiesFromRequest from 'util/getJwtCookiesFromRequest';
 
 const getRequestOptions = (
-  req: NextRequest,
+  req: NextApiRequest,
   options: AxiosRequestConfig<any> = {}
 ) => {
   return {

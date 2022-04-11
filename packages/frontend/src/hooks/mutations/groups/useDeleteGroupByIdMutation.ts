@@ -7,7 +7,7 @@ import { IGroup } from '@orca/types';
 const useDeleteGroupByIdMutation = (id: IGroup["id"]) => {
   const queryClient = useQueryClient();
   return useMutation(async (): Promise<IGroup["id"]> => {
-    const { data } = await axios.delete(`/api/groups/${id}`)
+    const { data } = await axios.delete<IGroup["id"]>(`/api/groups/${id}`)
     return data
   }, {
     async onMutate() {

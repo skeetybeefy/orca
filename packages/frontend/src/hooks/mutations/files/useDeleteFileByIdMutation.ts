@@ -6,8 +6,8 @@ import { IFile } from '@orca/types';
 
 const useDeleteFileByIdMutation = (id: IFile["id"]) => {
   const queryClient = useQueryClient();
-  return useMutation(async () => {
-    const response = await axios.delete(`/api/files/${id}`)
+  return useMutation(async (): Promise<IFile["id"]> => {
+    const response = await axios.delete<IFile["id"]>(`/api/files/${id}`)
     return response.data
   }, {
     onSettled() {

@@ -10,7 +10,7 @@ const useLoginMutation = () => {
   const queryClient = useQueryClient();
   const router = useRouter();
   return useMutation(async (credentials: ICredentials): Promise<IUser> => {
-    const response = await axios.post("/api/auth/login", credentials)
+    const response = await axios.post<IUser>("/api/auth/login", credentials)
     return response.data
   }, {
     onSuccess(data) {

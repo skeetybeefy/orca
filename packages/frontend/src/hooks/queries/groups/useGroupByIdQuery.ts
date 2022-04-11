@@ -8,7 +8,7 @@ const useGroupByIdQuery = (id: IGroup["id"] | undefined) => {
   return useQuery<IGroup[], Error, IGroup | undefined>(
     Entity.Groups,
     async () => {
-      const response = await axios.get("/api/groups")
+      const response = await axios.get<IGroup[]>("/api/groups")
       return response.data
     },
     {
