@@ -7,6 +7,7 @@ import { createReadStream } from "fs";
 import { join } from "path";
 
 import {
+  Body,
     Controller, Delete, Get, Param, Post, Req, StreamableFile, UploadedFile, UseGuards,
     UseInterceptors
 } from "@nestjs/common";
@@ -62,5 +63,10 @@ export class FilesController {
   @Delete(':id')
   remove(@Param('id') id: File['id']) {
     return this.filesService.remove(id);
+  }
+
+  @Delete()
+  removeBulk(@Body() ids: ReadonlyArray<File["id"]>) {
+    return this.filesService.removeBulk(ids)
   }
 }

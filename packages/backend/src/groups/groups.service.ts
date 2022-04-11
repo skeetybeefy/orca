@@ -76,4 +76,12 @@ export class GroupsService {
       throw new NotFoundException('Group not found');
     } else return id;
   }
+
+  async removeBulk(ids: ReadonlyArray<Group['id']>) {
+    const deleteResponse = await this.groupsRepository.delete(ids as number[])
+    if (deleteResponse.affected !== ids.length) {
+      // TODO see which ids didnt get deleted
+      // switch to transactions
+    } else return ids
+  }
 }
