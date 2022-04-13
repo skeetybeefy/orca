@@ -7,6 +7,7 @@ enum Routes {
   Home = "/",
   Login = "/auth/login",
   Register = "/auth/register",
+  UsefulMaterials = "/usefulMaterials"
 }
 
 export default Routes;
