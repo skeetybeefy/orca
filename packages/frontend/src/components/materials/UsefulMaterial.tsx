@@ -7,39 +7,45 @@ export interface IUsefulMaterialProps {
 }
 
 const UsefulMaterial: React.FC<IUsefulMaterialProps> = ({ imageSrc, title, link }) => {
-  const linkColor = useColorModeValue("black","gray.300")
-  
+  const linkColor = useColorModeValue("black", "gray.300")
+
   return (
-    <Box
-      w={300}
-      borderColor="gray.600"
-      borderWidth="1px"
-    >
-      <Box>
-        <Image
-          w={300}
-          h={200}
-          src={imageSrc}
-          objectFit="contain"
-        ></Image>
-      </Box>
-      <Box paddingX={"4"} paddingBottom={"2"}>
-        <Box
-          fontWeight={"semibold"}
-          fontSize="larger"
-        >{title}</Box>
-        <Box
-          color={linkColor}
-          fontWeight={"light"}
-          isTruncated
-          _hover={{
-            textDecoration: "underline"
-          }}
-        >
-          <a href={link}>{link}</a>
+    <a href={link}>
+      <Box
+        w={300}
+        borderColor="gray.600"
+        borderWidth="1px"
+        _hover={{
+          cursor: "pointer",
+          borderColor: "gray.500",
+          boxShadow: "xl"
+        }}
+      >
+        <Box>
+          <Image
+            w={300}
+            h={200}
+            src={imageSrc}
+            objectFit="contain"
+          ></Image>
+        </Box>
+        <Box paddingX={"4"} paddingBottom={"2"}>
+          <Box
+            fontWeight={"semibold"}
+            fontSize="larger"
+          >
+            {title}
+          </Box>
+          <Box
+            color={linkColor}
+            fontWeight={"light"}
+            isTruncated
+          >
+            {link}
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </a>
   )
 }
 
