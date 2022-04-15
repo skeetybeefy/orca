@@ -164,7 +164,7 @@ const DoctorRegisterForm: FC<IRegisterFormProps> = ({ onRegister }) => {
           />
         </FormControl>
         <FormControl isRequired>
-          <FormLabel htmlFor="specification">Спецификация</FormLabel>
+          <FormLabel htmlFor="specification">Специализация</FormLabel>
           <Input
             value={values["specification"]}
             onChange={handleChange}

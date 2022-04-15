@@ -9,7 +9,6 @@ const useCreateFileMutation = () => {
   const queryClient = useQueryClient();
   return useMutation(
     async ({ file, ...values }: SubmitFileDto) => {
-      console.log({ values });
       const formData = new FormData();
       formData.append("file", file);
       Object.entries(values).forEach(([key, value]) => {

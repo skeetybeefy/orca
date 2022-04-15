@@ -19,7 +19,6 @@ const authenticationMiddleware = async (
     req.userContext = data;
     next();
   } catch (e) {
-    console.log({ e });
     throw e;
   }
 };
