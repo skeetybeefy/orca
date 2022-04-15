@@ -1,8 +1,17 @@
 import { Exclude } from "class-transformer";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, RelationId } from "typeorm";
+import { Group } from "groups/entities/group.entity";
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  RelationId,
+} from "typeorm";
 import { User } from "users/entities/user.entity";
 
-import { IFile } from "@orca/types";
+import { FileCategory, IFile } from "@orca/types";
 
 @Entity()
 export class File implements IFile {
@@ -26,5 +35,19 @@ export class File implements IFile {
   owner: User;
 
   @RelationId((self: File) => self.owner)
-  ownerId: User['id'];
+  ownerId: User["id"];
+
+  @Column({ nullable: true })
+  description: string;
+
+  @Column({ type: "enum", enum: FileCategory })
+  category: FileCategory;
+
+  @ManyToMany(() => Group)
+  @JoinTable()
+  @Exclude()
+  allowedGroups: Group[];
+
+  @RelationId((self: File) => self.allowedGroups)
+  allowedGroupsIds: Group["id"][];
 }

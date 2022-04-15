@@ -1,47 +1,36 @@
 import Page from "components/common/Page";
-import { useFormik } from "formik";
+import FileUpsertForm from "components/files/FileUpsertForm";
 import useCreateFileMutation from "hooks/mutations/files/useCreateFileMutation";
+import useGroupsOptions from "hooks/queries/groups/useGroupsOptions";
 import ProtectedLayout from "layouts/ProtectedLayout";
 import { useRouter } from "next/router";
-import React, { ChangeEventHandler, useCallback } from "react";
+import React, { useCallback } from "react";
+import { SubmitFileDto } from "types/dtos/SubmitFileDto";
 import Routes from "types/enums/Routes";
 
-import {
-  Button,
-  FormControl,
-  FormLabel,
-  Heading,
-  Input,
-  VStack,
-} from "@chakra-ui/react";
-
-interface FormWithFile {
-  file: File | null;
-}
+import { Heading, Spinner, Text, VStack } from "@chakra-ui/react";
+import { FileCategory } from "@orca/types";
 
 const Create = () => {
   const router = useRouter();
-
   const createFileMutation = useCreateFileMutation();
-
-  const { handleSubmit, setFieldValue } = useFormik({
-    initialValues: {
-      file: null,
+  const onSubmit = useCallback(
+    async (values: SubmitFileDto) => {
+      await createFileMutation.mutateAsync(values);
+      router.push(Routes.Files);
     },
-    onSubmit: async ({ file }: FormWithFile) => {
-      if (file) {
-        await createFileMutation.mutateAsync(file);
-        router.push(Routes.Files);
-      }
-    },
-  });
-
-  const onFileInputChange: ChangeEventHandler<HTMLInputElement> = useCallback(
-    (e) => {
-      setFieldValue("file", e.target.files![0]);
-    },
-    [setFieldValue]
+    [router, createFileMutation]
   );
+
+  const { data: groups, isLoading, isError, error } = useGroupsOptions();
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (isError) {
+    return <Text>Ошибка: {error?.message}</Text>;
+  }
 
   return (
     <Page title="Creating a document">
@@ -49,22 +38,17 @@ const Create = () => {
         <Heading size="md" w="full" textAlign="start">
           Загрузить файл
         </Heading>
-        <form onSubmit={handleSubmit}>
-          <VStack align="stretch" gap={4}>
-            <FormControl>
-              <FormLabel htmlFor="file">File</FormLabel>
-              <Input
-                onChange={onFileInputChange}
-                type="file"
-                id="file"
-                placeholder="File"
-              />
-            </FormControl>
-            <Button w="full" type="submit">
-              Загрузить
-            </Button>
-          </VStack>
-        </form>
+        <FileUpsertForm
+          initialValues={{
+            filename: "",
+            category: FileCategory.Text,
+            description: "",
+            allowedGroupsIds: [],
+          }}
+          allowedGroups={groups}
+          onSubmit={onSubmit}
+          submitText={"Загрузить"}
+        />
       </VStack>
     </Page>
   );
