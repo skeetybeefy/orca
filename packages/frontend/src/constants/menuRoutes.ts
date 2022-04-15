@@ -14,6 +14,10 @@ const menuRoutes: IMenuRoute[] = [
     title: "Кабинет",
     href: Routes.Dashboard,
   },
+  {
+    title: "Полезные материалы",
+    href: Routes.UsefulMaterials
+  },
 ];
 
 export default menuRoutes;
