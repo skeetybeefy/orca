@@ -1,5 +1,13 @@
 import {
-    IsEmail, IsEnum, IsNotEmpty, IsNumberString, IsString, MinLength, ValidateIf
+  IsEmail,
+  IsEnum,
+  IsNotEmpty,
+  IsNumberString,
+  IsString,
+  Length,
+  MaxLength,
+  MinLength,
+  ValidateIf,
 } from "class-validator";
 import { Role } from "users/entities/role.enum";
 
@@ -17,25 +25,31 @@ export class CreateUserDto implements ICreateUserDto {
   password: string;
 
   @IsString()
+  @MaxLength(50)
   nickname?: string;
 
   @IsString()
   @IsNotEmpty()
+  @MaxLength(50)
   firstName: string;
 
   @IsString()
   @IsNotEmpty()
+  @MaxLength(50)
   lastName: string;
 
   @IsString()
+  @MaxLength(50)
   middleName?: string;
 
   @IsString()
   @IsNotEmpty()
+  @MaxLength(50)
   addressRegion: string;
 
   @IsString()
   @IsNotEmpty()
+  @MaxLength(50)
   addressSettlement: string;
 
   @IsString()
@@ -43,9 +57,16 @@ export class CreateUserDto implements ICreateUserDto {
   addressLocation: string;
 
   @ValidateIf((o) => o.role === Role.Doctor)
+  @IsString()
+  @IsNotEmpty()
+  @Length(2, 2)
+  diplomaNumberLetterPart: string;
+
+  @ValidateIf((o) => o.role === Role.Doctor)
   @IsNumberString()
   @IsNotEmpty()
-  diplomaNumber: string;
+  @Length(6, 6)
+  diplomaNumberNumericPart: string;
 
   @ValidateIf((o) => o.role === Role.Doctor)
   @IsString()

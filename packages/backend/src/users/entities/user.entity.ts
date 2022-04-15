@@ -1,17 +1,24 @@
 import { Exclude } from "class-transformer";
 import { File } from "files/entities/file.entity";
 import { Group } from "groups/entities/group.entity";
-import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { Role } from "users/entities/role.enum";
 
 import { IUser } from "@orca/types";
 
 @Entity()
-export class User implements Omit<IUser, 'groupsIds' | 'files'> {
+export class User implements Omit<IUser, "groupsIds" | "files"> {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'enum', enum: Role })
+  @Column({ type: "enum", enum: Role })
   role: Role;
 
   @Column()
@@ -39,7 +46,16 @@ export class User implements Omit<IUser, 'groupsIds' | 'files'> {
   addressLocation: string;
 
   @Column({ nullable: true })
+  @JoinColumn()
   diplomaNumber: string;
+
+  @Column({ nullable: true })
+  @Exclude()
+  diplomaNumberLetterPart: string;
+
+  @Column({ nullable: true })
+  @Exclude()
+  diplomaNumberNumericPart: string;
 
   @Column({ nullable: true })
   qualification: string;
