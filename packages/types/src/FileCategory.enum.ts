@@ -1,4 +1,4 @@
 export enum FileCategory {
-  Text,
-  Video,
+  Text = "text",
+  Video = "video",
 }

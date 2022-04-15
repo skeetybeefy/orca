@@ -30,7 +30,7 @@ services:
     volumes:
       - ./packages/frontend/src:/usr/src/app/packages/frontend/src
       - ./packages/frontend/public:/usr/src/app/packages/frontend/public
-      - ./packages/frontend/.next:/usr/src/app/packages/frontend/.next
+      - uploads-dev:/usr/src/app/packages/frontend/uploaded
     ports:
       - ${FRONTEND_PORT}:${FRONTEND_PORT}
     depends_on:

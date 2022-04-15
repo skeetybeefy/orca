@@ -10,10 +10,6 @@ const doctorRoutes: IMenuRoute[] = [
     title: "Файлы",
     href: Routes.Files,
   },
-  {
-    title: "Карточки файлов",
-    href: Routes.FileCards,
-  },
 ];
 
 export default doctorRoutes;
