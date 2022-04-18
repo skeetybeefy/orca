@@ -5,7 +5,7 @@ import useSelectState from "components/form/useSelectState";
 import Loadable from "components/Loadable";
 import FileCategories from "constants/FileCategories";
 import { useFormik } from "formik";
-import useGroupsOptions from "hooks/queries/groups/useGroupsOptions";
+import useGroupsOptions from "api/queries/groups/useGroupsOptions";
 import React, { FC } from "react";
 import { SubmitFileDto } from "types/dtos/SubmitFileDto";
 import IOption from "types/interfaces/Option";

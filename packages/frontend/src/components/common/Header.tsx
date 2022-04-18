@@ -5,7 +5,7 @@ import MobileMenu from "components/common/MobileMenu";
 import ProfileMenu from "components/common/ProfileMenu";
 import ThemeSwitcher from "components/common/ThemeSwitcher";
 import menuRoutes from "constants/menuRoutes";
-import useProfileQuery from "hooks/queries/useProfileQuery";
+import useProfileQuery from "api/queries/useProfileQuery";
 import { map } from "lodash";
 import NextLink from "next/link";
 import React from "react";

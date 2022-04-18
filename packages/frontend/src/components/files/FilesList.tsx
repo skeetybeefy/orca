@@ -1,4 +1,4 @@
-import useFilesQuery from "hooks/queries/files/useFilesQuery";
+import useFilesQuery from "api/queries/files/useFilesQuery";
 import Link from "next/link";
 import React from "react";
 

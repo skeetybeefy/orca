@@ -10,7 +10,7 @@ services:
     networks:
       - orca
     volumes:
-      - uploads-production:/usr/src/app/uploaded
+      - uploads-production:/usr/src/app/packages/backend/uploaded
     ports:
       - ${BACKEND_PORT}:${BACKEND_PORT}
     depends_on:

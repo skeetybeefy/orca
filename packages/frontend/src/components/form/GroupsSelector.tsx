@@ -1,9 +1,9 @@
 import Loadable from "components/Loadable";
-import useGroupsQuery from "hooks/queries/groups/useGroupsQuery";
+import useGroupsQuery from "api/queries/groups/useGroupsQuery";
 import React, { FC } from "react";
 
 import { IGroup } from "@orca/types";
-import useGroupsOptions from "hooks/queries/groups/useGroupsOptions";
+import useGroupsOptions from "api/queries/groups/useGroupsOptions";
 import { FormControl, FormLabel, Spinner } from "@chakra-ui/react";
 import { ErrorMessage } from "formik";
 import LoadingError from "components/LoadingError";

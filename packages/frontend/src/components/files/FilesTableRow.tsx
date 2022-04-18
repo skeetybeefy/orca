@@ -1,4 +1,4 @@
-import useDeleteFileByIdMutation from "hooks/mutations/files/useDeleteFileByIdMutation";
+import useDeleteFileByIdMutation from "api/mutations/files/useDeleteFileByIdMutation";
 import Link from "next/link";
 import { FC, useCallback } from "react";
 
@@ -23,11 +23,11 @@ import { ApiRoute, IFile } from "@orca/types";
 
 const FilesTableRow: FC<IFile> = ({ id, originalname, mimetype, path }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const deleteFileByIdMutation = useDeleteFileByIdMutation(id);
+  const deleteFileByIdMutation = useDeleteFileByIdMutation();
   const onDelete = useCallback(() => {
-    deleteFileByIdMutation.mutate();
+    deleteFileByIdMutation.mutate(id);
     onClose();
-  }, [deleteFileByIdMutation, onClose]);
+  }, [deleteFileByIdMutation, id, onClose]);
 
   return (
     <>

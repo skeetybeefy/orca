@@ -3,6 +3,7 @@ import { Group } from "groups/entities/group.entity";
 import {
   Column,
   Entity,
+  IsNull,
   JoinTable,
   ManyToMany,
   ManyToOne,
@@ -38,7 +39,7 @@ export class File implements IFile {
   ownerId: User["id"];
 
   @Column({ nullable: true })
-  description: string;
+  description?: string;
 
   @Column({ type: "enum", enum: FileCategory })
   category: FileCategory;

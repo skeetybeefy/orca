@@ -10,6 +10,7 @@ COPY packages/frontend/tsconfig.json ./packages/frontend/
 COPY packages/types/tsconfig.json ./packages/types/
 COPY packages/backend/package.json ./packages/backend/
 COPY packages/frontend/package.json ./packages/frontend/
+COPY packages/frontend/next.config.js ./packages/frontend/
 COPY packages/types/package.json ./packages/types/
 RUN yarn install --frozen-lockfile
 COPY packages/types/src ./packages/types/src

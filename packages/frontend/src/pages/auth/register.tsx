@@ -1,7 +1,7 @@
 import DoctorRegisterForm from "components/auth/register/DoctorRegisterForm";
 import PatientRegisterForm from "components/auth/register/PatientRegisterForm";
 import Page from "components/common/Page";
-import useRegisterMutation from "hooks/mutations/profile/useRegisterMutation";
+import useRegisterMutation from "api/mutations/profile/useRegisterMutation";
 import MainLayout from "layouts/MainLayout";
 import { useRouter } from "next/router";
 import React, { useCallback } from "react";

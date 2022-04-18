@@ -10,7 +10,7 @@ import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
   app.use(cookieParser());
 
@@ -25,12 +25,12 @@ async function bootstrap() {
 
   const config = app.get(ConfigService);
   const port = config.get(EnvironmentVariable.BACKEND_PORT);
-  const frontendOrigin = config.get(EnvironmentVariable.FRONTEND_ORIGIN);
+  // const frontendOrigin = config.get(EnvironmentVariable.FRONTEND_ORIGIN);
 
-  app.enableCors({
-    origin: frontendOrigin,
-    credentials: true,
-  });
+  // app.enableCors({
+  //   origin: frontendOrigin,
+  //   credentials: true,
+  // });
 
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb" }));
