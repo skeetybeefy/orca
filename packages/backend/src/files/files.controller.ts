@@ -69,7 +69,7 @@ export class FilesController {
     const stream = createReadStream(path);
 
     request.res.set({
-      "Content-Disposition": `inline; filename="${file.filename}"`,
+      "Content-Disposition": `attachment; filename="${file.filename}"`,
       "Content-Type": file.mimetype,
     });
 
