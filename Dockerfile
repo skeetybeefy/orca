@@ -24,7 +24,7 @@ COPY packages/frontend/next.config.js ./packages/frontend/
 COPY packages/frontend/src ./packages/frontend/src
 COPY packages/backend/src ./packages/backend/src
 ARG NEXT_PUBLIC_API_URL
-ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}}
+ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
 RUN yarn run lerna run build
 
 

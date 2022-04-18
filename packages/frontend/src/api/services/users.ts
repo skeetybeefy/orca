@@ -1,4 +1,4 @@
-import axios from "api";
+import axios from "axios";
 
 import { ApiRoute, ICreateUserDto, IUpdateUserDto, IUser } from "@orca/types";
 

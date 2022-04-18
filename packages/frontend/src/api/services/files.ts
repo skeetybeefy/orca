@@ -1,7 +1,6 @@
 import { ApiRoute, IFile } from "@orca/types";
 import axios from "axios";
 import { SubmitFileDto } from "types/dtos/SubmitFileDto";
-import { FormDataConverter } from "util/formDataConverter";
 
 const filesUrl = `/api/${ApiRoute.Files}`;
 

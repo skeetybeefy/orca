@@ -21,12 +21,12 @@ const Update = () => {
   }, [id]);
 
   const { data: group } = useGroupByIdQuery(parsedId);
-  const updateGroupByIdMutation = useUpdateGroupByIdMutation(parsedId);
+  const updateGroupByIdMutation = useUpdateGroupByIdMutation();
 
   const onUpdate = useCallback(
     (group) => {
       if (parsedId) {
-        updateGroupByIdMutation.mutate(group);
+        updateGroupByIdMutation.mutate({ id: parsedId, group });
         router.push(Routes.Groups);
       }
     },
