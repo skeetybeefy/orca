@@ -8,10 +8,8 @@ import { User } from "users/entities/user.entity";
 import { GroupsService } from "groups/groups.service";
 import { CreateFileDto } from "files/dto/createFile.dto";
 
-type CreateFileProps = {
-  ownerId: User["id"];
-  file: CreateFileDto;
-};
+export type CreateFileInfo = Omit<File, "id" | "owner" | "allowedGroups">;
+
 @Injectable()
 export class FilesService {
   constructor(
@@ -19,8 +17,7 @@ export class FilesService {
     private readonly usersService: UsersService,
     private readonly groupsService: GroupsService
   ) {}
-  async create({ file, ownerId }: CreateFileProps) {
-    const { allowedGroupsIds } = file;
+  async create({ ownerId, allowedGroupsIds, ...file }: CreateFileInfo) {
     const owner = await this.usersService.getById(ownerId);
     const allowedGroups = await this.groupsService.getByIds(allowedGroupsIds);
     if (!owner) {

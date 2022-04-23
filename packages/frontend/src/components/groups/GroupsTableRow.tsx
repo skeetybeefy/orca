@@ -1,27 +1,48 @@
-import useDeleteGroupByIdMutation from 'hooks/mutations/groups/useDeleteGroupByIdMutation';
-import useGroupByIdQuery from 'hooks/queries/groups/useGroupByIdQuery';
-import useUserByIdQuery from 'hooks/queries/users/useUserByIdQuery';
-import Link from 'next/link';
-import { FC } from 'react';
+import useDeleteGroupByIdMutation from "api/mutations/groups/useDeleteGroupByIdMutation";
+import useGroupByIdQuery from "api/queries/groups/useGroupByIdQuery";
+import useUserByIdQuery from "api/queries/users/useUserByIdQuery";
+import Link from "next/link";
+import { FC, useCallback } from "react";
 
-import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import {
-    Avatar, AvatarGroup, Button, ButtonGroup, Flex, Menu, MenuButton, MenuItem, MenuList, Modal,
-    ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Td, Text, Tr,
-    useDisclosure
-} from '@chakra-ui/react';
-import { IGroup } from '@orca/types';
+  Avatar,
+  AvatarGroup,
+  Button,
+  ButtonGroup,
+  Flex,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Td,
+  Text,
+  Tr,
+  useDisclosure,
+} from "@chakra-ui/react";
+import { IGroup } from "@orca/types";
 
 const GroupsTableRow: FC<IGroup> = ({ id }) => {
   const { data: group } = useGroupByIdQuery(id);
 
-  const deleteGroupByIdMutation = useDeleteGroupByIdMutation(id);
+  const deleteGroupByIdMutation = useDeleteGroupByIdMutation();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { data: owner } = useUserByIdQuery(group?.ownerId);
 
   // const members = useSelector(selectUsersByIds(membersIds));
+
+  const onDelete = useCallback(() => {
+    deleteGroupByIdMutation.mutate(id);
+  }, [deleteGroupByIdMutation, id]);
 
   return (
     <>
@@ -35,11 +56,7 @@ const GroupsTableRow: FC<IGroup> = ({ id }) => {
           </ModalBody>
 
           <ModalFooter>
-            <Button
-              colorScheme="red"
-              mr={3}
-              onClick={() => deleteGroupByIdMutation.mutate()}
-            >
+            <Button colorScheme="red" mr={3} onClick={onDelete}>
               Удалить
             </Button>
             <Button onClick={onClose}>Отмена</Button>

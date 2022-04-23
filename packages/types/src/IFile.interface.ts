@@ -14,11 +14,9 @@ export interface IFile {
   allowedGroupsIds: IGroup["id"][];
 }
 
-export type ISubmitFileDto = Pick<
+export type ICreateFileDto = Pick<
   IFile,
   "filename" | "category" | "allowedGroupsIds" | "description"
 >;
-
-export type ICreateFileDto = Omit<IFile, "id" | "ownerId">;
 
 export type IUpdateFileDto = Pick<IFile, "id"> & Partial<ICreateFileDto>;

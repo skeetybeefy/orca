@@ -1,6 +1,6 @@
 import { MultiValue, Select } from "chakra-react-select";
 import { useFormik } from "formik";
-import useUsersQuery from "hooks/queries/users/useUsersQuery";
+import useUsersQuery from "api/queries/users/useUsersQuery";
 import { FC, useCallback, useMemo } from "react";
 
 import { Button, FormControl, FormLabel, Input, Spinner, Text, VStack } from "@chakra-ui/react";

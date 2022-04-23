@@ -3,7 +3,7 @@ import Page from "components/common/Page";
 import HomeLayout from "layouts/HomeLayout";
 
 import { Container, Grid, Text } from "@chakra-ui/react";
-import useProfileQuery from "hooks/queries/useProfileQuery";
+import useProfileQuery from "api/queries/useProfileQuery";
 
 const Home = () => {
   const { isSuccess } = useProfileQuery();

@@ -1,5 +1,5 @@
 import UserAvatar from "components/common/UserAvatar";
-import useLogoutMutation from "hooks/mutations/profile/useLogoutMutation";
+import useLogoutMutation from "api/mutations/profile/useLogoutMutation";
 import React from "react";
 
 import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";

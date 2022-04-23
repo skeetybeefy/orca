@@ -1,7 +1,7 @@
 import Page from "components/common/Page";
 import FileUpsertForm from "components/files/FileUpsertForm";
-import useCreateFileMutation from "hooks/mutations/files/useCreateFileMutation";
-import useGroupsOptions from "hooks/queries/groups/useGroupsOptions";
+import useCreateFileMutation from "api/mutations/files/useCreateFileMutation";
+import useGroupsOptions from "api/queries/groups/useGroupsOptions";
 import ProtectedLayout from "layouts/ProtectedLayout";
 import { useRouter } from "next/router";
 import React, { useCallback } from "react";

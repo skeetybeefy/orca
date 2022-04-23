@@ -1,6 +1,6 @@
 import Page from "components/common/Page";
 import GroupUpsertForm from "components/groups/GroupUpsertForm";
-import useCreateGroupMutation from "hooks/mutations/groups/useCreateGroupMutation";
+import useCreateGroupMutation from "api/mutations/groups/useCreateGroupMutation";
 import ProtectedLayout from "layouts/ProtectedLayout";
 import { useRouter } from "next/router";
 import { useCallback, useMemo } from "react";

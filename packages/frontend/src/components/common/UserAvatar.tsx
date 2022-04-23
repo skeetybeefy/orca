@@ -1,4 +1,4 @@
-import useProfileQuery from "hooks/queries/useProfileQuery";
+import useProfileQuery from "api/queries/useProfileQuery";
 import React from "react";
 
 import { Avatar } from "@chakra-ui/react";

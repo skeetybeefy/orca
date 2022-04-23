@@ -1,7 +1,13 @@
 import { useFormik } from "formik";
 import React, { FC } from "react";
 
-import { Button, FormControl, FormLabel, Input, VStack } from "@chakra-ui/react";
+import {
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
+  VStack,
+} from "@chakra-ui/react";
 import { ICreateUserDto, Role } from "@orca/types";
 
 export interface IRegisterFormProps {
@@ -21,7 +27,8 @@ const DoctorRegisterForm: FC<IRegisterFormProps> = ({ onRegister }) => {
       addressSettlement: "",
       addressLocation: "",
       password: "",
-      diplomaNumber: "",
+      diplomaNumberNumericPart: "",
+      diplomaNumberLetterPart: "",
       qualification: "",
       specification: "",
       medicalFacility: "",
@@ -140,15 +147,31 @@ const DoctorRegisterForm: FC<IRegisterFormProps> = ({ onRegister }) => {
           />
         </FormControl>
         <FormControl isRequired>
-          <FormLabel htmlFor="diplomaNumber">Номер диплома</FormLabel>
+          <FormLabel htmlFor="diplomaNumberLetterPart">
+            Номер диплома (буквенная часть, 2 буквы)
+          </FormLabel>
           <Input
-            value={values["diplomaNumber"]}
+            value={values["diplomaNumberLetterPart"]}
             onChange={handleChange}
             onBlur={handleBlur}
-            name={"diplomaNumber"}
-            id="diplomaNumber"
+            name={"diplomaNumberLetterPart"}
+            id="diplomaNumberLetterPart"
             type="text"
-            placeholder="9999999999"
+            placeholder="AB"
+          />
+        </FormControl>
+        <FormControl isRequired>
+          <FormLabel htmlFor="diplomaNumberNumericPart">
+            Номер диплома (числовая часть, 6 цифр)
+          </FormLabel>
+          <Input
+            value={values["diplomaNumberNumericPart"]}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            name={"diplomaNumberNumericPart"}
+            id="diplomaNumberNumericPart"
+            type="text"
+            placeholder="123456"
           />
         </FormControl>
         <FormControl isRequired>

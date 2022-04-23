@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import useLoginMutation from "hooks/mutations/profile/useLoginMutation";
+import useLoginMutation from "api/mutations/profile/useLoginMutation";
 import React, { useCallback } from "react";
 
 import { Button, FormControl, FormLabel, Input, VStack } from "@chakra-ui/react";

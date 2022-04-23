@@ -1,7 +1,7 @@
 import Page from "components/common/Page";
 import GroupUpsertForm from "components/groups/GroupUpsertForm";
-import useUpdateGroupByIdMutation from "hooks/mutations/groups/useUpdateGroupByIdMutation";
-import useGroupByIdQuery from "hooks/queries/groups/useGroupByIdQuery";
+import useUpdateGroupByIdMutation from "api/mutations/groups/useUpdateGroupByIdMutation";
+import useGroupByIdQuery from "api/queries/groups/useGroupByIdQuery";
 import ProtectedLayout from "layouts/ProtectedLayout";
 import { useRouter } from "next/router";
 import { useCallback, useMemo } from "react";
@@ -21,12 +21,12 @@ const Update = () => {
   }, [id]);
 
   const { data: group } = useGroupByIdQuery(parsedId);
-  const updateGroupByIdMutation = useUpdateGroupByIdMutation(parsedId);
+  const updateGroupByIdMutation = useUpdateGroupByIdMutation();
 
   const onUpdate = useCallback(
     (group) => {
       if (parsedId) {
-        updateGroupByIdMutation.mutate(group);
+        updateGroupByIdMutation.mutate({ id: parsedId, group });
         router.push(Routes.Groups);
       }
     },
@@ -45,7 +45,7 @@ const Update = () => {
     <Page title="Редактирование группы">
       <VStack align="stretch" gap={4}>
         <Heading size="md" w="full" textAlign="start">
-        Редактирование группы
+          Редактирование группы
         </Heading>
         <GroupUpsertForm
           buttonText="Сохранить"

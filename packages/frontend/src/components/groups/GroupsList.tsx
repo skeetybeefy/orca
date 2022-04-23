@@ -1,4 +1,4 @@
-import useGroupsQuery from "hooks/queries/groups/useGroupsQuery";
+import useGroupsQuery from "api/queries/groups/useGroupsQuery";
 import Link from "next/link";
 import React from "react";
 

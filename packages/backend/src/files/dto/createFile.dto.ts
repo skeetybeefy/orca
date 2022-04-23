@@ -7,23 +7,12 @@ import {
 } from "class-validator";
 
 import { FileCategory, ICreateFileDto, IGroup } from "@orca/types";
+import { Transform } from "class-transformer";
 
 export class CreateFileDto implements ICreateFileDto {
   @IsString()
   @IsNotEmpty()
-  originalname: string;
-
-  @IsString()
-  @IsNotEmpty()
   filename: string;
-
-  @IsString()
-  @IsNotEmpty()
-  path: string;
-
-  @IsString()
-  @IsNotEmpty()
-  mimetype: string;
 
   @IsEnum(FileCategory)
   category: FileCategory;
@@ -33,5 +22,9 @@ export class CreateFileDto implements ICreateFileDto {
   description?: string;
 
   @IsNumber({}, { each: true })
+  @Transform(({ value }) => {
+    if (!value) return [];
+    return value.split(",").map((str) => Number.parseInt(str));
+  })
   allowedGroupsIds: IGroup["id"][];
 }

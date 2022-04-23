@@ -18,7 +18,8 @@ export interface IBaseUser {
 }
 
 export interface IMedicalInformation {
-  diplomaNumber: string;
+  diplomaNumberLetterPart: string;
+  diplomaNumberNumericPart: string;
   qualification: string;
   specification: string;
   medicalFacility: string;
