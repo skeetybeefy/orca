@@ -13,7 +13,6 @@ const ProfileEditForm = ({ profile, id }) => {
   const router = useRouter()
 
   const onSubmit = async () => {
-    console.log(values)
     const { data } = await axios.patch<IUpdateUserDto>(`/api/users/${id}`, values)
     router.push(Routes.Profile)
   }
@@ -45,7 +44,7 @@ const ProfileEditForm = ({ profile, id }) => {
             </GridItem>
           )
         })}
-        <Button type="submit" w="full">
+        <Button type="submit" w="full" gridColumn={"span 2"}>
           Изменить профиль
         </Button>
       </Grid>

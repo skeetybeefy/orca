@@ -46,8 +46,6 @@ const Profile = () => {
   delete profile?.id;
   delete profile?.role;
 
-  console.log({ profile });
-
   return (
     <Page title="Profile">
       <VStack gap="4" align="start">
