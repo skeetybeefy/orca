@@ -45,16 +45,10 @@ export class User implements Omit<IUser, "groupsIds" | "files"> {
   @Column()
   addressLocation: string;
 
-  @Column({ nullable: true })
-  @JoinColumn()
-  diplomaNumber: string;
-
-  @Column({ nullable: true })
-  @Exclude()
+  @Column()
   diplomaNumberLetterPart: string;
 
-  @Column({ nullable: true })
-  @Exclude()
+  @Column()
   diplomaNumberNumericPart: string;
 
   @Column({ nullable: true })

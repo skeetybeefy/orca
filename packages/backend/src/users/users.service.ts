@@ -1,8 +1,8 @@
 import * as bcrypt from "bcrypt";
+import { Repository } from "typeorm";
 import { CreateUserDto } from "users/dto/createUser.dto";
 import { UpdateUserDto } from "users/dto/updateUser.dto";
 import { User } from "users/entities/user.entity";
-import { Repository } from "typeorm";
 
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
@@ -13,16 +13,8 @@ export class UsersService {
     @InjectRepository(User) private usersRepository: Repository<User>
   ) {}
 
-  async create({
-    diplomaNumberLetterPart,
-    diplomaNumberNumericPart,
-    ...createUserDto
-  }: CreateUserDto) {
-    const diplomaNumber = diplomaNumberLetterPart + diplomaNumberNumericPart;
-    const newUser = await this.usersRepository.create({
-      diplomaNumber,
-      ...createUserDto,
-    });
+  async create({ ...createUserDto }: CreateUserDto) {
+    const newUser = await this.usersRepository.create(createUserDto);
     await this.usersRepository.save(newUser);
     return newUser;
   }

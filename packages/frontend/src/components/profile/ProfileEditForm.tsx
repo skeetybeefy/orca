@@ -21,7 +21,6 @@ const ProfileEditForm = ({ profile, id }) => {
   const { handleChange, handleBlur, handleSubmit, values } = useFormik({
     initialValues: profile,
     onSubmit: onSubmit,
-    enableReinitialize: true
   })
 
   return (
