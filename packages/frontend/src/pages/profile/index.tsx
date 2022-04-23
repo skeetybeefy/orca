@@ -1,30 +1,13 @@
 import Page from 'components/common/Page';
-import { useFormik } from 'formik';
+import ProfileEditForm from 'components/profile/ProfileEditForm';
 import useProfileQuery from 'hooks/queries/useProfileQuery';
 import ProtectedLayout from 'layouts/ProtectedLayout';
 
-import {
-  Avatar, Button, FormControl, FormLabel, Heading, HStack, Input, Spinner, Text, VStack
-} from '@chakra-ui/react';
+import { Avatar, Heading, HStack, Spinner, Text, VStack } from '@chakra-ui/react';
 
 const Profile = () => {
 
   const { data: profile, isLoading, isError, error } = useProfileQuery()
-
-  delete profile?.id
-
-  const onUpdate = () => {
-
-  }
-
-  const { handleChange, handleBlur, handleSubmit, values } = useFormik({
-    initialValues: profile,
-    onSubmit: onUpdate,
-    enableReinitialize: true
-  })
-
-  console.log(values)
-
 
   if (isLoading) {
     return (
@@ -51,6 +34,11 @@ const Profile = () => {
       </Page>
     )
   }
+
+  const id = profile.id
+
+  delete profile?.id
+  delete profile?.role
   
   return (
     <Page title="Profile">
@@ -65,34 +53,7 @@ const Profile = () => {
         <Heading size="md" w="full" textAlign="start">
           Редактирование профиля
         </Heading>
-        <form onSubmit={handleSubmit}>
-          <VStack p="2" gap="4">
-            {Object.keys(values).map((profileKey) => {
-              let disabled = true
-              if (profileKey === "nickname") {
-                disabled = false
-              }
-
-              return (
-                <FormControl>
-                  <FormLabel htmlFor={profileKey}>{profileKey}</FormLabel>
-                  <Input
-                    value={values[profileKey]}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    name={profileKey}
-                    id={profileKey}
-                    type="text"
-                    disabled={disabled}
-                  />
-                </FormControl>
-              )
-            })}
-            <Button type="submit" w="full">
-              Изменить профиль
-            </Button>
-          </VStack>
-        </form>
+        <ProfileEditForm profile={profile} id={id}/>
       </VStack>
     </Page>
   )
