@@ -12,58 +12,52 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-const Profile = () => {
-  const { data: profile, isLoading, isError, error } = useProfileQuery();
-
-  if (isLoading) {
-    return (
-      <Page title="Profile">
-        <VStack gap="4" align="start">
-          <Heading size="lg" w="full" textAlign="start">
-            Профиль
-          </Heading>
-          <Spinner />
-        </VStack>
-      </Page>
-    );
-  }
-
-  if (isError) {
-    return (
-      <Page title="Profile">
-        <VStack gap="4" align="start">
-          <Heading size="lg" w="full" textAlign="start">
-            Профиль
-          </Heading>
-          <Text>Ошибка: {error?.message}</Text>
-        </VStack>
-      </Page>
-    );
-  }
-
-  const id = profile.id;
-
-  delete profile?.id;
-  delete profile?.role;
-
+const ProfilePageWrapper = ({ children }) => {
   return (
     <Page title="Profile">
       <VStack gap="4" align="start">
         <Heading size="lg" w="full" textAlign="start">
           Профиль
         </Heading>
-        <HStack spacing={"4"}>
-          <Avatar size="lg" name={profile?.nickname}></Avatar>
-          <Text fontSize="lg">
-            {profile?.firstName} {profile?.middleName} {profile?.lastName}
-          </Text>
-        </HStack>
-        <Heading size="md" w="full" textAlign="start">
-          Редактирование профиля
-        </Heading>
-        <ProfileEditForm profile={profile} id={id} />
+        {children}
       </VStack>
     </Page>
+  )
+}
+
+const Profile = () => {
+  const { data: profile, isLoading, isError, error } = useProfileQuery();
+
+  if (isLoading) {
+    return (
+      <ProfilePageWrapper>
+        <Spinner />
+      </ProfilePageWrapper>
+    );
+  }
+
+  if (isError) {
+    return (
+      <ProfilePageWrapper>
+        <Text>Ошибка: {error?.message}</Text>
+      </ProfilePageWrapper>
+    );
+  }
+
+
+  return (
+    <ProfilePageWrapper>
+      <HStack spacing={"4"}>
+        <Avatar size="lg" name={profile?.nickname}></Avatar>
+        <Text fontSize="lg">
+          {profile?.firstName} {profile?.middleName} {profile?.lastName}
+        </Text>
+      </HStack>
+      <Heading size="md" w="full" textAlign="start">
+        Редактирование профиля
+      </Heading>
+      <ProfileEditForm profile={profile} />
+    </ProfilePageWrapper>
   );
 };
 

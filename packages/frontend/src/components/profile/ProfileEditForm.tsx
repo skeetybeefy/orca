@@ -1,4 +1,4 @@
-import axios from 'axios';
+import useUpdateProfileMutation from 'api/mutations/profile/useUpdateProfileMutation';
 import profileEditableFields from 'constants/profileEditableFields';
 import profileMapping from 'constants/profileFieldsMapping';
 import { useFormik } from 'formik';
@@ -6,19 +6,22 @@ import { useRouter } from 'next/router';
 import Routes from 'types/enums/Routes';
 
 import { Button, FormControl, FormLabel, Grid, GridItem, Input } from '@chakra-ui/react';
-import { IUpdateUserDto } from '@orca/types';
 
-const ProfileEditForm = ({ profile, id }) => {
+const ProfileEditForm = ({ profile }) => {
+
+  const { id, role, ...profileFormFields } = profile
+
+  const updateProfileMutation = useUpdateProfileMutation()
 
   const router = useRouter()
 
   const onSubmit = async () => {
-    const { data } = await axios.patch<IUpdateUserDto>(`/api/users/${id}`, values)
-    router.push(Routes.Profile)
+    const user = {role, ...values}
+    updateProfileMutation.mutate({id, user})
   }
 
   const { handleChange, handleBlur, handleSubmit, values } = useFormik({
-    initialValues: profile,
+    initialValues: profileFormFields,
     onSubmit: onSubmit,
   })
 
