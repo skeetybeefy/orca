@@ -1,12 +1,13 @@
-import { IRegisterFormProps } from "components/auth/register/DoctorRegisterForm";
-import { useFormik } from "formik";
-import React, { FC } from "react";
+import { IRegisterFormProps } from 'components/auth/register/DoctorRegisterForm';
+import { useFormik } from 'formik';
+import React, { FC } from 'react';
+import { patientValidationSchema } from 'validationSchemas/patientValidationSchema';
 
-import { Button, FormControl, FormLabel, Input, VStack } from "@chakra-ui/react";
-import { Role } from "@orca/types";
+import { Button, FormControl, FormLabel, Input, Text, VStack } from '@chakra-ui/react';
+import { Role } from '@orca/types';
 
 const PatientRegisterForm: FC<IRegisterFormProps> = ({ onRegister }) => {
-  const { handleChange, handleBlur, handleSubmit, values } = useFormik({
+  const { errors, handleChange, handleBlur, handleSubmit, touched, values } = useFormik({
     initialValues: {
       role: Role.Patient,
       email: "",
@@ -20,6 +21,7 @@ const PatientRegisterForm: FC<IRegisterFormProps> = ({ onRegister }) => {
       password: "",
     },
     onSubmit: onRegister,
+    validationSchema: patientValidationSchema
   });
   return (
     <form onSubmit={handleSubmit}>
@@ -35,6 +37,9 @@ const PatientRegisterForm: FC<IRegisterFormProps> = ({ onRegister }) => {
             type="email"
             placeholder="example@mail.com"
           />
+          {(touched.email && errors.email) ?
+           <Text mt={2} color="red.600">{errors.email}</Text> :
+            null}
         </FormControl>
         <FormControl isRequired>
           <FormLabel htmlFor="password">Пароль</FormLabel>
@@ -47,6 +52,9 @@ const PatientRegisterForm: FC<IRegisterFormProps> = ({ onRegister }) => {
             type="password"
             placeholder="Password"
           />
+          {(touched.password && errors.password) ?
+           <Text mt={2} color="red.600">{errors.password}</Text> :
+            null}
         </FormControl>
         <FormControl isRequired>
           <FormLabel htmlFor="nickname">Псевдоним</FormLabel>
@@ -59,6 +67,9 @@ const PatientRegisterForm: FC<IRegisterFormProps> = ({ onRegister }) => {
             type="text"
             placeholder="nickname"
           />
+          {(touched.nickname && errors.nickname) ?
+           <Text mt={2} color="red.600">{errors.nickname}</Text> :
+            null}
         </FormControl>
         <FormControl isRequired>
           <FormLabel htmlFor="firstName">Имя</FormLabel>
@@ -71,6 +82,9 @@ const PatientRegisterForm: FC<IRegisterFormProps> = ({ onRegister }) => {
             type="text"
             placeholder="Иван"
           />
+          {(touched.firstName && errors.firstName) ?
+           <Text mt={2} color="red.600">{errors.firstName}</Text> :
+            null}
         </FormControl>
         <FormControl isRequired>
           <FormLabel htmlFor="lastName">Фамилия</FormLabel>
@@ -83,6 +97,9 @@ const PatientRegisterForm: FC<IRegisterFormProps> = ({ onRegister }) => {
             type="text"
             placeholder="Иванов"
           />
+          {(touched.lastName && errors.lastName) ?
+           <Text mt={2} color="red.600">{errors.lastName}</Text> :
+            null}
         </FormControl>
         <FormControl>
           <FormLabel htmlFor="middleName">Отчество</FormLabel>
@@ -107,6 +124,9 @@ const PatientRegisterForm: FC<IRegisterFormProps> = ({ onRegister }) => {
             type="text"
             placeholder="Татарстан"
           />
+          {(touched.addressRegion && errors.addressRegion) ?
+           <Text mt={2} color="red.600">{errors.addressRegion}</Text> :
+            null}
         </FormControl>
         <FormControl isRequired>
           <FormLabel htmlFor="addressSettlement">Город / поселение</FormLabel>
@@ -119,6 +139,9 @@ const PatientRegisterForm: FC<IRegisterFormProps> = ({ onRegister }) => {
             type="text"
             placeholder="Казань"
           />
+          {(touched.addressSettlement && errors.addressSettlement) ?
+           <Text mt={2} color="red.600">{errors.addressSettlement}</Text> :
+            null}
         </FormControl>
         <FormControl isRequired>
           <FormLabel htmlFor="addressLocation">Адрес</FormLabel>
@@ -131,6 +154,9 @@ const PatientRegisterForm: FC<IRegisterFormProps> = ({ onRegister }) => {
             type="text"
             placeholder="ул. Вишневского"
           />
+          {(touched.addressLocation && errors.addressLocation) ?
+           <Text mt={2} color="red.600">{errors.addressLocation}</Text> :
+            null}
         </FormControl>
 
         <Button type="submit" w="full">
