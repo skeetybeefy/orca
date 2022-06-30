@@ -1,13 +1,14 @@
 import { IRegisterFormProps } from 'components/auth/register/DoctorRegisterForm';
 import { useFormik } from 'formik';
-import React, { FC } from 'react';
+import { debounce } from 'lodash';
+import React, { FC, useEffect, useMemo } from 'react';
 import { patientValidationSchema } from 'validationSchemas/patientValidationSchema';
 
 import { Button, FormControl, FormLabel, Input, Text, VStack } from '@chakra-ui/react';
 import { Role } from '@orca/types';
 
 const PatientRegisterForm: FC<IRegisterFormProps> = ({ onRegister }) => {
-  const { errors, handleChange, handleBlur, handleSubmit, touched, values } = useFormik({
+  const { errors, handleChange, handleBlur, handleSubmit, touched, validateForm, values } = useFormik({
     initialValues: {
       role: Role.Patient,
       email: "",
@@ -21,8 +22,18 @@ const PatientRegisterForm: FC<IRegisterFormProps> = ({ onRegister }) => {
       password: "",
     },
     onSubmit: onRegister,
+    validateOnChange: false,
     validationSchema: patientValidationSchema
   });
+
+  const debouncedValidate = useMemo(
+    () => debounce(validateForm, 500), [validateForm]
+  ) 
+
+  useEffect(() => {
+    debouncedValidate(values)
+  }, [values, debouncedValidate])
+
   return (
     <form onSubmit={handleSubmit}>
       <VStack p={2} gap={4}>
